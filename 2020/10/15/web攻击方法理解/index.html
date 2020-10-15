@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        web攻击方法理解 | Ma4out7
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/favicon.png">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let CONFIG = {"hostname":"example.com","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"themeInfo":{"name":"ILS","version":"2.0.2","author":"XPoet","repository":"https://github.com/XPoet/hexo-theme-ils"}};
+  </script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+<div class="page-container">
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            Ma4out7
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        HOME
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        ARCHIVES
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">web攻击方法理解</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-10-15 17:19:50
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/my-world/">my world</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+    
+    
+</div>
+
+        </div>
+
+        <div class="article-content markdown-body">
+            <h1 id="一、Brute-force"><a href="#一、Brute-force" class="headerlink" title="一、Brute force"></a>一、Brute force</h1><h2 id="1、why"><a href="#1、why" class="headerlink" title="1、why"></a>1、why</h2><p>由于用户有可能设置弱口令或其他容易的口令，所以可以通过密码字典来穷举用户可能的所有密码破解，简单粗暴。</p>
+<h2 id="2、how"><a href="#2、how" class="headerlink" title="2、how"></a>2、how</h2><ul>
+<li>准备质量比较高的密码字典。</li>
+<li>正确是用工具进行‘撞库’。如bp使用。</li>
+</ul>
+<h2 id="3、defense"><a href="#3、defense" class="headerlink" title="3、defense"></a>3、defense</h2><p>设置更加复杂的密码。</p>
+<h1 id="二、Command-injection（exp-ping-ip"><a href="#二、Command-injection（exp-ping-ip" class="headerlink" title="二、Command injection（exp:ping ip)"></a>二、Command injection（exp:ping ip)</h1><h2 id="1-why"><a href="#1-why" class="headerlink" title="1.why"></a>1.why</h2><blockquote>
+<p>命令注入漏洞产生的原因一般是：web应用程序有时需要调用一些系统命令的函数,如PHP中的system,exec,shell-exec等等,当用户能够控制这些函数中的参数时,就可以将恶意参系统命令拼接到正常命令中,从而造成命令注入攻击并且，用户的输入未经过滤或者过滤不严格就直接被当做系统命令进行执行；因此，嘿壳儿就可以通过批处理中的一些技巧来一次执行多条命令，并且通过构造可以这行任意的命令，从而控制我们的计算机或服务器。</p>
+<p>漏洞形成需要同时满足以下三个条件:<br>1.使用了内部调用shell的函数(system,exec)<br>2.将外界传入的参数传递给内部调用shell的函数<br>3.参数中shell的元字符没有被转义</p>
+</blockquote>
+<h2 id="2-how"><a href="#2-how" class="headerlink" title="2.how"></a>2.how</h2><p>通过构造服务端能够识别的恶意语句（shell命令）来达到目的。</p>
+<blockquote>
+<p>在命令执行的过程中，常用的连接符有：&amp;&amp; 、 &amp; 、 || 、 | 、；<br>**&amp;&amp;** : 前一个指令执行成功，后面的指令才继续执行，就像进行与操作一样<br>**&amp;** ： 直接连接多个命令<br>**||** ： 前 一个命令执行失败，后面的才继续执行，类似于或操作<br>**|** ： 管道符，将前一个命令的输出作为下一个命令的输入<br>**;** ： 直接连接多个命令。</p>
+</blockquote>
+<h2 id="3、defense-1"><a href="#3、defense-1" class="headerlink" title="3、defense"></a>3、defense</h2><p>可以设置白名单，限制用户输入。</p>
+<h1 id="三、CSRF-跨站请求伪造"><a href="#三、CSRF-跨站请求伪造" class="headerlink" title="三、CSRF(跨站请求伪造)"></a>三、CSRF(跨站请求伪造)</h1><h2 id="1-why-1"><a href="#1-why-1" class="headerlink" title="1.why"></a>1.why</h2><p>这个例子很形象，反正我是懂了。</p>
+<blockquote>
+<p>受害者 Bob 在银行有一笔存款，通过对银行的网站发送请求 <a target="_blank" rel="noopener" href="http://bank.example/withdraw?account=bob&amp;amount=1000000&amp;for=bob2">http://bank.example/withdraw?account=bob&amp;amount=1000000&amp;for=bob2</a> 可以使 Bob 把 1000000 的存款转到 bob2 的账号下。通常情况下，该请求发送到网站后，服务器会先验证该请求是否来自一个合法的 session，并且该 session 的用户 Bob 已经成功登陆。</p>
+<p>​    黑客 Mallory 自己在该银行也有账户，他知道上文中的 URL 可以把钱进行转帐操作。Mallory 可以自己发送一个请求给银行：<a target="_blank" rel="noopener" href="http://bank.example/withdraw?account=bob&amp;amount=1000000&amp;for=Mallory%E3%80%82%E4%BD%86%E6%98%AF%E8%BF%99%E4%B8%AA%E8%AF%B7%E6%B1%82%E6%9D%A5%E8%87%AA">http://bank.example/withdraw?account=bob&amp;amount=1000000&amp;for=Mallory。但是这个请求来自</a> Mallory 而非 Bob，他不能通过安全认证，因此该请求不会起作用。</p>
+<p>​    这时，Mallory 想到使用 CSRF 的攻击方式，他先自己做一个网站，在网站中放入如下代码： src=”<a target="_blank" rel="noopener" href="http://bank.example/withdraw?account=bob&amp;amount=1000000&amp;for=Mallory">http://bank.example/withdraw?account=bob&amp;amount=1000000&amp;for=Mallory</a> ”，并且通过广告等诱使 Bob 来访问他的网站。当 Bob 访问该网站时，上述 url 就会从 Bob 的浏览器发向银行，而这个请求会附带 Bob 浏览器中的 cookie 一起发向银行服务器。大多数情况下，该请求会失败，因为他要求 Bob 的认证信息。但是，如果 Bob 当时恰巧刚访问他的银行后不久，他的浏览器与银行网站之间的 session 尚未过期，浏览器的 cookie 之中含有 Bob 的认证信息。这时，悲剧发生了，这个 url 请求就会得到响应，钱将从 Bob 的账号转移到 Mallory 的账号，而 Bob 当时毫不知情。等以后 Bob 发现账户钱少了，即使他去银行查询日志，他也只能发现确实有一个来自于他本人的合法请求转移了资金，没有任何被攻击的痕迹。而 Mallory 则可以拿到钱后逍遥法外。 </p>
+</blockquote>
+<p>也就是，用户A访问信任网站C，成功登入后，留下了cookie，然后访问了攻击者B设置恶意代码，在用户A不知情的情况下，访问了网站C，并且执行了恶意代码的命令，达成目的。</p>
+<h2 id="2、defense"><a href="#2、defense" class="headerlink" title="2、defense"></a>2、defense</h2><ol>
+<li><h2 id="验证-HTTP-Referer-字段。"><a href="#验证-HTTP-Referer-字段。" class="headerlink" title="验证 HTTP Referer 字段。"></a>验证 HTTP Referer 字段。</h2></li>
+<li><h2 id="在请求地址中添加-token-并验证"><a href="#在请求地址中添加-token-并验证" class="headerlink" title="在请求地址中添加 token 并验证"></a>在请求地址中添加 token 并验证</h2></li>
+<li><h2 id="在-HTTP-头中自定义属性并验证"><a href="#在-HTTP-头中自定义属性并验证" class="headerlink" title="在 HTTP 头中自定义属性并验证"></a>在 HTTP 头中自定义属性并验证</h2></li>
+<li><h2 id="验证码"><a href="#验证码" class="headerlink" title="验证码"></a>验证码</h2></li>
+</ol>
+<h1 id="四、File-Inclusion-文件包含-和File-Upload"><a href="#四、File-Inclusion-文件包含-和File-Upload" class="headerlink" title="四、File Inclusion(文件包含)和File Upload"></a>四、File Inclusion(文件包含)和File Upload</h1><h2 id="1-why-2"><a href="#1-why-2" class="headerlink" title="1.why"></a>1.why</h2><p>有关文件包含和上传的知识点全部在这，挺全的，</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Monsterlz123/article/details/93964916?utm_source=app">https://blog.csdn.net/Monsterlz123/article/details/93964916?utm_source=app</a></p>
+<p>文件上传：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42636435/article/details/88096844?utm_source=app">https://blog.csdn.net/qq_42636435/article/details/88096844?utm_source=app</a></p>
+<h1 id="五、SQL-Injection"><a href="#五、SQL-Injection" class="headerlink" title="五、SQL Injection"></a>五、SQL Injection</h1><h2 id="1、why-1"><a href="#1、why-1" class="headerlink" title="1、why"></a>1、why</h2><p>通过sql命令构造恶意语句。</p>
+<h2 id="2、how-1"><a href="#2、how-1" class="headerlink" title="2、how"></a>2、how</h2><ul>
+<li><p>手工注入(注意使用#或–+来注释掉后面的内容)</p>
+<p>1.判断是否存在注入，注入是字符型还是数字型(数字型没有引号)</p>
+<p>​            1,1’,1’ and 1=1,1’ and 1=2</p>
+<p>2.猜解SQL查询语句中的字段数</p>
+<p>​        order by 1，或   1’ or order by 1 #</p>
+<p>3.确定显示的字段顺序</p>
+<p>​        order by 来数字尝试，或者union select 1,2~~</p>
+<p>4.获取当前数据库</p>
+<p>​        已经找到了注入点（此处为2），然后用sql语句替换注入点（选择        用database()替换2）。</p>
+<p>5.获取数据库中的表</p>
+<p>​        继续用sql语句替换</p>
+<p>6.获取表中的字段名</p>
+<p>7.下载数据</p>
+</li>
+<li><p>使用工具注入，sqlmap工具。</p>
+</li>
+</ul>
+<h2 id="3、defense-2"><a href="#3、defense-2" class="headerlink" title="3、defense"></a>3、defense</h2><p>可以预备义处理和参数式查询。</p>
+<h1 id="六、SQL-Injection-Blind"><a href="#六、SQL-Injection-Blind" class="headerlink" title="六、SQL Injection(Blind)"></a>六、SQL Injection(Blind)</h1><h2 id="1、why-2"><a href="#1、why-2" class="headerlink" title="1、why"></a>1、why</h2><blockquote>
+<p>手工盲注的过程，就像你与一个机器人聊天，这个机器人知道的很多，但只会回答“是”或者“不是”，因此你需要询问它这样的问题，例如“数据库名字的第一个字母是不是a啊？”，通过这种机械的询问，最终获得你想要的数据。</p>
+<p>盲注分为基于布尔的盲注、基于时间的盲注以及基于报错的盲注，这里由于实验环境的限制，只演示基于布尔的盲注与基于时间的盲注。</p>
+</blockquote>
+<h2 id="2、how-2"><a href="#2、how-2" class="headerlink" title="2、how"></a>2、how</h2><p>下面简要介绍手工盲注的步骤（可与之前的<a target="_blank" rel="noopener" href="http://www.freebuf.com/articles/web/120747.html">手工注入</a>作比较）：</p>
+<blockquote>
+<p>1.判断是否存在注入，注入是字符型还是数字型</p>
+<p>2.猜解当前数据库名</p>
+<p>先猜库名的长度，然后遍历库名，真的烦。。。。</p>
+<p>3.猜解数据库中的表名</p>
+<p>猜，猜，猜。。。</p>
+<p>4.猜解表中的字段名</p>
+<p>无限月读。。。</p>
+<p>5.猜解数据</p>
+</blockquote>
+<h1 id="七、XSS（跨站脚本攻击）"><a href="#七、XSS（跨站脚本攻击）" class="headerlink" title="七、XSS（跨站脚本攻击）"></a>七、XSS（跨站脚本攻击）</h1>
+        </div>
+
+        <div class="article-nav">
+            
+            
+                <div class="article-next">
+                    <a class="next btn"
+                       rel="next"
+                       href="/2020/10/15/my%20first%20blog/"
+                    >
+                        <span class="post-nav-title-item">My Post</span><span class="post-nav-item">Next posts</span> <i class="fa fa-chevron-right"></i>
+                    </a>
+                </div>
+            
+        </div>
+
+        <div class="comment-container">
+            <div class="comments-container">
+    
+        
+
+    
+</div>
+        </div>
+    </div>
+</div>
+
+
+                    
+
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2020 <i class="fa fa-heart-o"></i> <a href="/">John Doe</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a> | Theme <a
+                    href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v2.0.2</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+            
+<script src="/js/local-search.js"></script>
+
+        
+        <li class="mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+        
+        <li class="page-aside-toggle">
+            <i class="fa fa-bars"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81Brute-force"><span class="nav-number">1.</span> <span class="nav-text">一、Brute force</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81why"><span class="nav-number">1.1.</span> <span class="nav-text">1、why</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81how"><span class="nav-number">1.2.</span> <span class="nav-text">2、how</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81defense"><span class="nav-number">1.3.</span> <span class="nav-text">3、defense</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Command-injection%EF%BC%88exp-ping-ip"><span class="nav-number">2.</span> <span class="nav-text">二、Command injection（exp:ping ip)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-why"><span class="nav-number">2.1.</span> <span class="nav-text">1.why</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-how"><span class="nav-number">2.2.</span> <span class="nav-text">2.how</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81defense-1"><span class="nav-number">2.3.</span> <span class="nav-text">3、defense</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81CSRF-%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0"><span class="nav-number">3.</span> <span class="nav-text">三、CSRF(跨站请求伪造)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-why-1"><span class="nav-number">3.1.</span> <span class="nav-text">1.why</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81defense"><span class="nav-number">3.2.</span> <span class="nav-text">2、defense</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81-HTTP-Referer-%E5%AD%97%E6%AE%B5%E3%80%82"><span class="nav-number">3.3.</span> <span class="nav-text">验证 HTTP Referer 字段。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E8%AF%B7%E6%B1%82%E5%9C%B0%E5%9D%80%E4%B8%AD%E6%B7%BB%E5%8A%A0-token-%E5%B9%B6%E9%AA%8C%E8%AF%81"><span class="nav-number">3.4.</span> <span class="nav-text">在请求地址中添加 token 并验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-HTTP-%E5%A4%B4%E4%B8%AD%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7%E5%B9%B6%E9%AA%8C%E8%AF%81"><span class="nav-number">3.5.</span> <span class="nav-text">在 HTTP 头中自定义属性并验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E7%A0%81"><span class="nav-number">3.6.</span> <span class="nav-text">验证码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81File-Inclusion-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB-%E5%92%8CFile-Upload"><span class="nav-number">4.</span> <span class="nav-text">四、File Inclusion(文件包含)和File Upload</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-why-2"><span class="nav-number">4.1.</span> <span class="nav-text">1.why</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81SQL-Injection"><span class="nav-number">5.</span> <span class="nav-text">五、SQL Injection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81why-1"><span class="nav-number">5.1.</span> <span class="nav-text">1、why</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81how-1"><span class="nav-number">5.2.</span> <span class="nav-text">2、how</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81defense-2"><span class="nav-number">5.3.</span> <span class="nav-text">3、defense</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E3%80%81SQL-Injection-Blind"><span class="nav-number">6.</span> <span class="nav-text">六、SQL Injection(Blind)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81why-2"><span class="nav-number">6.1.</span> <span class="nav-text">1、why</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81how-2"><span class="nav-number">6.2.</span> <span class="nav-text">2、how</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%83%E3%80%81XSS%EF%BC%88%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">七、XSS（跨站脚本攻击）</span></a></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/main.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/toggle-mode.js"></script>
+
+
+
+
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+
+
+
+</body>
+</html>
