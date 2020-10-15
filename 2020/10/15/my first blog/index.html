@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        My Post | Ma4out7
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/favicon.png">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let CONFIG = {"hostname":"example.com","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"themeInfo":{"name":"ILS","version":"2.0.2","author":"XPoet","repository":"https://github.com/XPoet/hexo-theme-ils"}};
+  </script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+<div class="page-container">
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            Ma4out7
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        HOME
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        ARCHIVES
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">My Post</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-10-15 15:19:36
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%B0%8F%E9%97%AE%E9%A2%98/">小问题</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+    
+    
+</div>
+
+        </div>
+
+        <div class="article-content markdown-body">
+            <h1 id="Mac下基于GitHub的Hexo博客搭建及更换主题。（命令基于root权限下）"><a href="#Mac下基于GitHub的Hexo博客搭建及更换主题。（命令基于root权限下）" class="headerlink" title="Mac下基于GitHub的Hexo博客搭建及更换主题。（命令基于root权限下）"></a>Mac下基于GitHub的Hexo博客搭建及更换主题。（命令基于root权限下）</h1><p><strong>一、node.js安装</strong>（用于生成静态页面）</p>
+<ol>
+<li><p>直接通过官网下载<a href="https://link.zhihu.com/?target=https://nodejs.org/en/">https://link.zhihu.com/?target=https%3A//nodejs.org/en/</a>，并且安装。</p>
+</li>
+<li><p>通过<code>node -v</code>来检查是否安装成功。</p>
+</li>
+</ol>
+<p><strong>二、Git安装及配置</strong>（将本地内容提交到GitHub（已注册）上）</p>
+<hr>
+<ol>
+<li><p>在终端输入<code>brew install git</code>来下载，<code>git -v</code>检查安装成功（Mac下brew安装详见）</p>
+</li>
+<li><p>ssh配置关联GitHub仓库详见<a target="_blank" rel="noopener" href="https://blog.csdn.net/linhai1028/article/details/81436825?biz_id=102&amp;utm_term=Mac%E4%B8%8Bgit&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-3-81436825&amp;spm=1018.2118.3001.4187">https://blog.csdn.net/linhai1028/article/details/81436825?biz_id=102&amp;utm_term=Mac%E4%B8%8Bgit&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-3-81436825&amp;spm=1018.2118.3001.4187</a></p>
+</li>
+</ol>
+<p><strong>三、hexo安装（通过npm）</strong></p>
+<ol>
+<li>更新安装源：<code>npm config set regitory  https://regitory.npm.taobao.org</code>（如不更换，安装会卡住）</li>
+<li>验证是否更新成功：<code>npm config get regitory</code></li>
+<li>安装cnpm：<code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code></li>
+<li>安装hexo：<code>npm install -g hexo-cli</code></li>
+</ol>
+<p><strong>四、hexo初始化</strong></p>
+<ol>
+<li><code>mkdir blog</code></li>
+<li><code>cd blog/</code></li>
+<li><code>hexo init</code>//hexo初始化</li>
+<li><code>hexo g</code>生成静态页面,<code>hexo s</code>之后即可访问<a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a>（不要停止终端）</li>
+</ol>
+<p><strong>五、hexo部署到GitHub</strong></p>
+<ol>
+<li><p>进入blog文件夹，可以看到_ config.yml文件(blog配置文件)。</p>
+</li>
+<li><p>拉到底部，配置如下（repsitory是仓库的地址）：<img src="/Users/a/Desktop/截屏2020-10-15 16.10.59.png" style="zoom:50%;" /></p>
+</li>
+<li><p>在blog下的终端输入<code>npm install hexo-deployer-git  --save</code></p>
+</li>
+<li><p>输入：</p>
+<p><code>hexo clean</code></p>
+<p><code>hexo g</code></p>
+<p><code>hexo d</code></p>
+</li>
+</ol>
+<p><strong>六、完成</strong></p>
+<p>打开浏览器，输入<a target="_blank" rel="noopener" href="https://xxx.github.io(xxx是github的用户名),即可访问./">https://xxx.github.io（xxx是GitHub的用户名），即可访问。</a></p>
+<h1 id="更换主题-优化问题，以后再写吧"><a href="#更换主题-优化问题，以后再写吧" class="headerlink" title="更换主题(优化问题，以后再写吧)"></a>更换主题(优化问题，以后再写吧)</h1><h2 id="一、在bolg文件夹的themes文件下下载主题。"><a href="#一、在bolg文件夹的themes文件下下载主题。" class="headerlink" title="一、在bolg文件夹的themes文件下下载主题。"></a>一、在bolg文件夹的themes文件下下载主题。</h2><h2 id="二、配置blog下的-config-yml文件中的theme，选择对应的主题。"><a href="#二、配置blog下的-config-yml文件中的theme，选择对应的主题。" class="headerlink" title="二、配置blog下的_config.yml文件中的theme，选择对应的主题。"></a>二、配置blog下的_config.yml文件中的theme，选择对应的主题。</h2><p><code>hexo s</code>即可在本地访问。</p>
+<p><code>hexo g</code>,<code>hexo d</code>,上传GitHub。</p>
+<p>详见<a target="_blank" rel="noopener" href="https://easyhexo.com/">https://easyhexo.com/</a></p>
+
+        </div>
+
+        <div class="article-nav">
+            
+                <div class="article-prev">
+                    <a class="prev btn"
+                       rel="prev"
+                       href="/2020/10/15/web%E5%90%84%E7%A7%8D%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95%E7%90%86%E8%A7%A3/"
+                    >
+                        <i class="fa fa-chevron-left"></i> <span class="post-nav-title-item"></span><span class="post-nav-item">Prev posts</span>
+                    </a>
+                </div>
+            
+            
+                <div class="article-next">
+                    <a class="next btn"
+                       rel="next"
+                       href="/2020/10/12/hello-world/"
+                    >
+                        <span class="post-nav-title-item">Hello World</span><span class="post-nav-item">Next posts</span> <i class="fa fa-chevron-right"></i>
+                    </a>
+                </div>
+            
+        </div>
+
+        <div class="comment-container">
+            <div class="comments-container">
+    
+        
+
+    
+</div>
+        </div>
+    </div>
+</div>
+
+
+                    
+
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2020 <i class="fa fa-heart-o"></i> <a href="/">John Doe</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a> | Theme <a
+                    href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v2.0.2</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+            
+<script src="/js/local-search.js"></script>
+
+        
+        <li class="mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+        
+        <li class="page-aside-toggle">
+            <i class="fa fa-bars"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Mac%E4%B8%8B%E5%9F%BA%E4%BA%8EGitHub%E7%9A%84Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%8F%8A%E6%9B%B4%E6%8D%A2%E4%B8%BB%E9%A2%98%E3%80%82%EF%BC%88%E5%91%BD%E4%BB%A4%E5%9F%BA%E4%BA%8Eroot%E6%9D%83%E9%99%90%E4%B8%8B%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">Mac下基于GitHub的Hexo博客搭建及更换主题。（命令基于root权限下）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9B%B4%E6%8D%A2%E4%B8%BB%E9%A2%98-%E4%BC%98%E5%8C%96%E9%97%AE%E9%A2%98%EF%BC%8C%E4%BB%A5%E5%90%8E%E5%86%8D%E5%86%99%E5%90%A7"><span class="nav-number">2.</span> <span class="nav-text">更换主题(优化问题，以后再写吧)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%9C%A8bolg%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84themes%E6%96%87%E4%BB%B6%E4%B8%8B%E4%B8%8B%E8%BD%BD%E4%B8%BB%E9%A2%98%E3%80%82"><span class="nav-number">2.1.</span> <span class="nav-text">一、在bolg文件夹的themes文件下下载主题。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E9%85%8D%E7%BD%AEblog%E4%B8%8B%E7%9A%84-config-yml%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84theme%EF%BC%8C%E9%80%89%E6%8B%A9%E5%AF%B9%E5%BA%94%E7%9A%84%E4%B8%BB%E9%A2%98%E3%80%82"><span class="nav-number">2.2.</span> <span class="nav-text">二、配置blog下的_config.yml文件中的theme，选择对应的主题。</span></a></li></ol></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/main.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/toggle-mode.js"></script>
+
+
+
+
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+
+
+
+</body>
+</html>
