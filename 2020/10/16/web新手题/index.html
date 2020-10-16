@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        web新手题 | Ma4out7
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/favicon.png">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let CONFIG = {"hostname":"example.com","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"themeInfo":{"name":"ILS","version":"2.0.2","author":"XPoet","repository":"https://github.com/XPoet/hexo-theme-ils"}};
+  </script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+<div class="page-container">
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            Ma4out7
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        HOME
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        ARCHIVES
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">web新手题</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-10-16 16:03:24
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Web/">Web</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+    
+    
+</div>
+
+        </div>
+
+        <div class="article-content markdown-body">
+            <h2 id="1-view-source"><a href="#1-view-source" class="headerlink" title="1.view_source"></a>1.view_source</h2><p>直接F12,查看源代码，找到flag。</p>
+<h2 id="2-robots"><a href="#2-robots" class="headerlink" title="2.robots"></a>2.robots</h2><p>题目知识点:robots协议也叫robots.txt（统一小写）是一种存放于网站根目录下的ASCII编码的文本文件，它通常告诉网络搜索引擎的漫游器（又称网络蜘蛛），此网站中的哪些内容是不应被搜索引擎的漫游器获取的，哪些是可以被漫游器获取的。因为一些系统中的URL是大小写敏感的，所以robots.txt的文件名应统一为小写。（百度）<br>解法：选择直接在URL上寻找robots.txt文件，得到下图：<br><img src="https://img-blog.csdnimg.cn/20200923191554772.png#pic_center" alt="得到flag的地方"><br>URL再次访问flag文件，得到flag。</p>
+<h2 id="3-backup"><a href="#3-backup" class="headerlink" title="3.backup"></a>3.backup</h2><p>知识点：index.php的备份文件有“.bak”后缀，所以URL直接寻找备份文件，下载的文件更改后缀名为.php,打开文件，得到flag。<br><img src="https://img-blog.csdnimg.cn/20200923192328419.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTQ0MzU3,size_16,color_FFFFFF,t_70#pic_center" alt="flag"></p>
+<h2 id="4-cookie"><a href="#4-cookie" class="headerlink" title="4.cookie"></a>4.cookie</h2><p>知识点：Cookie，有时也用其复数形式 Cookies。类型为“小型文本文件”，是某些网站为了辨别用户身份，进行Session跟踪而储存在用户本地终端上的数据（通常经过加密），由用户客户端计算机暂时或永久保存的信息（百度）也就是存储的浏览记录。<br>方法一：F12查看源代码，在network模块的response下找到look-here=cookie.php，所以选择在URL上选择，然后跳转页面如下：<br><img src="https://img-blog.csdnimg.cn/20200923193425666.png#pic_center"><br>继续F12，找到flag。<br>方法二：针对cookie，可以选择用burpsuite抓包，找到cookie.php,得flag。</p>
+<h2 id="5-disabled-button"><a href="#5-disabled-button" class="headerlink" title="5.disabled_button"></a>5.disabled_button</h2><p>知识点：HTML语法。<br>解法：直接F12,去掉button元素中disable属性，点击按键，得到flag。</p>
+<h2 id="6-weak-auth"><a href="#6-weak-auth" class="headerlink" title="6.weak_auth"></a>6.weak_auth</h2><p>简单密码认证，直接通过burpsuite简单密码字典爆破，在BP上123456的长度不一样，得到密码，得flag。</p>
+<h2 id="7-command-execution（命令执行）"><a href="#7-command-execution（命令执行）" class="headerlink" title="7.command_execution（命令执行）"></a>7.command_execution（命令执行）</h2><p>知识点：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq646748739/article/details/81660514">ping功能</a><br>命令执行，有很多种方式，常用的命令执行：<br><img src="https://img-blog.csdnimg.cn/20200923203554743.png#pic_center" alt="在这里插入图片描述"><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/gufenchen/article/details/93485351?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522160086172519724839250394%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=160086172519724839250394&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_click~default-1-93485351.nonecase&utm_term=waf&spm=1018.2118.3001.4187">WAF介绍</a><br>Linux常用的命令<br>       解法：一、用”ls”,”../“,”cat”等操作命令，一步一步寻找到flag.txt文件<br>二、可以直接使用：find  / -name flag.txt找到文件，然后用cat打开文件，得到flag。</p>
+<h2 id="8-simple-php"><a href="#8-simple-php" class="headerlink" title="8.simple_php"></a>8.simple_php</h2><p>知识点：简单的代码审计问题，需要基本能够看懂PHP代码的意思.<br>解法：用get方式传送，直接URL上操作，通过PHP，得a&gt;0&amp;&amp;b不是数字，且要大于1234.得flag。<br><img src="https://img-blog.csdnimg.cn/20200923205428115.png#pic_center" alt="在这里插入图片描述"><br>“?”此处是分隔符号。<br><img src="https://img-blog.csdnimg.cn/20200923205355763.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTQ0MzU3,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h2 id="9-get-post"><a href="#9-get-post" class="headerlink" title="9.get_post"></a>9.get_post</h2><p>知识点：HTTP中两种请求，get和post。<br>解法：get方式，直接用URL，post在源代码network模块中传送。<br>得到flag。</p>
+<h2 id="10-xff-referer"><a href="#10-xff-referer" class="headerlink" title="10.xff_referer"></a>10.xff_referer</h2><p>知识点:<br>X-forwarded-For是告诉服务器当前请求者的最终ip的http请求头字段,通常可以直接通过修改http头中的X-Forwarded-For字段来仿造请求的最终ip。<br>referer是HTTP表头的一个字段，就是告诉服务器当前访问者是从哪个url地址跳转到自己的，跟xff一样，referer也可直接修改。<br>解法：直接选择代理，使用burp suite抓包，然后to request模块，修改xff和referer，得到flag。</p>
+<h2 id="11-webshell"><a href="#11-webshell" class="headerlink" title="11.webshell"></a>11.webshell</h2><p>知识点：一句话木马,中国菜刀/蚁剑.<br>解法：直接菜刀，解除flag。</p>
+<h2 id="12-simple-js"><a href="#12-simple-js" class="headerlink" title="12.simple_js"></a>12.simple_js</h2><p>知识点：js在HTML中的使用，能够看懂web上的源代码。同时结合了密码学。<br>解法：在源代码中找到了一些奇怪的数字，<br><img src="https://img-blog.csdnimg.cn/20200923215252276.png#pic_center" alt="十六进制"><br>十六进制转换成十进制，然后找到其对应的ascii码，得到一些数字，然后在这些数通过ascii转换成字母，注意得到的字符串不是flag，拼凑正确格式，得到flag。</p>
+
+        </div>
+
+        <div class="article-nav">
+            
+                <div class="article-prev">
+                    <a class="prev btn"
+                       rel="prev"
+                       href="/2020/10/16/3/"
+                    >
+                        <i class="fa fa-chevron-left"></i> <span class="post-nav-title-item">web进阶</span><span class="post-nav-item">Prev posts</span>
+                    </a>
+                </div>
+            
+            
+                <div class="article-next">
+                    <a class="next btn"
+                       rel="next"
+                       href="/2020/10/15/web%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95%E7%90%86%E8%A7%A3/"
+                    >
+                        <span class="post-nav-title-item">web攻击方法理解</span><span class="post-nav-item">Next posts</span> <i class="fa fa-chevron-right"></i>
+                    </a>
+                </div>
+            
+        </div>
+
+        <div class="comment-container">
+            <div class="comments-container">
+    
+        
+
+    
+</div>
+        </div>
+    </div>
+</div>
+
+
+                    
+
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2020 <i class="fa fa-heart-o"></i> <a href="/">John Doe</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a> | Theme <a
+                    href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v2.0.2</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+            
+<script src="/js/local-search.js"></script>
+
+        
+        <li class="mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+        
+        <li class="page-aside-toggle">
+            <i class="fa fa-bars"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-view-source"><span class="nav-number">1.</span> <span class="nav-text">1.view_source</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-robots"><span class="nav-number">2.</span> <span class="nav-text">2.robots</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-backup"><span class="nav-number">3.</span> <span class="nav-text">3.backup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-cookie"><span class="nav-number">4.</span> <span class="nav-text">4.cookie</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-disabled-button"><span class="nav-number">5.</span> <span class="nav-text">5.disabled_button</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-weak-auth"><span class="nav-number">6.</span> <span class="nav-text">6.weak_auth</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-command-execution%EF%BC%88%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">7.command_execution（命令执行）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-simple-php"><span class="nav-number">8.</span> <span class="nav-text">8.simple_php</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-get-post"><span class="nav-number">9.</span> <span class="nav-text">9.get_post</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-xff-referer"><span class="nav-number">10.</span> <span class="nav-text">10.xff_referer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-webshell"><span class="nav-number">11.</span> <span class="nav-text">11.webshell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-simple-js"><span class="nav-number">12.</span> <span class="nav-text">12.simple_js</span></a></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/main.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/toggle-mode.js"></script>
+
+
+
+
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+
+
+
+</body>
+</html>
