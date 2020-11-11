@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        单链表 | Ma4out7
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/favicon.png">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let CONFIG = {"hostname":"example.com","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"themeInfo":{"name":"ILS","version":"2.0.2","author":"XPoet","repository":"https://github.com/XPoet/hexo-theme-ils"}};
+  </script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+<div class="page-container">
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                @require "../common/variables.styl";
+@require "../common/magic-theme.styl";
+@require "../common/animated.styl";
+
+$header-progress-height = 2.8px;
+
+.header-wrapper {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background-color);
+  padding-top: $header-progress-height;
+
+  if (hexo-config('magic.enable') == true) {
+    magic-style(1.02, 1.02);
+  }
+
+  .header-content {
+    width: $main-content-width;
+    height: 100%;
+
+    transition();
+
+    +ils-tablet() {
+      width: $main-content-width-tablet !important;
+    }
+
+    +ils-mobile() {
+      width: $main-content-width-mobile !important;
+    }
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    z-index: $z-index-5;
+
+    .logo-title {
+      font-size: 2.2em;
+      font-weight: bold;
+
+      +ils-tablet() {
+        font-size: 2.0em;
+      }
+
+      +ils-mobile() {
+        font-size: 1.8em;
+      }
+
+      letter-spacing: 1px;
+      color: var(--first-text-color);
+      transition();
+    }
+
+    .menu-list {
+
+      +ils-tablet() {
+        display: none;
+      }
+
+      .menu-item {
+        float: left;
+        position: relative;
+        margin-left: 30px;
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        a {
+
+          &:hover {
+
+            color: var(--normal-text-color);
+
+            &::after {
+              content: '';
+              position: absolute;
+              bottom: -10px;
+              left: 50%;
+              width: 100%;
+              height: 2px;
+              transform: translateX(-50%);
+              background: var(--primary-color);
+              transition();
+            }
+          }
+
+        }
+
+
+        .active {
+          color: var(--second-text-color);
+          font-weight: bold;
+          transition();
+
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            transform: translateX(-50%);
+            background: var(--primary-color)
+            transition();
+          }
+        }
+      }
+
+    }
+
+
+    .menu-bar {
+      display: none;
+      position: relative;
+      cursor: pointer;
+
+      +ils-tablet() {
+        display: block;
+      }
+
+
+      .menu-bar-middle {
+        width: 18px;
+        height: 2px;
+        margin: 6px 0;
+        position: relative;
+        background: var(--normal-text-color);
+        transition();
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: -6px;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background: var(--normal-text-color);
+          transition();
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -6px;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background: var(--normal-text-color);
+          transition();
+        }
+      }
+    }
+  }
+
+
+  .header-drawer {
+    width: 100%;
+    padding: $header-height 0 20px 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    background: var(--background-color);
+    transition();
+    z-index: $z-index-2;
+
+    .drawer-menu-list {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+
+      .drawer-menu-item {
+
+        a {
+          display: block;
+          margin: 8px auto;
+          padding: 0 20px;
+          border-radius: 20px;
+          text-align: center;
+          line-height: 34px;
+          color: var(--normal-text-color);
+          transition();
+
+          &:hover {
+            color: var(--second-text-color);
+            font-weight: bold;
+          }
+        }
+
+        .active {
+          border: 1px solid var(--normal-text-color);
+          color: var(--second-text-color);
+          font-weight: bold;
+        }
+
+      }
+
+
+    }
+  }
+
+
+  .window-mask {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: $z-index-1;
+    visibility: hidden;
+    opacity: 0;
+    transition();
+  }
+
+
+}
+
+
+.header-drawer-show {
+
+  .header-content {
+    .menu-bar {
+      .menu-bar-middle {
+
+        background: transparent;
+
+        &::before {
+          transform: translateY(6px) rotate(45deg);
+        }
+
+
+        &::after {
+          transform: translateY(-6px) rotate(-45deg);
+        }
+      }
+    }
+  }
+
+
+  .header-drawer {
+    transform: scaleY(1);
+  }
+
+  .window-mask {
+    visibility: visible;
+    opacity: 1;
+  }
+
+}
+
+.header-wrapper-shrink {
+
+  if (hexo-config('magic.enable') == false) {
+    box-shadow: 0 1px 2px var(--border-color);
+  }
+
+  .header-content {
+
+    .logo-title {
+      transform: scale(0.8);
+      transform-origin: left top;
+    }
+
+    .menu-list {
+      .menu-item {
+        a:hover {
+          &::after {
+            bottom: -($header-shrink-height / 2 - 10);
+          }
+        }
+
+        .active::after {
+          bottom: -($header-shrink-height / 2 - 10);
+        }
+      }
+
+    }
+  }
+
+
+  .header-drawer {
+    padding: $header-shrink-height 0 20px 0;
+  }
+}
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">单链表</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-11-11 20:25:45
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+    
+    
+</div>
+
+        </div>
+
+        <div class="article-content markdown-body">
+            <h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>有头结点单链表的基本操作，包括</p>
+<p>创建表：构造函数创建头指针，使用尾插法来存储数据。</p>
+<p>元素插入、删除：通过工作指针找到对应的插入或删除的位置的前驱，在通过工作指针进行插入或删除。</p>
+<p>查找：通过工作指针遍历链表，寻找对应元素。</p>
+<p>测表空：测试head-&gt;next==0,即可。</p>
+<p>求表长：遍历中计数。</p>
+<p>获取某位置元素的值：遍历即可</p>
+<p>返回元素的前驱：通过两个连续工作指针，同时遍历链表，前一个指针即为前驱</p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>直接上代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>; </span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">Node</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	T data;<span class="comment">//数据域，存放表元素</span></span><br><span class="line">	Node *next;<span class="comment">//指针域，指向下一个结点</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">LinkList</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line">		Node&lt;T&gt; *Head;<span class="comment">// 链表头指针</span></span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		LinkList() ;<span class="comment">//构造函数， 创建空链表</span></span><br><span class="line">		~LinkList();<span class="comment">//析构函数，删除表空间</span></span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">CreateList</span><span class="params">(<span class="keyword">int</span> n)</span></span>;<span class="comment">//创建具有n个元素的线性链表</span></span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">Insert</span><span class="params">(<span class="keyword">int</span> i,T e)</span></span>;<span class="comment">//在表中第i个位置插入元素</span></span><br><span class="line">		<span class="function">T <span class="title">Delete</span><span class="params">(<span class="keyword">int</span> i)</span></span>;<span class="comment">//删除表中第i个元素</span></span><br><span class="line">		<span class="function">T <span class="title">GetElem</span><span class="params">(<span class="keyword">int</span> i)</span></span>;<span class="comment">//获取第i个元素的值</span></span><br><span class="line">		<span class="function"><span class="keyword">int</span> <span class="title">Locate</span><span class="params">(T e)</span></span>;<span class="comment">//在链表中查找值为e的元素</span></span><br><span class="line">		<span class="function">T <span class="title">prior</span><span class="params">(T e)</span></span>;<span class="comment">//返回元素e的前驱</span></span><br><span class="line">		<span class="function"><span class="keyword">int</span> <span class="title">Empty</span><span class="params">()</span></span>;<span class="comment">//测表空</span></span><br><span class="line">		<span class="function"><span class="keyword">int</span> <span class="title">Length</span><span class="params">()</span></span>;<span class="comment">//测表长</span></span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">ListDisplay</span><span class="params">()</span></span>;<span class="comment">//输出表元素</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">LinkList</span>&lt;T&gt;:</span>:LinkList()</span><br><span class="line">&#123;<span class="comment">//构建函数，建一空链表</span></span><br><span class="line">	Head=<span class="keyword">new</span> Node&lt;T&gt;;</span><br><span class="line">	Head-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">LinkList</span>&lt;T&gt;:</span>:~LinkList()</span><br><span class="line">&#123;<span class="comment">//析构函数，释放链表所占空间</span></span><br><span class="line">	Node&lt;T&gt; *p;</span><br><span class="line">	<span class="keyword">while</span>(Head)<span class="comment">//从头结点开始，依次释放结点</span></span><br><span class="line">	&#123;</span><br><span class="line">		p=Head;</span><br><span class="line">		Head=Head-&gt;next;</span><br><span class="line">	    <span class="keyword">delete</span> p;</span><br><span class="line">	&#125;</span><br><span class="line">	Head=<span class="literal">NULL</span>;<span class="comment">//头结点指向空</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">LinkList</span>&lt;T&gt;:</span>:CreateList(<span class="keyword">int</span> n)</span><br><span class="line">&#123;<span class="comment">//尾插法(正序)创建具有n个元素的线性表</span></span><br><span class="line">	Node&lt;T&gt; *p,*s;<span class="comment">//设置工作指针。p指向尾结点</span></span><br><span class="line">	p=Head;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;请依次输入&quot;</span>&lt;&lt;n&lt;&lt;<span class="string">&quot;个元素值：&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		s=<span class="keyword">new</span> Node&lt;T&gt;;<span class="comment">//新建元素结点</span></span><br><span class="line">	    <span class="built_in">cin</span>&gt;&gt;s-&gt;data;<span class="comment">//输入新建数据元素值</span></span><br><span class="line">		s-&gt;next=p-&gt;next;<span class="comment">//新结点链入表尾</span></span><br><span class="line">		p-&gt;next=s;</span><br><span class="line">		p=s;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">LinkList</span>&lt;T&gt;:</span>:Insert (<span class="keyword">int</span> i,T e)</span><br><span class="line">&#123;<span class="comment">//在指定位置插入元素</span></span><br><span class="line">	<span class="keyword">int</span> j=<span class="number">0</span>;</span><br><span class="line">	Node&lt;T&gt; *p;</span><br><span class="line">	p=Head;<span class="comment">//工作指针初始化</span></span><br><span class="line">	<span class="keyword">while</span>(p &amp;&amp; j&lt;i<span class="number">-1</span>)<span class="comment">//定位到插入点之前</span></span><br><span class="line">	&#123;</span><br><span class="line">		p=p-&gt;next;<span class="comment">//</span></span><br><span class="line">		j++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(!p||j&gt;i<span class="number">-1</span>) <span class="keyword">throw</span><span class="string">&quot;位置异常&quot;</span>;<span class="comment">//插入位置不合理，i&lt;0或i&gt;表长</span></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		Node&lt;T&gt; *s;</span><br><span class="line">		s=<span class="keyword">new</span> Node&lt;T&gt;;<span class="comment">//</span></span><br><span class="line">		s-&gt;data=e;<span class="comment">//</span></span><br><span class="line">		s-&gt;next=p-&gt;next;<span class="comment">//结点S链接到p结点之后</span></span><br><span class="line">		p-&gt;next=s;<span class="comment">//</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">T</span> <span class="title">LinkList</span>&lt;T&gt;:</span>:Delete (<span class="keyword">int</span> i)</span><br><span class="line">&#123;<span class="comment">//删除指定位置元素</span></span><br><span class="line">	T x;</span><br><span class="line">	Node&lt;T&gt; *p,*q;<span class="comment">//设置工作指针</span></span><br><span class="line">	p=Head;<span class="comment">//查找从头结点开始</span></span><br><span class="line">	<span class="keyword">int</span> j=<span class="number">0</span>;<span class="comment">//计数器初始化</span></span><br><span class="line">	<span class="keyword">while</span>(p-&gt;next &amp;&amp; j&lt;i<span class="number">-1</span>)<span class="comment">//p定位到删除点的前驱</span></span><br><span class="line">	&#123;</span><br><span class="line">		p=p-&gt;next;<span class="comment">//</span></span><br><span class="line">		j++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(!p-&gt;next||j&gt;i<span class="number">-1</span>) <span class="comment">//删除位置不合理</span></span><br><span class="line">		<span class="keyword">throw</span><span class="string">&quot;位置异常&quot;</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="comment">//删除位置合理</span></span><br><span class="line">	&#123;</span><br><span class="line">		q=p-&gt;next;<span class="comment">// 暂存删除结点位置</span></span><br><span class="line">		p-&gt;next=q-&gt;next;<span class="comment">//从链表中摘除删除结点</span></span><br><span class="line">		x=q-&gt;data;<span class="comment">//取删除数据元素的值</span></span><br><span class="line">		<span class="keyword">delete</span> q;<span class="comment">// 释放删除点</span></span><br><span class="line">		<span class="keyword">return</span> x;<span class="comment">//返回删除元素的值</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">int</span> <span class="title">LinkList</span>&lt;T&gt;:</span>:Locate (T e)</span><br><span class="line">&#123;<span class="comment">//按元素值查找，找到，返回元素在表中的位序；否则，返回0</span></span><br><span class="line">	<span class="keyword">int</span> j=<span class="number">1</span>;</span><br><span class="line">	Node&lt;T&gt; *p;<span class="comment">//工作指针</span></span><br><span class="line">	p=Head-&gt;next;<span class="comment">//首元结点为查找起始位置</span></span><br><span class="line">	<span class="keyword">while</span>(p &amp;&amp; p-&gt;data!=e)</span><br><span class="line">	&#123;</span><br><span class="line">		p=p-&gt;next;</span><br><span class="line">		j++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(p==<span class="literal">NULL</span>) <span class="keyword">return</span> <span class="number">0</span>;<span class="comment">//末找到，返回0</span></span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> j; <span class="comment">//找到，返回位序</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">T</span> <span class="title">LinkList</span>&lt;T&gt;:</span>:GetElem(<span class="keyword">int</span> i)</span><br><span class="line">&#123;<span class="comment">//获取第i个元素的值</span></span><br><span class="line">	Node&lt;T&gt; *p;<span class="comment">//设置工作指针</span></span><br><span class="line">	p=Head-&gt;next;<span class="comment">//从首结点开始</span></span><br><span class="line">	<span class="keyword">int</span> j=<span class="number">1</span>;<span class="comment">//计数器初始化</span></span><br><span class="line">	<span class="keyword">while</span>(p&amp;&amp;j&lt;i)<span class="comment">//定位到第i个元素结点</span></span><br><span class="line">	&#123;</span><br><span class="line">		p=p-&gt;next;j++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(!p||j&gt;i)<span class="comment">//定位位置不合理：空表或i小于0或i大于表长</span></span><br><span class="line">		<span class="keyword">throw</span> <span class="string">&quot;位置&quot;</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="comment">//位置合理</span></span><br><span class="line">		<span class="keyword">return</span> p-&gt;data;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">int</span> <span class="title">LinkList</span>&lt;T&gt;:</span>:Empty()</span><br><span class="line">&#123;<span class="comment">//测表空。</span></span><br><span class="line">	<span class="keyword">if</span>(Head-&gt;next==<span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;<span class="comment">//空表，返回1</span></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;<span class="comment">//不空，返回0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">T</span> <span class="title">LinkList</span>&lt;T&gt;:</span>:prior(T e)</span><br><span class="line">&#123;<span class="comment">//返回元素前驱</span></span><br><span class="line">	Node&lt;T&gt; *p,*q;</span><br><span class="line">	p=Head;q=p-&gt;next;</span><br><span class="line">	<span class="keyword">while</span>(q&amp;&amp;q-&gt;data!=e)</span><br><span class="line">	&#123;</span><br><span class="line">		p=q;q=q-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(p==Head)</span><br><span class="line">		<span class="keyword">throw</span><span class="string">&quot;首元素，无前驱&quot;</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(q==<span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">throw</span><span class="string">&quot;元素不存在&quot;</span>;		</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> p-&gt;data;</span><br><span class="line">		</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">int</span> <span class="title">LinkList</span>&lt;T&gt;:</span>:Length()</span><br><span class="line">&#123;<span class="comment">//测表长</span></span><br><span class="line">	<span class="keyword">int</span> len=<span class="number">0</span>;<span class="comment">//计数器初始化</span></span><br><span class="line">	Node&lt;T&gt; *p;<span class="comment">//设置工作指针</span></span><br><span class="line">	p=Head;<span class="comment">//指向头结点</span></span><br><span class="line">	<span class="keyword">while</span>(p-&gt;next)</span><br><span class="line">	&#123;</span><br><span class="line">		len++;p=p-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> len;<span class="comment">//返回表长</span></span><br><span class="line">&#125;<span class="comment">//Length</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">LinkList</span>&lt;T&gt;:</span>:ListDisplay()</span><br><span class="line">&#123;<span class="comment">//遍历显示链表</span></span><br><span class="line">	Node&lt;T&gt; *p;<span class="comment">//设置工作指针</span></span><br><span class="line">	p=Head-&gt;next;<span class="comment">//从首元结点开始遍历</span></span><br><span class="line">	<span class="keyword">int</span> i=<span class="number">1</span>;<span class="comment">//元素位序</span></span><br><span class="line">	<span class="keyword">while</span>(p)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;p-&gt;data&lt;&lt;<span class="string">&quot;\t&quot;</span>;</span><br><span class="line">		p=p-&gt;next;</span><br><span class="line">		i++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+        </div>
+
+        <div class="article-nav">
+            
+            
+                <div class="article-next">
+                    <a class="next btn"
+                       rel="next"
+                       href="/2020/11/11/%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%82%A8%E7%9A%84%E7%BA%BF%E6%80%A7%E8%A1%A8/"
+                    >
+                        <span class="post-nav-title-item">顺序存储的线性表</span><span class="post-nav-item">Next posts</span> <i class="fa fa-chevron-right"></i>
+                    </a>
+                </div>
+            
+        </div>
+
+        <div class="comment-container">
+            <div class="comments-container">
+    
+        
+
+    
+</div>
+        </div>
+    </div>
+</div>
+
+
+                    
+
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2020 <i class="fa fa-heart-o"></i> <a href="/">John Doe</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a> | Theme <a
+                    href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v2.0.2</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+            
+<script src="/js/local-search.js"></script>
+
+        
+        <li class="mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+        
+        <li class="page-aside-toggle">
+            <i class="fa fa-bars"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01"><span class="nav-number">1.</span> <span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02"><span class="nav-number">2.</span> <span class="nav-text">0x02</span></a></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/main.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/toggle-mode.js"></script>
+
+
+
+
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+
+
+
+</body>
+</html>
