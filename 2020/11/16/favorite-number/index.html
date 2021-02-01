@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="UTF-8">
 <head>
     <meta charset="utf-8">
     
@@ -188,11 +188,8 @@
         </div>
 
         <div class="article-content markdown-body">
-            <h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>首先看到<img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1617.06.05.png" alt="iShot2020-11-1617.06.05"></p>
-<p>可以确定应该是到代码审计的题目，dirserch扫描后台，index.php也没有任何变化，</p>
-<img src="/Users/a/Desktop/截图/web/iShot2020-11-1617.09.15.png" alt="iShot2020-11-1617.09.15" style="zoom: 50%;" />
-
-<p>检查代码:</p>
+            <h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>首先看到<br><img src="https://img-blog.csdnimg.cn/20201203164246657.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTQ0MzU3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>可以确定应该是到代码审计的题目，dirserch扫描后台，index.php也没有任何变化，<br><img src="https://img-blog.csdnimg.cn/20201203164314181.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTQ0MzU3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">检查代码:</p>
 <ol>
 <li>和数组强相等，第一个元素不能等于admin</li>
 <li>正则表达式，要求num全是数字。</li>
@@ -202,18 +199,10 @@
 <p>可是数组如何强相等？没有思路。</p>
 <p>wp提示：<a target="_blank" rel="noopener" href="https://segmentfault.com/q/1010000003871264">PHP安全</a></p>
 <p>所以尝试了下构造的payload</p>
-<p><code>stuff[4294967296]=admin&amp;stuff[1]=user&amp;num=123</code></p>
-<p><img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1617.31.43.png" alt="iShot2020-11-1617.31.43"></p>
-<p>可以访问，说明成功绕过第一条件。</p>
+<p><code>stuff[4294967296]=admin&amp;stuff[1]=user&amp;num=123</code><br><img src="https://img-blog.csdnimg.cn/202012031643459.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTQ0MzU3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">可以访问，说明成功绕过第一条件。</p>
 <p>wp提示：可以用跨行检测来绕过数字检测，用换行符<code>%0a</code></p>
-<p>用hackbar访问没回显，bp抓包，发现重新编码 ，导致hackbar没反应</p>
-<img src="/Users/a/Desktop/截图/web/iShot2020-11-1617.39.22.png" alt="iShot2020-11-1617.39.22" style="zoom: 50%;" />
-
-<p>bp尝试，成功访问，绕过了数字检测。<img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1617.41.50.png" alt="iShot2020-11-1617.41.50"></p>
-<p>最后需要绕过黑名单，命令执行访问文件。</p>
-<p>wp提示：访问文件的方法，以及可以通过iNode索引节点来找到flag<img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1617.44.49.png" alt="iShot2020-11-1617.44.49"></p>
-<p>构造payload，bp访问，得到flag的序号<img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1617.47.05.png" alt="iShot2020-11-1617.47.05"></p>
-<p>tac方法查看，得到flag。<img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1617.49.30.png" alt="iShot2020-11-1617.49.30"></p>
+<p>用hackbar访问没回显，bp抓包，发现重新编码 ，导致hackbar没反应<br><img src="https://img-blog.csdnimg.cn/20201203164414313.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTQ0MzU3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">bp尝试，成功访问，绕过了数字检测。[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传<br><img src="https://img-blog.csdnimg.cn/20201203164431634.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTQ0MzU3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">最后需要绕过黑名单，命令执行访问文件。</p>
+<p>wp提示：访问文件的方法，以及可以通过iNode索引节点来找到flag<br><img src="https://img-blog.csdnimg.cn/20201203164453835.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTQ0MzU3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">构造payload，bp访问，得到flag的序号<br><img src="https://img-blog.csdnimg.cn/20201203164513773.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTQ0MzU3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>tac方法查看，得到flag。<br><img src="https://img-blog.csdnimg.cn/20201203164536346.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTQ0MzU3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>题目：千方百计的绕过，很直接。</p>
 <p>知识点：</p>
 <ol>
@@ -270,7 +259,7 @@
                 <footer class="footer">
     <div class="info-container">
         <div class="copyright-info info-item">
-            &copy; 2020 <i class="fa fa-heart-o"></i> <a href="/">John Doe</a>
+            &copy; 2021 <i class="fa fa-heart-o"></i> <a href="/">John Doe</a>
         </div>
         
         <div class="theme-info info-item">

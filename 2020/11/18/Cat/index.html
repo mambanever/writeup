@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="UTF-8">
 <head>
     <meta charset="utf-8">
     
@@ -188,34 +188,24 @@
         </div>
 
         <div class="article-content markdown-body">
-            <h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>首先看到<img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1819.59.29.png" alt="iShot2020-11-1819.59.29"></p>
-<p>想到了ping命令测试，涉及命令执行。</p>
-<p>扫后台，只有index.php 文件，访问后页面没变化，考虑输入域名</p>
-<p><img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1820.04.39.png" alt="iShot2020-11-1820.04.39"></p>
-<p>虽然网页没有任何变化，但是可以看到url变量，又想到文件包含漏洞，尝试了些许，不行，尝试命令执行，应该是存在过滤的。<img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1820.12.57.png" alt="iShot2020-11-1820.12.57"></p>
-<p>wp提示：</p>
+            <h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>首先看到<br><img src="https://img-blog.csdnimg.cn/20201203164744492.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTQ0MzU3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>想到了ping命令测试，涉及命令执行。</p>
+<p>扫后台，只有index.php 文件，访问后页面没变化，考虑输入域名<br><img src="https://img-blog.csdnimg.cn/20201203164758257.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTQ0MzU3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">虽然网页没有任何变化，但是可以看到url变量，又想到文件包含漏洞，尝试了些许，不行，尝试命令执行，应该是存在过滤的。<br><img src="https://img-blog.csdnimg.cn/20201203164932447.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTQ0MzU3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>wp提示：</p>
 <blockquote>
-<p>在URL的传参处?url=这里，我们传递个%79发现传递之后变成了?url=w，看来是可以传递url编码，系统会接受并进行解析，于是我们传递%80会出现报错，url编码使用的是16进制，80也就是128，ASCII码是从0-127，所以这个时候会报错。</p>
+<p>在URL的传参处?url=这里，我们传递个%79发现传递之后变成了?url=w，看来是可以传递url编码，系统会接受并进行解析，于是我们传递%80会出现报错，url编码使用的是16进制，80也就是128，ASCII码是从0-127，所以这个时候会报错。<br><img src="https://img-blog.csdnimg.cn/20201203165118971.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTQ0MzU3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 </blockquote>
-<p><img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1820.24.52.png" alt="iShot2020-11-1820.24.52"></p>
 <p>可以知道使用的Django框架，然后这么多代码，看啥呢？找啥呢？</p>
 <p>迷茫中。。。。</p>
-<p>wp提示，找到了database信息</p>
-<p><img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1820.36.48.png" alt="iShot2020-11-1820.36.48"></p>
-<p>原题目的提示</p>
+<p>wp提示，找到了database信息<br><img src="https://img-blog.csdnimg.cn/20201203165142267.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTQ0MzU3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">原题目的提示</p>
 <p><code>RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL?</code></p>
-<p>php curl不是特别懂，找到了大佬的图<img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1820.46.47.png" alt="iShot2020-11-1820.46.47"></p>
-<p>所以使用@进行文件传递，对文件进行读取之后还会把内容传给url参数<br>如果像上面一样有超出解析范围的编码的时候就会得到错误信息。。</p>
-<p><img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1820.57.50.png" alt="iShot2020-11-1820.57.50"></p>
-<p>得到flag。</p>
-<p><img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1821.03.10.png" alt="iShot2020-11-1821.03.10"></p>
+<p>php curl不是特别懂，找到了大佬的图</p>
+<p><img src="https://img-blog.csdnimg.cn/20201203165203771.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTQ0MzU3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>所以使用@进行文件传递，对文件进行读取之后还会把内容传给url参数<br>如果像上面一样有超出解析范围的编码的时候就会得到错误信息。。<br><img src="https://img-blog.csdnimg.cn/20201203165216715.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTQ0MzU3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>得到flag。<img src="https://img-blog.csdnimg.cn/20201203165236910.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTQ0MzU3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>本题还是有点偏的，通过报错得到数据库信息</p>
 <p>总结：</p>
 <ol>
 <li>URL编码，也称为百分号编码。特殊字符需要用URL编码，临界值是%7F(127)。</li>
-<li>PHP的cURL</li>
+<li>PHP的cURL<br><img src="https://img-blog.csdnimg.cn/20201203165324645.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTQ0MzU3,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></li>
 </ol>
-<p><img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1823.37.44.png" alt="iShot2020-11-1823.37.44"></p>
 
         </div>
 
@@ -264,7 +254,7 @@
                 <footer class="footer">
     <div class="info-container">
         <div class="copyright-info info-item">
-            &copy; 2020 <i class="fa fa-heart-o"></i> <a href="/">John Doe</a>
+            &copy; 2021 <i class="fa fa-heart-o"></i> <a href="/">John Doe</a>
         </div>
         
         <div class="theme-info info-item">
