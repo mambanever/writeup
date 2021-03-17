@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     
     <title>
-        Ma4out7
+        Category: 知识普及 | Ma4out7
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
@@ -45,7 +45,7 @@
                     <a class=""
                        href="/"
                     >
-                        首页
+                        HOME
                     </a>
                 </li>
             
@@ -53,15 +53,15 @@
                     <a class=""
                        href="/archives"
                     >
-                        归档
+                        ARCHIVES
                     </a>
                 </li>
             
                 <li class="menu-item">
-                    <a class=""
+                    <a class="active"
                        href="/categories"
                     >
-                        分类
+                        CATEGORIES
                     </a>
                 </li>
             
@@ -69,7 +69,7 @@
                     <a class=""
                        href="/tags"
                     >
-                        标签
+                        TAGS
                     </a>
                 </li>
             
@@ -77,7 +77,7 @@
                     <a class=""
                        href="/links"
                     >
-                        友链
+                        LINKS
                     </a>
                 </li>
             
@@ -85,7 +85,7 @@
                     <a class=""
                        href="/about"
                     >
-                        关于
+                        ABOUT
                     </a>
                 </li>
             
@@ -101,32 +101,32 @@
             
                 <li class="drawer-menu-item">
                     <a class=""
-                       href="/">首页</a>
+                       href="/">HOME</a>
                 </li>
             
                 <li class="drawer-menu-item">
                     <a class=""
-                       href="/archives">归档</a>
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class="active"
+                       href="/categories">CATEGORIES</a>
                 </li>
             
                 <li class="drawer-menu-item">
                     <a class=""
-                       href="/categories">分类</a>
+                       href="/tags">TAGS</a>
                 </li>
             
                 <li class="drawer-menu-item">
                     <a class=""
-                       href="/tags">标签</a>
+                       href="/links">LINKS</a>
                 </li>
             
                 <li class="drawer-menu-item">
                     <a class=""
-                       href="/links">友链</a>
-                </li>
-            
-                <li class="drawer-menu-item">
-                    <a class=""
-                       href="/about">关于</a>
+                       href="/about">ABOUT</a>
                 </li>
             
         </ul>
@@ -145,72 +145,42 @@
 
                     
                         <div class="fade-in-down-animation">
-    <div class="article-content-container">
-
-        <div class="article-title">
-            <h3><a class="title-hover-animation"></a></h3>
+    <div class="category-container">
+        <div class="category-name">
+            <i class="fa fa-folder"></i> Category：知识普及 [1]
         </div>
-
-        <div class="meta-info">
-            <div class="article-meta-info">
-    <span class="article-date article-meta-item">
-        <i class="fa fa-calendar-o"></i> 2021-03-17 23:56:09
-    </span>
+        <div class="category-post-list">
+            
+<div class="archive-list-container">
     
-    
-    
-    
+        <section class="archive-item">
+            <div class="archive-item-header">
+                <span class="archive-year">2020</span>
+                <span class="archive-year-post-count">[1]</span>
+            </div>
+            <ul class="article-list">
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2020/11/11/CDN%E8%AE%B2%E8%A7%A3/"
+                        >CDN</a>
+                        <span class="article-date">11-11</span>
+                    </li>
+                
+            </ul>
+        </section>
     
 </div>
 
         </div>
-
-        <div class="article-content markdown-body">
-            <h2 id="什么是CDN"><a href="#什么是CDN" class="headerlink" title="什么是CDN"></a>什么是CDN</h2><ul>
-<li><p>CDN工作原理<br>内容分发网络（Content Delivery Network，简称CDN）是建立并覆盖在承载网之上，由分布在不同区域的边缘节点服务器群组成的分布式网络</p>
-</li>
-<li><p>最简单的CDN可以通过一个DNS服务器和多个缓存服务器组成。</p>
-</li>
-<li><p>例子讲解<br>  假设通过CDN加速的域名为<a target="_blank" rel="noopener" href="http://www.a.com,接入cdn网络,开始使/">www.a.com，接入CDN网络，开始使</a> 用加速服务后，当终端用户（北京）发起HTTP请求时，处理流程如下：</p>
-<ol>
-<li><p>当终端用户（北京）向<a target="_blank" rel="noopener" href="http://www.a.com下的指定资源发起请求时,首先向ldns(本地dns)发起域名解析请求.ldns检查缓存中是否有www.a.com的ip地址记录.如果有,则直接返回给终端用户;如果没有,则向授权dns查询./">www.a.com下的指定资源发起请求时，首先向LDNS（本地DNS）发起域名解析请求。LDNS检查缓存中是否有www.a.com的IP地址记录。如果有，则直接返回给终端用户；如果没有，则向授权DNS查询。</a></p>
-</li>
-<li><p>当授权DNS解析<a target="_blank" rel="noopener" href="http://www.a.com时,返回域名cname/">www.a.com时，返回域名CNAME</a> <a target="_blank" rel="noopener" href="http://www.a.tbcdn.com对应ip地址.域名解析请求发送至阿里云dns调度系统,并为请求分配最佳节点ip地址./">www.a.tbcdn.com对应IP地址。域名解析请求发送至阿里云DNS调度系统，并为请求分配最佳节点IP地址。</a></p>
-</li>
-<li><p>LDNS获取DNS返回的解析IP地址。用户获取解析IP地址。用户向获取的IP地址发起对该资源的访问请求。</p>
-</li>
-</ol>
-</li>
-</ul>
-<pre><code>4. 如果该IP地址对应的节点已缓存该资源，则会将数据直接返回给用户，例如，图中步骤7和8，请求结束。如果该IP地址对应的节点未缓存该资源，则节点向源站发起对该资源的请求。获取资源后，结合用户自定义配置的缓存策略，将资源缓存至节点，例如，图中的北京节点，并返回给用户，请求结束。</code></pre>
-<ul>
-<li>从这个例子可以了解到：<br>（1）CDN的加速资源是跟域名绑定的。<br>（2）通过域名访问资源，首先是通过DNS分查找离用户最近的CDN节点（边缘服务器）的IP<br>（3）通过IP访问实际资源时，如果CDN上并没有缓存资源，则会到源站请求资源，并缓存到CDN节点上，这样，用户下一次访问时，该CDN节点就会有对应资源的缓存了。</li>
-</ul>
-
-        </div>
-
-        <div class="article-nav">
-            
-            
-                <div class="article-next">
-                    <a class="next btn"
-                       rel="next"
-                       href="/2021/02/01/%E5%BF%98%E8%AE%B0%E9%A2%98%E7%9B%AE%E7%9A%84%E4%B8%80%E9%A2%98/"
-                    >
-                        <span class="post-nav-title-item">kk</span><span class="post-nav-item">下一篇</span> <i class="fa fa-chevron-right"></i>
-                    </a>
-                </div>
-            
-        </div>
-
-        <div class="comment-container">
-            <div class="comments-container">
+    </div>
+    <div class="category-paginator">
+        <div class="paginator">
     
-        
 
     
 </div>
-        </div>
+
     </div>
 </div>
 
@@ -229,7 +199,7 @@
         </div>
         
         <div class="theme-info info-item">
-            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动 | 主题 <a
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a> | Theme <a
                     href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v2.0.2</a>
         </div>
     </div>
@@ -266,12 +236,6 @@
     <!-- page aside -->
     <aside class="page-aside">
         
-            <div class="post-toc-wrap">
-    <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFCDN"><span class="nav-number">1.</span> <span class="nav-text">什么是CDN</span></a></li></ol>
-    </div>
-</div>
-        
     </aside>
 
 </div>
@@ -288,7 +252,7 @@
                 <input autocomplete="off"
                        autocorrect="off"
                        autocapitalize="off"
-                       placeholder="搜索..."
+                       placeholder="Search..."
                        spellcheck="false"
                        type="search"
                        class="search-input"
@@ -315,15 +279,6 @@
 
 
 
-
-
-    
-        
-<script src="/js/code-copy.js"></script>
-
-    
-
-    
 
 
 
