@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="UTF-8">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        攻防世界-FlatScience | Ma4out7
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/favicon.png">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let CONFIG = {"hostname":"example.com","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"themeInfo":{"name":"ILS","version":"2.0.2","author":"XPoet","repository":"https://github.com/XPoet/hexo-theme-ils"}};
+  </script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+<div class="page-container">
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            Ma4out7
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/categories"
+                    >
+                        分类
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/tags"
+                    >
+                        标签
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/links"
+                    >
+                        友链
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/about"
+                    >
+                        关于
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/links">友链</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">攻防世界-FlatScience</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-11-15 23:35:20
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa fa-folder"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/">攻防世界</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%8A%9F%E9%98%B2%E4%B8%96%E7%95%8C/">功防世界</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+    
+    
+</div>
+
+        </div>
+
+        <div class="article-content markdown-body">
+            <h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>首先看到</p>
+<img src="/Users/a/Desktop/截图/web/iShot2020-11-1523.42.13.png" alt="iShot2020-11-1523.42.13" style="zoom:50%;">
+
+<p>通过点击 this，也没有发现什么，所以就使用 dirsearch 扫了一下，看看后台有没有东西，果然看到 login.php 和 admin.php</p>
+<img src="/Users/a/Desktop/截图/web/iShot2020-11-1523.46.53.png" alt="iShot2020-11-1523.46.53" style="zoom:50%;">
+
+<img src="/Users/a/Desktop/截图/web/iShot2020-11-1523.47.13.png" alt="iShot2020-11-1523.47.13" style="zoom:50%;">
+
+<p>login 登陆页面，想到爆破和 sql 注入，输入<code>admin</code>和<code>admin&#39;</code>发现了问题。</p>
+<p><img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1523.51.27.png" alt="iShot2020-11-1523.51.27"></p>
+<p>可以看到有了回显，SQLite3 数据库，和 MySQL 的查询语句是不一样的，<img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1523.53.38.png" alt="iShot2020-11-1523.53.38"></p>
+<p>源码中看到了提示，需要访问 debug 变量，得到了完整的源码<img src="/Users/a/Desktop/截图/web/iShot2020-11-1523.55.03.png" alt="iShot2020-11-1523.55.03" style="zoom:33%;"></p>
+<p>应该是 sqlite3 数据库的注入，post 方式提交 user 和 pw，user 可能是注入点</p>
+<p>通过查资料</p>
+<p><code>sqlite数据库有一张sqlite_master表， 里面有type/name/tbl_name/rootpage/sql记录着用户创建表时的相关信息</code></p>
+<p>bp 下使用 sql 语句尝试<img src="/Users/a/Desktop/截图/web/iShot2020-11-1616.34.38.png" alt="iShot2020-11-1616.34.38" style="zoom: 50%;"></p>
+<p>可以看到表名 Users 和其中的字段名，接下来就可以继续访问</p>
+<p><img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1616.40.12.png" alt="iShot2020-11-1616.40.12"></p>
+<p><img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1616.40.28.png" alt="iShot2020-11-1616.40.28"></p>
+<p><img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1616.41.21.png" alt="iShot2020-11-1616.41.21"></p>
+<p><img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1616.42.47.png" alt="iShot2020-11-1616.42.47"></p>
+<p>整合一下，可以得到<img src="/Users/a/Desktop/%E6%88%AA%E5%9B%BE/web/iShot2020-11-1616.43.30.png" alt="iShot2020-11-1616.43.30"></p>
+<p>根据 admin.php，可以知道我们需要求出对应的 password，但是现在怎么得到呢？</p>
+<p>看到 hint 字段中的内容，密码可能在 PDF 中</p>
+<p>引用大佬的脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> cStringIO <span class="keyword">import</span> StringIO</span><br><span class="line"><span class="keyword">from</span> pdfminer.pdfinterp <span class="keyword">import</span> PDFResourceManager, PDFPageInterpreter</span><br><span class="line"><span class="keyword">from</span> pdfminer.converter <span class="keyword">import</span> TextConverter</span><br><span class="line"><span class="keyword">from</span> pdfminer.layout <span class="keyword">import</span> LAParams</span><br><span class="line"><span class="keyword">from</span> pdfminer.pdfpage <span class="keyword">import</span> PDFPage</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_pdf</span>():</span></span><br><span class="line">	<span class="keyword">return</span> [i <span class="keyword">for</span> i <span class="keyword">in</span> os.listdir(<span class="string">&quot;./&quot;</span>) <span class="keyword">if</span> i.endswith(<span class="string">&quot;pdf&quot;</span>)]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">convert_pdf_2_text</span>(<span class="params">path</span>):</span></span><br><span class="line">    rsrcmgr = PDFResourceManager()</span><br><span class="line">    retstr = StringIO()</span><br><span class="line">    device = TextConverter(rsrcmgr, retstr, codec=<span class="string">&#x27;utf-8&#x27;</span>, laparams=LAParams())</span><br><span class="line">    interpreter = PDFPageInterpreter(rsrcmgr, device)</span><br><span class="line">    <span class="keyword">with</span> open(path, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">        <span class="keyword">for</span> page <span class="keyword">in</span> PDFPage.get_pages(fp, set()):</span><br><span class="line">            interpreter.process_page(page)</span><br><span class="line">        text = retstr.getvalue()</span><br><span class="line">    device.close()</span><br><span class="line">    retstr.close()</span><br><span class="line">    <span class="keyword">return</span> text</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_password</span>():</span></span><br><span class="line">	pdf_path = get_pdf()</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> pdf_path:</span><br><span class="line">		<span class="keyword">print</span> <span class="string">&quot;Searching word in &quot;</span> + i</span><br><span class="line">		pdf_text = convert_pdf_2_text(i).split(<span class="string">&quot; &quot;</span>)</span><br><span class="line">		<span class="keyword">for</span> word <span class="keyword">in</span> pdf_text:</span><br><span class="line">			sha1_password = hashlib.sha1(word+<span class="string">&quot;Salz!&quot;</span>).hexdigest()</span><br><span class="line">			<span class="keyword">if</span> sha1_password == <span class="string">&#x27;3fab54a50e770d830c0416df817567662a9dc85c&#x27;</span>:</span><br><span class="line">				<span class="keyword">print</span> <span class="string">&quot;Find the password :&quot;</span> + word</span><br><span class="line">				exit()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">	find_password()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>虽然看不懂，也不能得出来，好像就可以得到 admin 的密码为：ThinJerboa</p>
+<img src="/Users/a/Desktop/截图/web/iShot2020-11-1616.55.23.png" alt="iShot2020-11-1616.55.23" style="zoom: 50%;">
+
+<p>得到 flag。</p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>知识点：</p>
+<ol>
+<li><p>login 登陆界面大多情况下是需要 sql 注入</p>
+</li>
+<li><p>注意查看源码，可能会有提示语句，提供做题思路</p>
+</li>
+<li><p>sqlite 自带的结构表 sqlite_master，sql 是 sqlite_master 中的一个字段，注入时经常用到的，注入后响应头的 set-cookie：</p>
+</li>
+<li><p>密码碰撞是真的有点不会</p>
+</li>
+</ol>
+
+        </div>
+
+        <div class="article-nav">
+            
+                <div class="article-prev">
+                    <a class="prev btn"
+                       rel="prev"
+                       href="/2020/11/16/favorite-number/"
+                    >
+                        <i class="fa fa-chevron-left"></i> <span class="post-nav-title-item">favorite_number</span><span class="post-nav-item">上一篇</span>
+                    </a>
+                </div>
+            
+            
+                <div class="article-next">
+                    <a class="next btn"
+                       rel="next"
+                       href="/2020/11/14/%E9%93%BE%E9%98%9F/"
+                    >
+                        <span class="post-nav-title-item">链队</span><span class="post-nav-item">下一篇</span> <i class="fa fa-chevron-right"></i>
+                    </a>
+                </div>
+            
+        </div>
+
+        <div class="comment-container">
+            <div class="comments-container">
+    
+        
+
+    
+</div>
+        </div>
+    </div>
+</div>
+
+
+                    
+
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2021 <i class="fa fa-heart-o"></i> <a href="/">John Doe</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动 | 主题 <a
+                    href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v2.0.2</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+            
+<script src="/js/local-search.js"></script>
+
+        
+        <li class="mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+        
+        <li class="page-aside-toggle">
+            <i class="fa fa-bars"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01"><span class="nav-number">1.</span> <span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02"><span class="nav-number">2.</span> <span class="nav-text">0x02</span></a></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/main.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/toggle-mode.js"></script>
+
+
+
+
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+
+
+
+</body>
+</html>
