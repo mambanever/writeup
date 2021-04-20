@@ -73,14 +73,9 @@
   background: var(--background-color);
   padding: 30px;
   border-radius: 4px;
-  box-shadow: 0 0 2px var(--border-color);
-  transition: all 0.3s ease;
 ils-tablet()
 ils-mobile()
 ils-tablet()
-}
-.about-container:hover {
-  transition: all 0.3s ease;
 }
 .about-container .about-content {
   margin-bottom: 30px;

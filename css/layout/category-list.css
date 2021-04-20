@@ -73,14 +73,9 @@
   background: var(--background-color);
   padding: 30px;
   border-radius: 4px;
-  box-shadow: 0 0 2px var(--border-color);
-  transition: all 0.3s ease;
 ils-tablet()
 ils-mobile()
 ils-tablet()
-}
-.category-list-container:hover {
-  transition: all 0.3s ease;
 }
 .category-list-container .category-list-content .all-category-list li.all-category-list-item {
   margin-bottom: 15px;

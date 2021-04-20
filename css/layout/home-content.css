@@ -121,38 +121,7 @@
 }
 .home-content-container .home-article-list .home-article-item {
   background: var(--background-color);
-  padding: 30px;
-  border-radius: 4px;
-  box-shadow: 0 0 2px var(--border-color);
-  transition: all 0.3s ease;
-  margin-bottom: 30px;
-}
-.home-content-container .home-article-list .home-article-item:hover {
-  transition: all 0.3s ease;
-}
-@media (max-width: 760px) {
-  .home-content-container .home-article-list .home-article-item {
-    padding: 28px;
-    border-radius: 3px;
-  }
-}
-@media (max-width: 480px) {
-  .home-content-container .home-article-list .home-article-item {
-    padding: 26px;
-    border-radius: 2px;
-  }
-}
-@media (max-width: 760px) {
-  .home-content-container .home-article-list .home-article-item {
-    padding: 20px;
-    border-radius: 4px;
-    box-shadow: 0 0 2px var(--border-color);
-    transition: all 0.3s ease;
-    margin-bottom: 20px;
-  }
-  .home-content-container .home-article-list .home-article-item:hover {
-    transition: all 0.3s ease;
-  }
+  margin-bottom: 70px;
 }
 .home-content-container .home-article-list .home-article-item .home-article-title {
   position: relative;
@@ -172,9 +141,12 @@
     font-size: 1.2em;
   }
 }
+.home-content-container .home-article-list .home-article-item .home-article-title a {
+  color: var(--second-text-color);
+}
 .home-content-container .home-article-list .home-article-item .home-article-content {
   text-align: justify;
-  margin: 20px 0;
+  margin: 30px 0;
   line-height: 2em;
 }
 .home-content-container .home-article-list .home-article-item .home-article-meta-info {
@@ -182,7 +154,7 @@
   justify-content: space-between;
   align-items: center;
   color: var(--third-text-color);
-  font-size: 1em;
+  font-size: 0.9em;
 }
 .home-content-container .home-article-list .home-article-item .home-article-meta-info .article-date {
   letter-spacing: 0.5px;
@@ -209,16 +181,4 @@
 }
 .home-content-container .home-article-list .home-article-item .home-article-meta-info a:hover {
   color: var(--primary-color);
-}
-@media (max-width: 760px) and (max-width: 760px) {
-  .home-content-container .home-article-list .home-article-item {
-    padding: 18px;
-    border-radius: 3px;
-  }
-}
-@media (max-width: 760px) and (max-width: 480px) {
-  .home-content-container .home-article-list .home-article-item {
-    padding: 16px;
-    border-radius: 2px;
-  }
 }

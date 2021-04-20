@@ -134,7 +134,7 @@ body {
   margin: 0;
   padding: 0;
   color: var(--normal-text-color);
-  background: var(--magic-background-color);
+  background: var(--background-color);
   font-family: Optima-Regular, Optima, PingFangSC-light, PingFangTC-light, 'PingFang SC', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   font-weight: 400;
   font-size: 15.2px;
@@ -190,11 +190,7 @@ button {
   border-radius: 5px;
   padding: 0.5em 1em;
   background: var(--background-color);
-  box-shadow: 0 0 2px var(--border-color);
-  transition: all 0.3s ease;
-}
-.btn:hover {
-  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
 }
 .btn:hover {
   transition: all 0.3s ease;
