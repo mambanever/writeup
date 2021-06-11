@@ -1,216 +1,414 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
-  <!-- 元数据 -->
-  <meta charset="utf-8">
-  <link rel="icon" href="">
-  <title>Ma4out7'Blog</title>
-  <meta name="author" content="Ma4out7" />
-  <meta http-equiv="Cache-Control" content="no-transform" />
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="robots" content="index,follow" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <meta name="format-detection" content="telphone=no, email=no" />
-  
-    <meta name="keywords" content="" />
-  
-  <meta property="og:type" content="website">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="Ma4out7">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Ma4out7">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="">
+    <meta property="og:type" content="website">
 <meta property="og:title" content="Ma4out7&#39;Blog">
 <meta property="og:url" content="http://example.com/index.html">
 <meta property="og:site_name" content="Ma4out7&#39;Blog">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/null">
 <meta property="article:author" content="Ma4out7">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/null">
-<meta name="twitter:site" content="@null">
-  
-  <!-- 站点验证相关 -->
-  
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
+    <title>Ma4out7&#39;s Blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
     
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
     
-  
-  <!-- 样式表文件 -->
-  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
-  
-  
-  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
-  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
-  
-  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
-  
-  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
-  
-  
-    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
-  
-  <!-- 不得不预先加载的一些JS文件 -->
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-  
-    <script src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
-  
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
 <meta name="generator" content="Hexo 5.2.0"></head>
 
-
-    <body class="custom-background">
-        <div id="kratos-wrapper">
-    <div id="kratos-page">
-        <div id="kratos-header">
-            <header id="kratos-desktop-topnav" class="kratos-topnav">
-                <div class="container">
-                    <div class="nav-header">
-                        <nav id="kratos-menu-wrap">
-                            <ul id="kratos-primary-menu" class="sf-menu">
-                                
-                                    
-                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
-                                    
-                                
-                                    
-                                        <li><a href="/archives/"><i class="fa fa-file"></i>档案馆</a></li>
-                                    
-                                
-                                    
-                                        <li><a href="/friends/"><i class="fa fa-paw"></i>好伙伴</a></li>
-                                    
-                                
-                                    
-                                        <li>
-                                            <a><i class="fa fa-link"></i>链接</a>
-                                            <ul class="sub-menu">
-                                                
-                                                    
-                                                
-                                                    
-                                                        <li><a target="_blank" rel="noopener" href="https://candinya.com">作者博客</a></li>
-                                                    
-                                                
-                                                    
-                                                        <li><a target="_blank" rel="noopener" href="https://github.com/Candinya/Kratos-Rebirth">项目链接</a></li>
-                                                    
-                                                
-                                            </ul>
-                                        </li>
-                                    
-                                
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </header>
-            <header id="kratos-mobile-topnav" class="kratos-topnav">
-                <div class="container">
-                    <div class="color-logo"><a href="/">Ma4out7&#39;Blog</a></div>
-                    <div class="nav-toggle">
-                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
-                            <i></i>
-                        </a>
-                    </div>
-                </div>
-            </header>
-        </div>
-        <div class="kratos-start kratos-hero-2">
-            <!-- <div class="kratos-overlay"></div> -->
-            <div class="kratos-cover kratos-cover-2 text-center">
-                <div class="desc desc2 animate-box">
-                    <a href="/">
-                        <h2>Ma4out7&#39;Blog</h2> <br />
-                        <span></span>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div id="kratos-blog-post">
-            <div class="container">
-                <div id="main" class="row">
-                    
-
-        <section class="col-md-8">
     
+        <body class="home-body">
+    
+    
+<header class="header index-header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <a class="home-link" href=/>Ma4out7's Blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 文章页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Ma4out7's Blog
+            <!-- 文章页  -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+                it's better to burn out than to fade away
+            
+            <!-- 文章页  -->
+            
+        </p>
+        <!-- 文章页meta -->
         
-        
-            <article class="kratos-hentry clearfix">
-                <div class="kratos-entry-border-new clearfix">
-                    
-                    <div class="kratos-entry-thumb-new">
-                        <a href="/2021/04/06/CTF%E6%AF%94%E8%B5%9B/%E7%BA%A2%E6%98%8E%E8%B0%B7%E6%9D%AF/">
-                            
-                                <img class="kratos-entry-thumb-new-img">
-                            
-                        </a>
-                    </div>
-                    <div class="kratos-post-inner-new">
-                        <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/CTF%E6%AF%94%E8%B5%9B/">CTF比赛</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/04/06/CTF%E6%AF%94%E8%B5%9B/%E7%BA%A2%E6%98%8E%E8%B0%B7%E6%9D%AF/">红明谷-web 复现</a>
-                        </header>
-                        <div class="kratos-entry-content-new">
-                            <p>
-                                
-                                    
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main index-page">
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/04/06/CTF%E6%AF%94%E8%B5%9B/%E7%BA%A2%E6%98%8E%E8%B0%B7%E6%9D%AF/" >
+            
+                <span>红明谷-web 复现</span>
+        </a>
+        <div class="abstract-content">
+            
 参考红明谷杯官方 wp &gt; https://blog.csdn.net/mochu7777777/article/details/115410705?
 
 红明谷杯-web 复现1.happysql
-考点：使用了双引号闭合，没有...
-                                
-                            </p>
-                        </div>
-                    </div>
-                    <footer class="kratos-post-meta-new">
-                        <span class="pull-left">
-                            <a>
-                                <i class="fa fa-calendar"></i>
-                                2021-04-06
-                            </a>
-                            <a>
-                                
-                                    <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/CTF%E6%AF%94%E8%B5%9B/" rel="tag">CTF比赛</a>
-                                
-                            </a>
-                            
-                                <!-- 当前仅支持valine/waline自带的统计功能 -->
-                                
-                            
-                            
-                                <!-- 当前仅支持waline自带的统计功能 -->
-                                
-                            
-                        </span>
-                        <span class="pull-right">
-                            <a class="read-more" href="/2021/04/06/CTF%E6%AF%94%E8%B5%9B/%E7%BA%A2%E6%98%8E%E8%B0%B7%E6%9D%AF/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                        </span>
-                    </footer>
-                </div>
-            </article>
-        
+考点：使用了双引号闭合，没有回显的布尔盲注
+很明显是布尔盲注了接下来考虑两个点： 1.截断函数用哪个？这里 mid()和 substring()已经被过滤了 2.如何绕过 information
+
+截断函数可以用 left()和 right()，不过需要注意的是这两个函数并不能像 mid 和 substring 一样逐个截断，写脚本的时候注意下测试字符串的拼接。而绕过 informat...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/06</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
     
-        
-        
-            <article class="kratos-hentry clearfix">
-                <div class="kratos-entry-border-new clearfix">
-                    
-                    <div class="kratos-entry-thumb-new">
-                        <a href="/2021/04/06/CTF%E6%AF%94%E8%B5%9B/ciscn/">
-                            
-                                <img class="kratos-entry-thumb-new-img">
-                            
-                        </a>
-                    </div>
-                    <div class="kratos-post-inner-new">
-                        <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/CTF%E6%AF%94%E8%B5%9B/">CTF比赛</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/04/06/CTF%E6%AF%94%E8%B5%9B/ciscn/">CSICN-web</a>
-                        </header>
-                        <div class="kratos-entry-content-new">
-                            <p>
-                                
-                                    web sql
+        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF比赛">CTF比赛</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/04/06/CTF%E6%AF%94%E8%B5%9B/ciscn/" >
+            
+                <span>CSICN-web</span>
+        </a>
+        <div class="abstract-content">
+            web sql
 知识点
 报错注入
 join 无列名注入
@@ -219,720 +417,874 @@ join 无列名注入
 &#39;)&#39;闭合，报错可用，得到 security 数据库，
 报错要得到表名，information 被过滤，以下可用来爆表
 
-1234sys.schema_tab...
-                                
-                            </p>
-                        </div>
-                    </div>
-                    <footer class="kratos-post-meta-new">
-                        <span class="pull-left">
-                            <a>
-                                <i class="fa fa-calendar"></i>
-                                2021-04-06
-                            </a>
-                            <a>
-                                
-                                    <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/CTF%E6%AF%94%E8%B5%9B/" rel="tag">CTF比赛</a>
-                                
-                            </a>
-                            
-                                <!-- 当前仅支持valine/waline自带的统计功能 -->
-                                
-                            
-                            
-                                <!-- 当前仅支持waline自带的统计功能 -->
-                                
-                            
-                        </span>
-                        <span class="pull-right">
-                            <a class="read-more" href="/2021/04/06/CTF%E6%AF%94%E8%B5%9B/ciscn/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                        </span>
-                    </footer>
-                </div>
-            </article>
-        
+1234sys.schema_table_statistics_with_buffersys.x$schema_table_statistics_with_buffersys.schema_auto_increment_columnssys.x$ps_schema_table_statistics_io
+
+
+也可
+
+123mysql.innodb_table_stats (此表中库名字段是 d...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/06</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
     
-        
-        
-            <article class="kratos-hentry clearfix">
-                <div class="kratos-entry-border-new clearfix">
-                    
-                    <div class="kratos-entry-thumb-new">
-                        <a href="/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/DASctf/">
-                            
-                                <img class="kratos-entry-thumb-new-img">
-                            
-                        </a>
-                    </div>
-                    <div class="kratos-post-inner-new">
-                        <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/CTF%E6%AF%94%E8%B5%9B/">CTF比赛</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/DASctf/">DASctf-web 复现</a>
-                        </header>
-                        <div class="kratos-entry-content-new">
-                            <p>
-                                
-                                    DASctf-web 复现
+        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF比赛">CTF比赛</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/DASctf/" >
+            
+                <span>DASctf-web 复现</span>
+        </a>
+        <div class="abstract-content">
+            DASctf-web 复现
 太菜了呀，又是凑数的一天参考https://shimo.im/docs/lf9OcEmdH70MC17f/read
 
 1.BestDB8考点：联合查询+load_file 文件读取
 
-上来就给了 SQL 语...
-                                
-                            </p>
-                        </div>
-                    </div>
-                    <footer class="kratos-post-meta-new">
-                        <span class="pull-left">
-                            <a>
-                                <i class="fa fa-calendar"></i>
-                                2021-04-06
-                            </a>
-                            <a>
-                                
-                                    <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/CTF%E6%AF%94%E8%B5%9B/" rel="tag">CTF比赛</a>
-                                
-                            </a>
-                            
-                                <!-- 当前仅支持valine/waline自带的统计功能 -->
-                                
-                            
-                            
-                                <!-- 当前仅支持waline自带的统计功能 -->
-                                
-                            
-                        </span>
-                        <span class="pull-right">
-                            <a class="read-more" href="/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/DASctf/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                        </span>
-                    </footer>
-                </div>
-            </article>
-        
+上来就给了 SQL 语句 PHPF12 源码注释中显示$sql = &quot;SELECT * FROM users WHERE id = &#39;$query&#39; OR username = \\&quot;$query\\&quot;&quot;;
+query=1和query=2均有回显，但是对于单引号进行了过滤，但是它给了 username，通过 username...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/06</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
     
-        
-        
-            <article class="kratos-hentry clearfix">
-                <div class="kratos-entry-border-new clearfix">
-                    
-                    <div class="kratos-entry-thumb-new">
-                        <a href="/2021/04/02/CTF%E6%AF%94%E8%B5%9B/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/">
-                            
-                                <img class="kratos-entry-thumb-new-img">
-                            
-                        </a>
-                    </div>
-                    <div class="kratos-post-inner-new">
-                        <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/CTF%E6%AF%94%E8%B5%9B/">CTF比赛</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/04/02/CTF%E6%AF%94%E8%B5%9B/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/">2020西湖论剑-web复现</a>
-                        </header>
-                        <div class="kratos-entry-content-new">
-                            <p>
-                                
-                                    2020 西湖论剑前言记得当时第一次参加比赛，虐的好惨，题目很好，网速很快，就是做不出，全程凑数，新手村的我刚出门就直接面对百级 boss，没有任何游戏体验。重新开始，今年继续
+        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF比赛">CTF比赛</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/04/02/CTF%E6%AF%94%E8%B5%9B/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/" >
+            
+                <span>2020西湖论剑-web复现</span>
+        </a>
+        <div class="abstract-content">
+            2020 西湖论剑前言记得当时第一次参加比赛，虐的好惨，题目很好，网速很快，就是做不出，全程凑数，新手村的我刚出门就直接面对百级 boss，没有任何游戏体验。重新开始，今年继续
 1.NewUload
 
-文件上传，过滤了文件后缀名和文件...
-                                
-                            </p>
-                        </div>
-                    </div>
-                    <footer class="kratos-post-meta-new">
-                        <span class="pull-left">
-                            <a>
-                                <i class="fa fa-calendar"></i>
-                                2021-04-02
-                            </a>
-                            <a>
-                                
-                                    <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/CTF%E6%AF%94%E8%B5%9B/" rel="tag">CTF比赛</a>
-                                
-                            </a>
-                            
-                                <!-- 当前仅支持valine/waline自带的统计功能 -->
-                                
-                            
-                            
-                                <!-- 当前仅支持waline自带的统计功能 -->
-                                
-                            
-                        </span>
-                        <span class="pull-right">
-                            <a class="read-more" href="/2021/04/02/CTF%E6%AF%94%E8%B5%9B/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                        </span>
-                    </footer>
-                </div>
-            </article>
-        
+文件上传，过滤了文件后缀名和文件内容都过滤了 php 关键字，甚至短标签的尖括号都不行，但是，没想到居然可以通过换行来绕过后缀名检测和用图片马来绕过文件内容的检测。
+
+就能从 phpinfo 中发现 disable_functions 中禁用了很多函数。网上有两种方法
+
+第一种就是利用.htaccess+lua。lua 是也是一种轻量化脚本语言，在 PHP 环境中可以被解析
+
+先上传一个....
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/02</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
     
-        
-        
-            <article class="kratos-hentry clearfix">
-                <div class="kratos-entry-border-new clearfix">
-                    
-                    <div class="kratos-entry-thumb-new">
-                        <a href="/2021/03/28/upload-labs/upload-labs/">
-                            
-                                <img class="kratos-entry-thumb-new-img">
-                            
-                        </a>
-                    </div>
-                    <div class="kratos-post-inner-new">
-                        <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/%E9%9D%B6%E6%9C%BA/">靶机</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/03/28/upload-labs/upload-labs/">upload-labs靶机练习</a>
-                        </header>
-                        <div class="kratos-entry-content-new">
-                            <p>
-                                
-                                    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF比赛">CTF比赛</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/03/28/upload-labs/upload-labs/" >
+            
+                <span>upload-labs靶机练习</span>
+        </a>
+        <div class="abstract-content">
+            
 一、后缀黑名单绕过1.前端 JS 绕过
 可以直接更改 js 源码，允许上传 PHP 文件
 也可以直接删除
 
-2.只验证 Content-type123if (file_exists(UPLOAD_PATH)) &#123;     ...
-                                
-                            </p>
-                        </div>
-                    </div>
-                    <footer class="kratos-post-meta-new">
-                        <span class="pull-left">
-                            <a>
-                                <i class="fa fa-calendar"></i>
-                                2021-03-28
-                            </a>
-                            <a>
-                                
-                                    <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/upload/" rel="tag">upload</a>
-                                
-                            </a>
-                            
-                                <!-- 当前仅支持valine/waline自带的统计功能 -->
-                                
-                            
-                            
-                                <!-- 当前仅支持waline自带的统计功能 -->
-                                
-                            
-                        </span>
-                        <span class="pull-right">
-                            <a class="read-more" href="/2021/03/28/upload-labs/upload-labs/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                        </span>
-                    </footer>
-                </div>
-            </article>
-        
+2.只验证 Content-type123if (file_exists(UPLOAD_PATH)) &#123;        if (($_FILES[&#x27;upload_file&#x27;][&#x27;type&#x27;] == &#x27;image/jpeg&#x27;) || ($_FILES[&#x27;upload_file&#x27;][&#x27;type&#x27;] == &#x27;image/png&#x27;) || ($_FILES[&...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/03/28</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
     
-        
-        
-            <article class="kratos-hentry clearfix">
-                <div class="kratos-entry-border-new clearfix">
-                    
-                    <div class="kratos-entry-thumb-new">
-                        <a href="/2021/03/26/xss-labs/xss-labs/">
-                            
-                                <img class="kratos-entry-thumb-new-img">
-                            
-                        </a>
-                    </div>
-                    <div class="kratos-post-inner-new">
-                        <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/%E9%9D%B6%E6%9C%BA/">靶机</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/03/26/xss-labs/xss-labs/">xss-labs靶机练习</a>
-                        </header>
-                        <div class="kratos-entry-content-new">
-                            <p>
-                                
-                                    先上图
+        <a class="post-tag" href="javascript:void(0);" data-tags = "upload">upload</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/03/26/xss-labs/xss-labs/" >
+            
+                <span>xss-labs靶机练习</span>
+        </a>
+        <div class="abstract-content">
+            先上图
 leve-1
 无任何过滤，get 型，直接&lt;script&gt;alert(1)&lt;/script&gt;
 
 2.
-方法一:闭合 input 标签里面的&quot;&gt;&lt;script&gt;alert(1)...
-                                
-                            </p>
-                        </div>
-                    </div>
-                    <footer class="kratos-post-meta-new">
-                        <span class="pull-left">
-                            <a>
-                                <i class="fa fa-calendar"></i>
-                                2021-03-26
-                            </a>
-                            <a>
-                                
-                                    <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/xss/" rel="tag">xss</a>
-                                
-                            </a>
-                            
-                                <!-- 当前仅支持valine/waline自带的统计功能 -->
-                                
-                            
-                            
-                                <!-- 当前仅支持waline自带的统计功能 -->
-                                
-                            
-                        </span>
-                        <span class="pull-right">
-                            <a class="read-more" href="/2021/03/26/xss-labs/xss-labs/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                        </span>
-                    </footer>
-                </div>
-            </article>
-        
+方法一:闭合 input 标签里面的&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;
+方法二:闭合 value 属性，在 input 标签中添加新的属性&quot; onclick=&quot;alert(11)
+
+3.HTML 实体化过滤
+htmlspecialchars 函数可以过滤&lt;``&gt;``&quot;，但是不会过滤单引号，而且 value 的闭合也是采用单引号，所以会有 xss 漏洞
+部分...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/03/26</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
     
-        
-        
-            <article class="kratos-hentry clearfix">
-                <div class="kratos-entry-border-new clearfix">
-                    
-                    <div class="kratos-entry-thumb-new">
-                        <a href="/2021/03/24/sql-labs/PAGE-1(Basic%20Challenges)/">
-                            
-                                <img class="kratos-entry-thumb-new-img">
-                            
-                        </a>
-                    </div>
-                    <div class="kratos-post-inner-new">
-                        <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/%E9%9D%B6%E6%9C%BA/">靶机</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/03/24/sql-labs/PAGE-1(Basic%20Challenges)/">sql_labs</a>
-                        </header>
-                        <div class="kratos-entry-content-new">
-                            <p>
-                                
-                                    先上图
+        <a class="post-tag" href="javascript:void(0);" data-tags = "xss">xss</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/03/24/sql-labs/PAGE-1(Basic%20Challenges)/" >
+            
+                <span>sql_labs</span>
+        </a>
+        <div class="abstract-content">
+            先上图
 PAGE-1(Basic Challenges)一、GET 篇1.2 最基本方法
-判断注入类型http://127.0.0.1/sqli-labs/Less-1/?id=1正确返回http://127.0.0.1/sqli-l...
-                                
-                            </p>
-                        </div>
-                    </div>
-                    <footer class="kratos-post-meta-new">
-                        <span class="pull-left">
-                            <a>
-                                <i class="fa fa-calendar"></i>
-                                2021-03-24
-                            </a>
-                            <a>
-                                
-                                    <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/sql/" rel="tag">sql</a>
-                                
-                            </a>
-                            
-                                <!-- 当前仅支持valine/waline自带的统计功能 -->
-                                
-                            
-                            
-                                <!-- 当前仅支持waline自带的统计功能 -->
-                                
-                            
-                        </span>
-                        <span class="pull-right">
-                            <a class="read-more" href="/2021/03/24/sql-labs/PAGE-1(Basic%20Challenges)/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                        </span>
-                    </footer>
-                </div>
-            </article>
-        
+判断注入类型http://127.0.0.1/sqli-labs/Less-1/?id=1正确返回http://127.0.0.1/sqli-labs/Less-1/?id=1&#39;出现报错显示http://127.0.0.1/sqli-labs/Less-1/?id=1&#39; and 1=1--+判断字符型和数字型注入的方法这道题感觉好像字符型可以，一般情况下，多是字符型注入
+猜测字段数
+
+1234http:&#x2F;&#x2F;127.0.0.1&#x2F;sqli-labs&#x2F...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/03/24</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
     
-        
-        
-            <article class="kratos-hentry clearfix">
-                <div class="kratos-entry-border-new clearfix">
-                    
-                    <div class="kratos-entry-thumb-new">
-                        <a href="/2021/03/06/CTF%E6%AF%94%E8%B5%9B/%E7%BA%A2%E5%B8%BD%E6%9D%AF/">
-                            
-                                <img class="kratos-entry-thumb-new-img">
-                            
-                        </a>
-                    </div>
-                    <div class="kratos-post-inner-new">
-                        <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/CTF%E6%AF%94%E8%B5%9B/">CTF比赛</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/03/06/CTF%E6%AF%94%E8%B5%9B/%E7%BA%A2%E5%B8%BD%E6%9D%AF/">红帽杯</a>
-                        </header>
-                        <div class="kratos-entry-content-new">
-                            <p>
-                                
-                                    find_it
+        <a class="post-tag" href="javascript:void(0);" data-tags = "sql">sql</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/03/06/CTF%E6%AF%94%E8%B5%9B/%E7%BA%A2%E5%B8%BD%E6%9D%AF/" >
+            
+                <span>红帽杯</span>
+        </a>
+        <div class="abstract-content">
+            find_it
 知识点
 vim 备份文件
 短标签
 
 
-robots.txt 文件提示有 1ndexx.php，但是访问不了存在 vim 备份文件：http://eci-2zefc95c45rhg0wuefre.cloudeci1.ic...
-                                
-                            </p>
-                        </div>
-                    </div>
-                    <footer class="kratos-post-meta-new">
-                        <span class="pull-left">
-                            <a>
-                                <i class="fa fa-calendar"></i>
-                                2021-03-06
-                            </a>
-                            <a>
-                                
-                                    <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/CTF%E6%AF%94%E8%B5%9B/" rel="tag">CTF比赛</a>
-                                
-                            </a>
-                            
-                                <!-- 当前仅支持valine/waline自带的统计功能 -->
-                                
-                            
-                            
-                                <!-- 当前仅支持waline自带的统计功能 -->
-                                
-                            
-                        </span>
-                        <span class="pull-right">
-                            <a class="read-more" href="/2021/03/06/CTF%E6%AF%94%E8%B5%9B/%E7%BA%A2%E5%B8%BD%E6%9D%AF/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                        </span>
-                    </footer>
-                </div>
-            </article>
-        
+robots.txt 文件提示有 1ndexx.php，但是访问不了存在 vim 备份文件：http://eci-2zefc95c45rhg0wuefre.cloudeci1.ichunqiu.com/.1ndexx.php.swp
+
+
+得到源码，/index.php?code=&lt;?=phpinfo();?&gt;
+发现 flag 在 phpinfo()的全局变量中
+
+framework
+知识点
+Yii 框架
+反序列化
+
+
+www.zip 的到框架的源码，本地搭建，获取框架的版本参考Yii 反序列漏洞
+
+WebsiteMange...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/03/06</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
     
-        
-        
-            <article class="kratos-hentry clearfix">
-                <div class="kratos-entry-border-new clearfix">
-                    
-                    <div class="kratos-entry-thumb-new">
-                        <a href="/2021/03/01/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/nmap/">
-                            
-                                <img class="kratos-entry-thumb-new-img">
-                            
-                        </a>
-                    </div>
-                    <div class="kratos-post-inner-new">
-                        <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">工具使用</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/03/01/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/nmap/">Nmap</a>
-                        </header>
-                        <div class="kratos-entry-content-new">
-                            <p>
-                                
-                                    nmap
+        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF比赛">CTF比赛</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/03/01/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/nmap/" >
+            
+                <span>Nmap</span>
+        </a>
+        <div class="abstract-content">
+            nmap
 HOST
 
-123456-iL #读取IP列表文件-iR #随机选择目标--exclude &lt;host&gt; #除外一些IP-sL #子网掩码计算，显示要扫的IP-n #不做dns解析--dns-server #指定...
-                                
-                            </p>
-                        </div>
-                    </div>
-                    <footer class="kratos-post-meta-new">
-                        <span class="pull-left">
-                            <a>
-                                <i class="fa fa-calendar"></i>
-                                2021-03-01
-                            </a>
-                            <a>
-                                
-                                    <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" rel="tag">工具使用</a>
-                                
-                            </a>
-                            
-                                <!-- 当前仅支持valine/waline自带的统计功能 -->
-                                
-                            
-                            
-                                <!-- 当前仅支持waline自带的统计功能 -->
-                                
-                            
-                        </span>
-                        <span class="pull-right">
-                            <a class="read-more" href="/2021/03/01/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/nmap/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                        </span>
-                    </footer>
-                </div>
-            </article>
-        
+123456-iL #读取IP列表文件-iR #随机选择目标--exclude &lt;host&gt; #除外一些IP-sL #子网掩码计算，显示要扫的IP-n #不做dns解析--dns-server #指定dns-server，可以访问国外的
+
+
+PORT
+
+12345678-sS:半连接扫描，发送SYN数据包，不会在对方主机日志中进行记录-sT #TCP扫描-sU #UDP扫描-sA:半连接扫描，发送ACK数据包，不会在对方主机日志中进行记录--scanflags #指定flags-sI #僵尸扫描-sY #SCTP协议-sO #IP协议
+
+
+PORT SP...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/03/01</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
     
-        
-        
-            <article class="kratos-hentry clearfix">
-                <div class="kratos-entry-border-new clearfix">
-                    
-                    <div class="kratos-entry-thumb-new">
-                        <a href="/2021/03/01/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/netcat/">
-                            
-                                <img class="kratos-entry-thumb-new-img">
-                            
-                        </a>
-                    </div>
-                    <div class="kratos-post-inner-new">
-                        <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">工具使用</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/03/01/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/netcat/">Netcat</a>
-                        </header>
-                        <div class="kratos-entry-content-new">
-                            <p>
-                                
-                                    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "工具使用">工具使用</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/03/01/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/netcat/" >
+            
+                <span>Netcat</span>
+        </a>
+        <div class="abstract-content">
+            
 nc 使用:透过使用 TCP 或 UDP 协议的网络连接去读写数据
 
 
--d 后台模式-e prog 程序重定向，一旦连接，就执行 [危险!!]-g gateway source-routing hop point[s], up t...
-                                
-                            </p>
-                        </div>
-                    </div>
-                    <footer class="kratos-post-meta-new">
-                        <span class="pull-left">
-                            <a>
-                                <i class="fa fa-calendar"></i>
-                                2021-03-01
-                            </a>
-                            <a>
-                                
-                                    <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" rel="tag">工具使用</a>
-                                
-                            </a>
-                            
-                                <!-- 当前仅支持valine/waline自带的统计功能 -->
-                                
-                            
-                            
-                                <!-- 当前仅支持waline自带的统计功能 -->
-                                
-                            
-                        </span>
-                        <span class="pull-right">
-                            <a class="read-more" href="/2021/03/01/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/netcat/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                        </span>
-                    </footer>
-                </div>
-            </article>
-        
-    
-    
-    
-        <div class='text-center pagination'>
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+-d 后台模式-e prog 程序重定向，一旦连接，就执行 [危险!!]-g gateway source-routing hop point[s], up to 8-G num source-routing pointer: 4, 8, 12, …-h 帮助信息-i secs 延时的间隔-l 监听模式，用于入站连接-L 连接关闭后,仍然继续监听-n 指定数字的 IP 地址，不能用 hostname-o file 记录 16 进制的传输-p port 本地端口号-r 随机本地及远程端口-s addr 本地源地址-t...
         </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/03/01</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
     
-</section>
-
-
-    <div class="hidden">
-        <!-- 加载文章阅读对应的统计功能，评论自带的那种 -->
-        
-    </div>
-
-
-
-                
-            
-
-<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
-    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+        <a class="post-tag" href="javascript:void(0);" data-tags = "工具使用">工具使用</a>
     
-        <div class="sticky-area">
-    
-    
-                <aside id="krw-about" class="widget widget-kratos-about clearfix">
-    <div class="photo-background"></div>
-    <div class="photo-wrapper clearfix">
-        <div class="photo-wrapper-tip text-center">
-            <img class="about-photo" src="/images/avatar.webp" />
-        </div>
-    </div>
-    <div class="textwidget">
-        <p class="text-center"></p>
-    </div>
-</aside>
-            
-                
-  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
-    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CTF%E6%AF%94%E8%B5%9B/">CTF比赛</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B0%8F%E9%97%AE%E9%A2%98/">小问题</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">工具使用</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%9F%A5%E8%AF%86%E6%99%AE%E5%8F%8A/">知识普及</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%B6%E6%9C%BA/">靶机</a><span class="category-list-count">3</span></li></ul>
-  </aside>
-
-
-            
-                
-  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
-    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
-      <div class="tag-clouds">
-        <a href="/tags/CTF%E6%AF%94%E8%B5%9B/" style="font-size: 0.8em;">CTF比赛</a> <a href="/tags/sql/" style="font-size: 0.6em;">sql</a> <a href="/tags/upload/" style="font-size: 0.6em;">upload</a> <a href="/tags/xss/" style="font-size: 0.6em;">xss</a> <a href="/tags/%E5%B0%8F%E9%97%AE%E9%A2%98/" style="font-size: 0.6em;">小问题</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" style="font-size: 0.7em;">工具使用</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E6%99%AE%E5%8F%8A/" style="font-size: 0.6em;">知识普及</a>
-      </div>
-  </aside>
-
-            
-                
-  <aside id="krw-posts" class="widget widget-kratos-posts">
-  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
-  <div class="tab-content">
-      <ul class="list-group">
-        
-        
-          
-          
-            <a class="list-group-item" href="/2021/04/06/CTF%E6%AF%94%E8%B5%9B/%E7%BA%A2%E6%98%8E%E8%B0%B7%E6%9D%AF/"><i class="fa  fa-book"></i> 红明谷-web 复现</a>
-            
-          
-        
-          
-          
-            <a class="list-group-item" href="/2021/04/06/CTF%E6%AF%94%E8%B5%9B/ciscn/"><i class="fa  fa-book"></i> CSICN-web</a>
-            
-          
-        
-          
-          
-            <a class="list-group-item" href="/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/DASctf/"><i class="fa  fa-book"></i> DASctf-web 复现</a>
-            
-          
-        
-          
-          
-            <a class="list-group-item" href="/2021/04/02/CTF%E6%AF%94%E8%B5%9B/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/"><i class="fa  fa-book"></i> 2020西湖论剑-web复现</a>
-            
-          
-        
-          
-          
-            <a class="list-group-item" href="/2021/03/28/upload-labs/upload-labs/"><i class="fa  fa-book"></i> upload-labs靶机练习</a>
-            
-          
-        
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-      </ul>
-  </div>
-  </aside>
-
-            
-    </div>
-</section>
-        
-        </div>
-    </div>
 </div>
-<footer>
-    <div id="footer"  class="ap-lrc"  >
-        <div class="kr-tool text-center">
-            <div class="tool">
-                
-                    <div class="box search-box">
-                        <a href="/search/">
-                            <span class="fa fa-search"></span>
-                        </a>
-                    </div>
-                
-                
-                    <div class="box theme-box" id="darkmode-switch">
-                        <span class="fa fa-adjust"></span>
-                    </div>
-                
-                
-            </div>
-            <div class="box gotop-box">
-                <span class="fa fa-chevron-up"></span>
-            </div>
+            
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3 footer-list text-center">
-                    <ul class="kratos-social-icons">
-                        
-                        
-                        <li><a target="_blank" rel="nofollow" href="https://t.me/CandyUnion"><i class="fa fa-telegram"></i></a></li>
-                        
-                        
-                        
-                        <li><a target="_blank" rel="me" href="https://nya.one/@Candinya"><i class="fa fa fa-share-alt-square"></i></a></li>
-                        <li><a target="_blank" rel="nofollow" href="https://github.com/Candinya"><i class="fa fa-github"></i></a></li>
-                        
-                    </ul>
-                    <ul class="kratos-copyright">
-                        <div>
-                            <li>&copy; 2021 Ma4out7'Blog 版权所有.</li>
-                            <li>本站已运行<span id="span_dt">Loading...</span></li>
-                        </div>
-                        <div>
-                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
-                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by Ma4out7.</li>
-                        </div>
-                        <div>
-                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
-                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
-                        </div>
-                        <div>
-                            
-                            
-                        </div>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    </article>
+    
+    <!-- paginator  -->
+    
+    <nav class="page-nav">
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">NEXT &gt;</a>
+    </nav>
+    
+</main>
+            <!-- profile -->
+            
+            <div class="profile">
+    <img class="profile-avatar" alt="avatar" src= https://img1.baidu.com/it/u=1093570909,3602207353&fm=26&fmt=auto&gp=0.jpg >
+    <div class="profile-name">Ma4out7</div>
+    
+    <div class="profile-signature">
+        You are a H@cker
     </div>
+    
+    
+    <div class="profile-social">
+        
+    
+        
+            
+                <a href="mailto:12345@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/fi3ework" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    
+        <div class="friends">
+            <div>FRIENDS</div>
+            
+                
+                    <span>
+                        <a href= //www.baidu.com target="_black">friendA</a>
+                    </span>
+                
+            
+                
+                    <span>
+                        <a href= //www.google.com target="_black">friendB</a>
+                    </span>
+                
+            
+                
+            
+        </div>
+    
+    
+        <div class="about-me">
+            <a href = "/about" >ABOUT ME</a>
+        </div>
+    
+</div>
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:12345@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/fi3ework" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
 </footer>
-</div>
-</div>
-
-        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
-<script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script>
-
-<script async src="/js/candy.min.js"></script>
-
-    <script defer src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    </div>
+    <!-- toc -->
     
-    <script defer src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
-    <meting-js
-        server="netease"
-        type="playlist"
-        id="3204190542"
-        order="random"
-        fixed="true"
-    >
-    </meting-js>
-
-
-
-    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-
-<script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
-<script defer src="/js/kratosr.min.js"></script>
-<script defer src="/js/pjax.min.js"></script>
-
-
-    <script defer src="/js/kr-dark.min.js"></script>
-
-
-
-<!-- Extra support for third-party plguins  -->
-
-
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 14
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/06</span><a class="archive-post-title" href= "/2021/04/06/CTF%E6%AF%94%E8%B5%9B/%E7%BA%A2%E6%98%8E%E8%B0%B7%E6%9D%AF/" >红明谷-web 复现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/06</span><a class="archive-post-title" href= "/2021/04/06/CTF%E6%AF%94%E8%B5%9B/ciscn/" >CSICN-web</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/06</span><a class="archive-post-title" href= "/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/DASctf/" >DASctf-web 复现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/02</span><a class="archive-post-title" href= "/2021/04/02/CTF%E6%AF%94%E8%B5%9B/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/" >2020西湖论剑-web复现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/28</span><a class="archive-post-title" href= "/2021/03/28/upload-labs/upload-labs/" >upload-labs靶机练习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2021/03/26/xss-labs/xss-labs/" >xss-labs靶机练习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/24</span><a class="archive-post-title" href= "/2021/03/24/sql-labs/PAGE-1(Basic%20Challenges)/" >sql_labs</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/06</span><a class="archive-post-title" href= "/2021/03/06/CTF%E6%AF%94%E8%B5%9B/%E7%BA%A2%E5%B8%BD%E6%9D%AF/" >红帽杯</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2021/03/01/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/nmap/" >Nmap</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2021/03/01/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/netcat/" >Netcat</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2021/03/01/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/wireshark-tcpdump/" >wireshark-tcpdump</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/15</span><a class="archive-post-title" href= "/2021/02/15/CDN%E8%AE%B2%E8%A7%A3/" >CDN</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href= "/2020/11/26/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" >Burp suit</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/15</span><a class="archive-post-title" href= "/2020/10/15/my%20first%20blog/" >Mac下基于GitHub的Hexo博客搭建</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="知识普及"><span class="iconfont-archer">&#xe606;</span>知识普及</span>
+    
+        <span class="sidebar-tag-name" data-tags="小问题"><span class="iconfont-archer">&#xe606;</span>小问题</span>
+    
+        <span class="sidebar-tag-name" data-tags="工具使用"><span class="iconfont-archer">&#xe606;</span>工具使用</span>
+    
+        <span class="sidebar-tag-name" data-tags="upload"><span class="iconfont-archer">&#xe606;</span>upload</span>
+    
+        <span class="sidebar-tag-name" data-tags="xss"><span class="iconfont-archer">&#xe606;</span>xss</span>
+    
+        <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
+    
+        <span class="sidebar-tag-name" data-tags="CTF比赛"><span class="iconfont-archer">&#xe606;</span>CTF比赛</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="知识普及"><span class="iconfont-archer">&#xe60a;</span>知识普及</span>
+    
+        <span class="sidebar-category-name" data-categories="小问题"><span class="iconfont-archer">&#xe60a;</span>小问题</span>
+    
+        <span class="sidebar-category-name" data-categories="工具使用"><span class="iconfont-archer">&#xe60a;</span>工具使用</span>
+    
+        <span class="sidebar-category-name" data-categories="CTF比赛"><span class="iconfont-archer">&#xe60a;</span>CTF比赛</span>
+    
+        <span class="sidebar-category-name" data-categories="靶机"><span class="iconfont-archer">&#xe60a;</span>靶机</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "Ma4out7"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+     
     </body>
 </html>
+
+
