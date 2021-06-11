@@ -364,7 +364,7 @@
 nc 使用:透过使用 TCP 或 UDP 协议的网络连接去读写数据
 
 
--d 后台模式-e prog 程序重定向，一旦连接，就执行 [危险!!]-g gateway source-routing hop point[s], up to 8-G num source-routing pointer: 4, 8, 12, …-h 帮助信息-i secs 延时的间隔-l 监听模式，用于入站连接-L 连接关闭后,仍然继续监听-n 指定数字的 IP 地址，不能用 hostname-o file 记录 16 进制的传输-p port 本地端口号-r 随机本地及远程端口-s addr 本地源地址-t...
+-d 后台模式-e ...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -396,15 +396,7 @@ nc 使用:透过使用 TCP 或 UDP 协议的网络连接去读写数据
             nmap
 HOST
 
-123456-iL #读取IP列表文件-iR #随机选择目标--exclude &lt;host&gt; #除外一些IP-sL #子网掩码计算，显示要扫的IP-n #不做dns解析--dns-server #指定dns-server，可以访问国外的
-
-
-PORT
-
-12345678-sS:半连接扫描，发送SYN数据包，不会在对方主机日志中进行记录-sT #TCP扫描-sU #UDP扫描-sA:半连接扫描，发送ACK数据包，不会在对方主机日志中进行记录--scanflags #指定flags-sI #僵尸扫描-sY #SCTP协议-sO #IP协议
-
-
-PORT SP...
+123456-iL #读取IP列表文件-iR #随机选择目标--excl...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -438,14 +430,7 @@ PORT SP...
 主界面介绍
 
 
-选择网卡后进入拦截界面。这里 1 号窗口表示 wireshark 捕获到的所有数据包的列表，注意最后一列 info 是组织说明列，不一定是该数据包中的原始内容；2 号窗口是 1 号窗口中选定的数据包的分层协议展示；3 号窗口表示 1 号窗口中选定的数据包的原始数据，其中左侧十六进制表示，右侧 ascii 码表示。在 2 号窗口选中某层，3 号窗口对应位置会高亮。
-在我们想抓取时对数据包进行过滤，就选择——捕获——选项，然后选择抓取的网卡，下面再选择过滤器。设置好后就可以开始抓包
-
-
-抓取后的过滤
-
-
-一般情况下，我们都是抓取完数据后进行过滤的，...
+选择网卡后进入拦截界面。这里 1 号窗口表示 wi...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -477,20 +462,7 @@ PORT SP...
             0x00前言不积跬步无以至千里，
 不积小流无以成江海。
 这里开始我的工具总结之路
-0x01 Burp suit参照burp suit使用详解
-由于经常使用burp，所以就不做了
-0x02 beef1.介绍2.使用
-0x03 dirb1.介绍2.使用
-字典目录在usr/share/wordlists下
-0x04 dirbuster已经很详细了。。
-0x05 dirsearch
--u 指定url 
--e 指定网站语言 
--w 可以加上自己的字典（带上路径） 
--r 递归查找 
-–random-agents 使用代理（使用的代理目录在uesr-agents.txt中，可以自己添加）
-
-挺简单的...
+0x01 B...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->

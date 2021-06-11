@@ -366,15 +366,7 @@
 join 无列名注入
 
 
-&#39;)&#39;闭合，报错可用，得到 security 数据库，
-报错要得到表名，information 被过滤，以下可用来爆表
-
-1234sys.schema_table_statistics_with_buffersys.x$schema_table_statistics_with_buffersys.schema_auto_increment_columnssys.x$ps_schema_table_statistics_io
-
-
-也可
-
-123mysql.innodb_table_stats (此表中库名字段是 d...
+&#39;)&#39;闭合，报错可...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -404,13 +396,7 @@ join 无列名注入
         </a>
         <div class="abstract-content">
             
-参考红明谷杯官方 wp &gt; https://blog.csdn.net/mochu7777777/article/details/115410705?
-
-红明谷杯-web 复现1.happysql
-考点：使用了双引号闭合，没有回显的布尔盲注
-很明显是布尔盲注了接下来考虑两个点： 1.截断函数用哪个？这里 mid()和 substring()已经被过滤了 2.如何绕过 information
-
-截断函数可以用 left()和 right()，不过需要注意的是这两个函数并不能像 mid 和 substring 一样逐个截断，写脚本的时候注意下测试字符串的拼接。而绕过 informat...
+参考红明谷杯官方 wp &gt; https://blog.csdn.net/mochu77...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -440,12 +426,7 @@ join 无列名注入
         </a>
         <div class="abstract-content">
             DASctf-web 复现
-太菜了呀，又是凑数的一天参考https://shimo.im/docs/lf9OcEmdH70MC17f/read
-
-1.BestDB8考点：联合查询+load_file 文件读取
-
-上来就给了 SQL 语句 PHPF12 源码注释中显示$sql = &quot;SELECT * FROM users WHERE id = &#39;$query&#39; OR username = \\&quot;$query\\&quot;&quot;;
-query=1和query=2均有回显，但是对于单引号进行了过滤，但是它给了 username，通过 username...
+太菜了呀，又是凑数的一天参考https://shimo.im/do...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -474,16 +455,7 @@ query=1和query=2均有回显，但是对于单引号进行了过滤，但是它
                 <span>2020西湖论剑-web复现</span>
         </a>
         <div class="abstract-content">
-            2020 西湖论剑前言记得当时第一次参加比赛，虐的好惨，题目很好，网速很快，就是做不出，全程凑数，新手村的我刚出门就直接面对百级 boss，没有任何游戏体验。重新开始，今年继续
-1.NewUload
-
-文件上传，过滤了文件后缀名和文件内容都过滤了 php 关键字，甚至短标签的尖括号都不行，但是，没想到居然可以通过换行来绕过后缀名检测和用图片马来绕过文件内容的检测。
-
-就能从 phpinfo 中发现 disable_functions 中禁用了很多函数。网上有两种方法
-
-第一种就是利用.htaccess+lua。lua 是也是一种轻量化脚本语言，在 PHP 环境中可以被解析
-
-先上传一个....
+            2020 西湖论剑前言记得当时第一次参加比赛，虐的好惨，题目很好，网速很快，就是做不出，全程凑...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->

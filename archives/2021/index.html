@@ -366,15 +366,7 @@
 join 无列名注入
 
 
-&#39;)&#39;闭合，报错可用，得到 security 数据库，
-报错要得到表名，information 被过滤，以下可用来爆表
-
-1234sys.schema_table_statistics_with_buffersys.x$schema_table_statistics_with_buffersys.schema_auto_increment_columnssys.x$ps_schema_table_statistics_io
-
-
-也可
-
-123mysql.innodb_table_stats (此表中库名字段是 d...
+&#39;)&#39;闭合，报错可...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -404,13 +396,7 @@ join 无列名注入
         </a>
         <div class="abstract-content">
             
-参考红明谷杯官方 wp &gt; https://blog.csdn.net/mochu7777777/article/details/115410705?
-
-红明谷杯-web 复现1.happysql
-考点：使用了双引号闭合，没有回显的布尔盲注
-很明显是布尔盲注了接下来考虑两个点： 1.截断函数用哪个？这里 mid()和 substring()已经被过滤了 2.如何绕过 information
-
-截断函数可以用 left()和 right()，不过需要注意的是这两个函数并不能像 mid 和 substring 一样逐个截断，写脚本的时候注意下测试字符串的拼接。而绕过 informat...
+参考红明谷杯官方 wp &gt; https://blog.csdn.net/mochu77...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -440,12 +426,7 @@ join 无列名注入
         </a>
         <div class="abstract-content">
             DASctf-web 复现
-太菜了呀，又是凑数的一天参考https://shimo.im/docs/lf9OcEmdH70MC17f/read
-
-1.BestDB8考点：联合查询+load_file 文件读取
-
-上来就给了 SQL 语句 PHPF12 源码注释中显示$sql = &quot;SELECT * FROM users WHERE id = &#39;$query&#39; OR username = \\&quot;$query\\&quot;&quot;;
-query=1和query=2均有回显，但是对于单引号进行了过滤，但是它给了 username，通过 username...
+太菜了呀，又是凑数的一天参考https://shimo.im/do...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -474,16 +455,7 @@ query=1和query=2均有回显，但是对于单引号进行了过滤，但是它
                 <span>2020西湖论剑-web复现</span>
         </a>
         <div class="abstract-content">
-            2020 西湖论剑前言记得当时第一次参加比赛，虐的好惨，题目很好，网速很快，就是做不出，全程凑数，新手村的我刚出门就直接面对百级 boss，没有任何游戏体验。重新开始，今年继续
-1.NewUload
-
-文件上传，过滤了文件后缀名和文件内容都过滤了 php 关键字，甚至短标签的尖括号都不行，但是，没想到居然可以通过换行来绕过后缀名检测和用图片马来绕过文件内容的检测。
-
-就能从 phpinfo 中发现 disable_functions 中禁用了很多函数。网上有两种方法
-
-第一种就是利用.htaccess+lua。lua 是也是一种轻量化脚本语言，在 PHP 环境中可以被解析
-
-先上传一个....
+            2020 西湖论剑前言记得当时第一次参加比赛，虐的好惨，题目很好，网速很快，就是做不出，全程凑...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -515,9 +487,7 @@ query=1和query=2均有回显，但是对于单引号进行了过滤，但是它
             
 一、后缀黑名单绕过1.前端 JS 绕过
 可以直接更改 js 源码，允许上传 PHP 文件
-也可以直接删除
-
-2.只验证 Content-type123if (file_exists(UPLOAD_PATH)) &#123;        if (($_FILES[&#x27;upload_file&#x27;][&#x27;type&#x27;] == &#x27;image/jpeg&#x27;) || ($_FILES[&#x27;upload_file&#x27;][&#x27;type&#x27;] == &#x27;image/png&#x27;) || ($_FILES[&...
+也...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -548,15 +518,7 @@ query=1和query=2均有回显，但是对于单引号进行了过滤，但是它
         <div class="abstract-content">
             先上图
 leve-1
-无任何过滤，get 型，直接&lt;script&gt;alert(1)&lt;/script&gt;
-
-2.
-方法一:闭合 input 标签里面的&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;
-方法二:闭合 value 属性，在 input 标签中添加新的属性&quot; onclick=&quot;alert(11)
-
-3.HTML 实体化过滤
-htmlspecialchars 函数可以过滤&lt;``&gt;``&quot;，但是不会过滤单引号，而且 value 的闭合也是采用单引号，所以会有 xss 漏洞
-部分...
+无任何过滤，get 型，直接&lt;script&gt;alert(1)...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -587,10 +549,7 @@ htmlspecialchars 函数可以过滤&lt;``&gt;``&quot;，但是不会过滤单引
         <div class="abstract-content">
             先上图
 PAGE-1(Basic Challenges)一、GET 篇1.2 最基本方法
-判断注入类型http://127.0.0.1/sqli-labs/Less-1/?id=1正确返回http://127.0.0.1/sqli-labs/Less-1/?id=1&#39;出现报错显示http://127.0.0.1/sqli-labs/Less-1/?id=1&#39; and 1=1--+判断字符型和数字型注入的方法这道题感觉好像字符型可以，一般情况下，多是字符型注入
-猜测字段数
-
-1234http:&#x2F;&#x2F;127.0.0.1&#x2F;sqli-labs&#x2F...
+判断...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -625,21 +584,7 @@ vim 备份文件
 短标签
 
 
-robots.txt 文件提示有 1ndexx.php，但是访问不了存在 vim 备份文件：http://eci-2zefc95c45rhg0wuefre.cloudeci1.ichunqiu.com/.1ndexx.php.swp
-
-
-得到源码，/index.php?code=&lt;?=phpinfo();?&gt;
-发现 flag 在 phpinfo()的全局变量中
-
-framework
-知识点
-Yii 框架
-反序列化
-
-
-www.zip 的到框架的源码，本地搭建，获取框架的版本参考Yii 反序列漏洞
-
-WebsiteMange...
+robots.txt 文件提示有 1nd...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -672,7 +617,7 @@ WebsiteMange...
 nc 使用:透过使用 TCP 或 UDP 协议的网络连接去读写数据
 
 
--d 后台模式-e prog 程序重定向，一旦连接，就执行 [危险!!]-g gateway source-routing hop point[s], up to 8-G num source-routing pointer: 4, 8, 12, …-h 帮助信息-i secs 延时的间隔-l 监听模式，用于入站连接-L 连接关闭后,仍然继续监听-n 指定数字的 IP 地址，不能用 hostname-o file 记录 16 进制的传输-p port 本地端口号-r 随机本地及远程端口-s addr 本地源地址-t...
+-d 后台模式-e ...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -704,15 +649,7 @@ nc 使用:透过使用 TCP 或 UDP 协议的网络连接去读写数据
             nmap
 HOST
 
-123456-iL #读取IP列表文件-iR #随机选择目标--exclude &lt;host&gt; #除外一些IP-sL #子网掩码计算，显示要扫的IP-n #不做dns解析--dns-server #指定dns-server，可以访问国外的
-
-
-PORT
-
-12345678-sS:半连接扫描，发送SYN数据包，不会在对方主机日志中进行记录-sT #TCP扫描-sU #UDP扫描-sA:半连接扫描，发送ACK数据包，不会在对方主机日志中进行记录--scanflags #指定flags-sI #僵尸扫描-sY #SCTP协议-sO #IP协议
-
-
-PORT SP...
+123456-iL #读取IP列表文件-iR #随机选择目标--excl...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->

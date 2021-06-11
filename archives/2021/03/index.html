@@ -363,9 +363,7 @@
             
 一、后缀黑名单绕过1.前端 JS 绕过
 可以直接更改 js 源码，允许上传 PHP 文件
-也可以直接删除
-
-2.只验证 Content-type123if (file_exists(UPLOAD_PATH)) &#123;        if (($_FILES[&#x27;upload_file&#x27;][&#x27;type&#x27;] == &#x27;image/jpeg&#x27;) || ($_FILES[&#x27;upload_file&#x27;][&#x27;type&#x27;] == &#x27;image/png&#x27;) || ($_FILES[&...
+也...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -396,15 +394,7 @@
         <div class="abstract-content">
             先上图
 leve-1
-无任何过滤，get 型，直接&lt;script&gt;alert(1)&lt;/script&gt;
-
-2.
-方法一:闭合 input 标签里面的&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;
-方法二:闭合 value 属性，在 input 标签中添加新的属性&quot; onclick=&quot;alert(11)
-
-3.HTML 实体化过滤
-htmlspecialchars 函数可以过滤&lt;``&gt;``&quot;，但是不会过滤单引号，而且 value 的闭合也是采用单引号，所以会有 xss 漏洞
-部分...
+无任何过滤，get 型，直接&lt;script&gt;alert(1)...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -435,10 +425,7 @@ htmlspecialchars 函数可以过滤&lt;``&gt;``&quot;，但是不会过滤单引
         <div class="abstract-content">
             先上图
 PAGE-1(Basic Challenges)一、GET 篇1.2 最基本方法
-判断注入类型http://127.0.0.1/sqli-labs/Less-1/?id=1正确返回http://127.0.0.1/sqli-labs/Less-1/?id=1&#39;出现报错显示http://127.0.0.1/sqli-labs/Less-1/?id=1&#39; and 1=1--+判断字符型和数字型注入的方法这道题感觉好像字符型可以，一般情况下，多是字符型注入
-猜测字段数
-
-1234http:&#x2F;&#x2F;127.0.0.1&#x2F;sqli-labs&#x2F...
+判断...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -473,21 +460,7 @@ vim 备份文件
 短标签
 
 
-robots.txt 文件提示有 1ndexx.php，但是访问不了存在 vim 备份文件：http://eci-2zefc95c45rhg0wuefre.cloudeci1.ichunqiu.com/.1ndexx.php.swp
-
-
-得到源码，/index.php?code=&lt;?=phpinfo();?&gt;
-发现 flag 在 phpinfo()的全局变量中
-
-framework
-知识点
-Yii 框架
-反序列化
-
-
-www.zip 的到框架的源码，本地搭建，获取框架的版本参考Yii 反序列漏洞
-
-WebsiteMange...
+robots.txt 文件提示有 1nd...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -520,7 +493,7 @@ WebsiteMange...
 nc 使用:透过使用 TCP 或 UDP 协议的网络连接去读写数据
 
 
--d 后台模式-e prog 程序重定向，一旦连接，就执行 [危险!!]-g gateway source-routing hop point[s], up to 8-G num source-routing pointer: 4, 8, 12, …-h 帮助信息-i secs 延时的间隔-l 监听模式，用于入站连接-L 连接关闭后,仍然继续监听-n 指定数字的 IP 地址，不能用 hostname-o file 记录 16 进制的传输-p port 本地端口号-r 随机本地及远程端口-s addr 本地源地址-t...
+-d 后台模式-e ...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -552,15 +525,7 @@ nc 使用:透过使用 TCP 或 UDP 协议的网络连接去读写数据
             nmap
 HOST
 
-123456-iL #读取IP列表文件-iR #随机选择目标--exclude &lt;host&gt; #除外一些IP-sL #子网掩码计算，显示要扫的IP-n #不做dns解析--dns-server #指定dns-server，可以访问国外的
-
-
-PORT
-
-12345678-sS:半连接扫描，发送SYN数据包，不会在对方主机日志中进行记录-sT #TCP扫描-sU #UDP扫描-sA:半连接扫描，发送ACK数据包，不会在对方主机日志中进行记录--scanflags #指定flags-sI #僵尸扫描-sY #SCTP协议-sO #IP协议
-
-
-PORT SP...
+123456-iL #读取IP列表文件-iR #随机选择目标--excl...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -594,14 +559,7 @@ PORT SP...
 主界面介绍
 
 
-选择网卡后进入拦截界面。这里 1 号窗口表示 wireshark 捕获到的所有数据包的列表，注意最后一列 info 是组织说明列，不一定是该数据包中的原始内容；2 号窗口是 1 号窗口中选定的数据包的分层协议展示；3 号窗口表示 1 号窗口中选定的数据包的原始数据，其中左侧十六进制表示，右侧 ascii 码表示。在 2 号窗口选中某层，3 号窗口对应位置会高亮。
-在我们想抓取时对数据包进行过滤，就选择——捕获——选项，然后选择抓取的网卡，下面再选择过滤器。设置好后就可以开始抓包
-
-
-抓取后的过滤
-
-
-一般情况下，我们都是抓取完数据后进行过滤的，...
+选择网卡后进入拦截界面。这里 1 号窗口表示 wi...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->

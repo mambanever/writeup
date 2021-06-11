@@ -363,9 +363,7 @@
             
 一、后缀黑名单绕过1.前端 JS 绕过
 可以直接更改 js 源码，允许上传 PHP 文件
-也可以直接删除
-
-2.只验证 Content-type123if (file_exists(UPLOAD_PATH)) &#123;        if (($_FILES[&#x27;upload_file&#x27;][&#x27;type&#x27;] == &#x27;image/jpeg&#x27;) || ($_FILES[&#x27;upload_file&#x27;][&#x27;type&#x27;] == &#x27;image/png&#x27;) || ($_FILES[&...
+也...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -396,15 +394,7 @@
         <div class="abstract-content">
             先上图
 leve-1
-无任何过滤，get 型，直接&lt;script&gt;alert(1)&lt;/script&gt;
-
-2.
-方法一:闭合 input 标签里面的&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;
-方法二:闭合 value 属性，在 input 标签中添加新的属性&quot; onclick=&quot;alert(11)
-
-3.HTML 实体化过滤
-htmlspecialchars 函数可以过滤&lt;``&gt;``&quot;，但是不会过滤单引号，而且 value 的闭合也是采用单引号，所以会有 xss 漏洞
-部分...
+无任何过滤，get 型，直接&lt;script&gt;alert(1)...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -435,10 +425,7 @@ htmlspecialchars 函数可以过滤&lt;``&gt;``&quot;，但是不会过滤单引
         <div class="abstract-content">
             先上图
 PAGE-1(Basic Challenges)一、GET 篇1.2 最基本方法
-判断注入类型http://127.0.0.1/sqli-labs/Less-1/?id=1正确返回http://127.0.0.1/sqli-labs/Less-1/?id=1&#39;出现报错显示http://127.0.0.1/sqli-labs/Less-1/?id=1&#39; and 1=1--+判断字符型和数字型注入的方法这道题感觉好像字符型可以，一般情况下，多是字符型注入
-猜测字段数
-
-1234http:&#x2F;&#x2F;127.0.0.1&#x2F;sqli-labs&#x2F...
+判断...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
